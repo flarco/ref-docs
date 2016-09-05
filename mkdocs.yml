@@ -1,0 +1,30 @@
+site_name: Master Reference
+
+theme: mkdocs #[cosmo|cyborg|readthedocs|yeti|journal|bootstrap|readable|united|simplex|flatly|spacelab|amelia|cerulean|slate|mkdocs]
+
+dev_addr: '0.0.0.0:8000'
+include_next_prev: false
+
+markdown_extensions:
+    - toc:
+        permalink: True
+pages:
+- Home: 'index.md'
+- Programming:
+  - 'Python': 'programming/python.md'
+  - 'Ruby': 'programming/ruby.md'
+- Database:
+  - 'PostgreSQL': 'database/postgres.md'
+  - 'MySQL': 'database/mysql.md'
+  - 'Oracle': 'database/oracle.md'
+  - 'ElasticSearch': 'database/elasticsearch.md'
+- ETL / BI:
+  - 'Informatica': 'etl/informatica.md'
+  - 'SSIS': 'etl/ssis.md'
+  - 'Talend': 'etl/talend.md'
+- Cloud:
+  - 'Docker' : 'cloud/docker.md'
+  - 'Amazon' : 'cloud/amazon.md'
+  - 'Linux' : 'cloud/linux.md'
+  - 'Git' : 'cloud/git.md'
+- Other: 'other.md'
