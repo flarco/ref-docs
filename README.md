@@ -2,10 +2,16 @@
 Master reference for all things code.
 Quickly find the solution!
 
-This project loads the site http://ref-docs.pw
+This project loads the site <http://ref-docs.pw>
 
+## Install MkDocs
+```
+pip install mkdocs
+```
 
-## Building
+Here for more info: <http://www.mkdocs.org/>
+
+## Building the site
 
 ```bash
 git clone https://github.com/flarco/ref-docs.git
