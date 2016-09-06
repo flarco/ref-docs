@@ -25,7 +25,7 @@ RUN echo "root:my_pass!" | chpasswd && \
   echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
 
 #run `bash` last to keep the container from exiting
-CMD service ssh restart && bash
+CMD service ssh restart && tail -f /var/log/lastlog
 ```
 
 ###List Images
