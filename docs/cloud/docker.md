@@ -19,7 +19,7 @@ docker build -f /path/to/a/Dockerfile2 -t username/wma_app:v1 .
 
 ####Add SSH Service
 ```
-RUN echo "root:a5c1211!" | chpasswd && \
+RUN echo "root:my_pass!" | chpasswd && \
   awk '!/PermitRootLogin/' /etc/ssh/sshd_config > temp && \
   mv temp /etc/ssh/sshd_config && \
   echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
@@ -61,7 +61,7 @@ docker run --rm -it ubuntu:trusty bash -l
 ```
 
 ### Export Container to TAR File
-https://docs.docker.com/engine/reference/commandline/export/
+<https://docs.docker.com/engine/reference/commandline/export/>
 ```
 docker export red_panda > latest.tar
 
@@ -69,7 +69,7 @@ docker export --output="latest.tar" red_panda
 ```
 
 ### Import Container from TAR File
-https://docs.docker.com/engine/reference/commandline/import/
+<https://docs.docker.com/engine/reference/commandline/import/>
 ```
 docker import http://example.com/exampleimage.tgz
 
@@ -147,7 +147,7 @@ docker stats `docker ps | awk '{print $NF}' | grep -v NAMES`
 ## Docker-Compose
 
 ### Main Reference
-https://docs.docker.com/compose/overview/
+<https://docs.docker.com/compose/overview/>
 
 ###Extanding / Inheritance
-https://blog.docker.com/2015/04/easily-configure-apps-for-multiple-environments-with-compose-1-2-and-much-more/
+<https://blog.docker.com/2015/04/easily-configure-apps-for-multiple-environments-with-compose-1-2-and-much-more/>
