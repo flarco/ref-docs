@@ -11,9 +11,9 @@ curl -sSL https://get.docker.com/ | sh
 Go to folder with DockerFile
 ```
 docker build -t username/wma_app:v1 .
-# OR
+ # OR
 docker build --no-cache -t username/wma_app:v1 .
-# OR
+ # OR
 docker build -f /path/to/a/Dockerfile2 -t username/wma_app:v1 .
 ```
 
@@ -83,7 +83,7 @@ docker import /path/to/exampleimage.tgz
 ###Run Image in background
 ```
 docker run --privileged -dti -p 8084:8084 username/wma_app:v1
-OR
+ # OR
 screen
 docker run -p 80:80 username/wma_app:v1
 ```
