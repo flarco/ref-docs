@@ -192,17 +192,29 @@ set autoindent
 ```
 
 ## Curl
+
 ###Post
 `-H` are headers
 `-d` is the text data to be be sent (below example is JSON'
 ```
-curl -H "Content-Type: application/json" -H "Connection: Keep-Alive" -H "Authorization: Bearer AQWQ7BIj4PJ_W8ekWk-30RIG96bwW6S6palc_aE5DjBN3C2bzSV94Lag3LuYmImU4LVIWj8lpvCO9FH46Bax3jWgqMXvuueevMroN7WND6wibv1xzXkm1KWvjcRosnksZ7kdFFb008orTmoLzoS0p1opAjkBucCebtGgoomdYHI5EvSvpAE" -X POST -d "{ \"comment\": \"$link\", \"visibility\": { \"code\": \"anyone\" } }" https://api.linkedin.com/v1/people/~/shares?format=json
+curl -H "Content-Type: application/json" -H "Connection: Keep-Alive" -H "Authorization: Bearer AQWQ7BIj4PJ_W8ekWk-30RIG96bwW6S6p" -X POST -d "{ \"comment\": \"$link\", \"visibility\": { \"code\": \"anyone\" } }" https://api.linkedin.com/v1/people/~/shares?format=json
 ```
 
 ### Get
 ```
 curl --header "Authorization: Bearer a503faf9-45b5-4fec-8334-337284a66ea4" http://localhost:9001/rest/v1/electronics/custoers/current
 curl -G https://www.google.com
+```
+
+### Put
+```
+curl -XPUT 'http://localhost:9200/_template/filebeat' -d@/etc/filebeat/filebeat.template.json
+curl -XPUT localhost:9200/_template/tcpdump -d '
+{
+  "order":0,
+  "template":"tcpdump-*"
+}
+'
 ```
 
 ## Syncthing
