@@ -15,6 +15,22 @@ git init
 git remote add TFMS11 Z:\\TFMS11.git
 ```
 
+# Config
+
+```
+git config
+```
+
+## Set email
+```
+git config --global user.email "user1@live.com"
+```
+
+## Use Windows Credential Manager
+<http://stackoverflow.com/questions/15381198/remove-credentials-from-git/15382950#15382950>
+```
+git config --global credential.helper wincred
+```
 
 
 # Branches
