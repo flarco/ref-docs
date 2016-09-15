@@ -13,6 +13,7 @@ pages:
 - Programming:
   - 'Python': 'programming/python.md'
   - 'Ruby': 'programming/ruby.md'
+  - 'NodeJS': 'programming/nodejs.md'
 - Database:
   - 'PostgreSQL': 'database/postgres.md'
   - 'MySQL': 'database/mysql.md'
