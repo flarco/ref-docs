@@ -112,6 +112,8 @@ r"(?<=Rate )[ \w$]+?(?= Job Type)"
 ### YAML
 
 ```python
+import yaml
+
 def parse_yaml(file_path):
   with open(file_path, 'r') as stream:
     data = yaml.load(stream)
