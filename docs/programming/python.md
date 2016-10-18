@@ -109,6 +109,20 @@ r"(?<=Pay: )[- \w$\d]+"
 r"(?<=Rate )[ \w$]+?(?= Job Type)"
 ```
 
+### YAML
+
+```python
+def parse_yaml(file_path):
+  with open(file_path, 'r') as stream:
+    data = yaml.load(stream)
+    return dict(data)
+
+data = parse_yaml(r'C:\path\file.yml')
+
+with open(r'C:\path\file2.yml', 'w') as outfile:
+    yaml.dump(data, outfile, default_flow_style=False)
+```
+
 ### JSON
 
 **Dict to JSON String**
@@ -122,6 +136,22 @@ print(json.dumps(data_dict))
 ```python
 import json
 print(json.loads(json_str))
+```
+
+**Good Library: jmespath**
+```
+pip install jmespath
+```
+
+<https://jmespath.readthedocs.io/en/latest/specification.html#index-expressions>
+<https://pypi.python.org/pypi/jmespath>
+
+```python
+data = {}
+jmespath.search('result.periods', data)
+jmespath.search('result.opening_hours.periods[0]', data)
+jmespath.search('result.opening_hours.periods[0].close', data)
+jmespath.search('result.opening_hours.periods[*].close.time', data)
 ```
 
 ### Dictionary
@@ -947,6 +977,29 @@ else:
 db.commit()
 cursor.close()
 db.close()
+
+```
+
+#### For Postgres
+```python
+sql_upsert = '''
+INSERT INTO {table} ({fields})
+VALUES ({fields_values})
+ON CONFLICT ({primary_key})
+DO UPDATE
+SET {fields_equal_key}
+'''
+
+no_space = lambda x: x.replace(' ', '_').replace('/','_').replace('-','_').replace('&','_')
+q = lambda x: '"' + x + '"'
+
+result = conn.execute(text(sql_upsert.format(
+    table='schema.table',
+    fields=','.join([q(no_space(h)) for h in headers]),
+    fields_values=','.join([":" + no_space(h) for h in headers]),
+    primary_key=','.join('"COL1" "COL1"'.split()),
+    fields_equal_key=','.join([q(no_space(h)) + "=:" + no_space(h) for h in headers]),
+  )), **record)
 
 ```
 
