@@ -800,6 +800,14 @@ N = 6
 ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(N))
 ```
 
+### Unicode
+
+**TypeError: Can't convert 'bytes' object to str implicitly**
+```python
+ascii_string = unicode_string.decode('utf-8')
+unicode_string = ascii_string.encode('utf-8')
+```
+
 FOR Loop
 --------
 
