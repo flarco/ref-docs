@@ -804,8 +804,8 @@ N = 6
 
 **TypeError: Can't convert 'bytes' object to str implicitly**
 ```python
-ascii_string = unicode_string.decode('utf-8')
-unicode_string = ascii_string.encode('utf-8')
+ascii_string = unicode_string.decode('utf8')
+unicode_string = ascii_string.encode('utf8')
 ```
 
 FOR Loop
