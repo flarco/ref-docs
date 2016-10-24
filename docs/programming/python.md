@@ -1974,3 +1974,14 @@ Flask with JQuery:
 
 <http://www.giantflyingsaucer.com/blog/?p=4310>
 
+
+
+## Jython
+
+
+**Distributing a JAR**
+<http://www.jython.org/jythonbook/en/1.0/SimpleWebApps.html#distributing-via-standalone-jar>
+
+**JDBC**
+<https://wiki.python.org/jython/DatabaseExamples>
+<http://www.jython.org/jythonbook/en/1.0/DatabasesAndJython.html>
