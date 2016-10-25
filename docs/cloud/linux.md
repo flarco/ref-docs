@@ -34,9 +34,9 @@ source ~/.bash_aliases
 
 *Sample env.sh file:*
 ```
-#!/bin/bash 
-export ORACLE_DB_IMAGE=<image-name> 
-export ORACLE_DB_PORT=<port to be exposed> 
+#!/bin/bash
+export ORACLE_DB_IMAGE=<image-name>
+export ORACLE_DB_PORT=<port to be exposed>
 export ORACLE_DB_CONTAINER_NAME=ORACLE_DB_SERVER
 ```
 
