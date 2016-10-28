@@ -208,7 +208,26 @@ keys = ('name', 'age', 'food')
 values = ('Monty', 42, 'spam')
 dict(zip(keys, values))
 {'food': 'spam', 'age': 42, 'name': 'Monty'}
+
 ```
+#### Get Unique nested keys
+```python
+all_paths = {}
+def get_unique_keys(data, parent_path=''):
+  if isinstance(data, dict):
+    for key, data2 in data.items():
+      get_unique_keys(data2, key if parent_path == '' else parent_path + '.' + key)
+  elif isinstance(data, list):
+    for data2 in data:
+      get_unique_keys(data2, parent_path + '[*]')
+  else:
+    all_paths[parent_path] = all_paths.get(parent_path,0) + 1
+
+get_unique_keys(data_dict)
+for path in sorted(all_paths):
+  print('{} --> {}'.format(path, all_paths[path]))
+```
+
 
 ### Array
 
