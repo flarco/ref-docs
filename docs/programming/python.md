@@ -1051,6 +1051,9 @@ df.to_sql("fhrs", engine)
 
 ### Install MySQL Connector
 
+**GO HERE:**
+<https://dev.mysql.com/downloads/connector/python/>
+
 **For Ubuntu**
 
 Starting with a vanilla Lucid install \[1\], install pip and upgrade to the latest version:
