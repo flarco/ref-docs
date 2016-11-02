@@ -15,6 +15,7 @@ pages:
   - 'Java': 'programming/java.md'
   - 'Ruby': 'programming/ruby.md'
   - 'NodeJS': 'programming/nodejs.md'
+  - 'GoLang': 'programming/go.md'
 - Database:
   - 'PostgreSQL': 'database/postgres.md'
   - 'MySQL': 'database/mysql.md'
@@ -29,4 +30,5 @@ pages:
   - 'Amazon' : 'cloud/amazon.md'
   - 'Linux' : 'cloud/linux.md'
   - 'Git' : 'cloud/git.md'
+  - 'NGINX' : 'cloud/nginx.md'
 - Other: 'other.md'
