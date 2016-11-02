@@ -71,6 +71,8 @@ docker export --output="latest.tar" red_panda
 ### Import Container from TAR File
 <https://docs.docker.com/engine/reference/commandline/import/>
 ```
+docker import /path/to/exampleimage.tar username/imagename:v1
+
 docker import http://example.com/exampleimage.tgz
 
 cat exampleimage.tgz | docker import - exampleimagelocal:new
