@@ -127,6 +127,11 @@ with open(r'C:\path\file2.yml', 'w') as outfile:
 
 ### JSON
 
+**STDin JSON Tool**
+```
+curl http://localhost:3000/stats | python -m "json.tool"
+```
+
 **Dict to JSON String**
 ```python
 import json
