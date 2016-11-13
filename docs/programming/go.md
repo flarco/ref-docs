@@ -4,8 +4,17 @@ Address: `&i` returns the address
 
 Pointer: `*j` returns the value of the pointer
 
+**Commands**
+```go
+break    default      func    interface    select
+case     defer        go      map          struct
+chan     else         goto    package      switch
+const    fallthrough  if      range        type
+continue for          import  return       var
+```
 
 ## Control Flow
+**Best Reference: <https://github.com/astaxie/build-web-application-with-golang/blob/master/en/02.3.md>**
 ### For Loop
 ```go
 func main() {
@@ -341,6 +350,15 @@ delete(m, "key")
 strings.Fields(s)
 ```
 
+**Convert to bytes**
+```go
+s := "hello" + "man"
+c := []byte(s)  // convert string to []byte type
+c[0] = 'c'
+s2 := string(c)  // convert back to string type
+fmt.Printf("%s\n", s2)
+```
+
 ## Functions
 ```go
 func WordCount(s string) map[string]int {
@@ -567,11 +585,18 @@ func main() {
 - The error type is a built-in interface.
 ```go
 i, err := strconv.Atoi("42")
-if err != nil {
+if !err {
     fmt.Printf("couldn't convert number: %v\n", err)
     return
 }
 fmt.Println("Converted integer:", i)
+```
+
+```go
+err := errors.New("emit macho dwarf: elf header corrupted")
+if err != nil {
+    fmt.Print(err)
+}
 ```
 
 ## Threads / GoRoutines
@@ -874,5 +899,6 @@ func main() {
 See this:
 <https://www.reddit.com/r/golang/comments/1kw7ac/can_someone_convince_me_gopath_is_a_good_idea/>
 
-
-
+```
+export GOBIN=[WorkspacePath]/bin
+```
