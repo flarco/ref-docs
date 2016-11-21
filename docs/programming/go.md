@@ -902,3 +902,7 @@ See this:
 ```
 export GOBIN=[WorkspacePath]/bin
 ```
+
+
+### BeeGo
+**Tutorial:** <https://beego.me/docs/install/bee.md>
