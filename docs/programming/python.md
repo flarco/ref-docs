@@ -833,6 +833,8 @@ N = 6
 ```python
 ascii_string = unicode_string.decode('utf8')
 unicode_string = ascii_string.encode('utf8')
+
+ascii_string = unicode_string.encode('ascii', errors='replace').decode('ascii')
 ```
 
 FOR Loop
@@ -2015,3 +2017,31 @@ Flask with JQuery:
 **JDBC**
 <https://wiki.python.org/jython/DatabaseExamples>
 <http://www.jython.org/jythonbook/en/1.0/DatabasesAndJython.html>
+
+
+
+## Scrapy
+
+**Extract all images**:
+
+```python
+from scrapy.selector import Selector
+from scrapy.http import HtmlResponse
+
+response = HtmlResponse(url='http://example.com', body=html_text, encoding='utf8')
+response.css('img').xpath('@src').extract()
+
+```
+
+**Using CSS**
+```python
+from scrapy.selector import Selector
+from scrapy.http import HtmlResponse
+
+response = HtmlResponse(url='http://example.com', body=html_text, encoding='utf8')
+results = response.css(css_selector_str1)
+item = results[0]
+text = item.css(css_selector_str2 + '::text').extract()
+```
+
+
