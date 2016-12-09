@@ -14,6 +14,18 @@ Proc sql;
 quit;
 ```
 
+## Concatenation
+```
+CAT, CATS, CATT, CATX all perform concatenation, as long as you're on 9.1.3 or later (and CATQ on 9.2 or later); CAT does basic concatenation, CATS concatenates and strips spaces, CATT trims, and CATX concatenates with a delimiter.
+```
+
+```sql
+proc sql;
+create table test as
+select CATS(year, month) as ym from tbl;
+run;
+```
+
 ## Functions
 ### JOIN
 <http://stackoverflow.com/questions/23649874/left-join-in-sas-using-proc-sql>
