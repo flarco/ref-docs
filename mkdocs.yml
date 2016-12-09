@@ -21,6 +21,7 @@ pages:
   - 'MySQL': 'database/mysql.md'
   - 'Oracle': 'database/oracle.md'
   - 'ElasticSearch': 'database/elasticsearch.md'
+  - 'SAS': 'database/sas.md'
 - ETL / BI:
   - 'Informatica': 'etl/informatica.md'
   - 'SSIS': 'etl/ssis.md'
