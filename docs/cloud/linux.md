@@ -12,8 +12,14 @@ pgrep tcpdump && echo "Already running.." || ( /__/pfsense.tcp.sh & )
 watch -n 5 ls -l # loops every 5 seconds
 watch -n 5 insync-headless get_sync_progress
 
-# Alternate solution
+**Alternate solution**
 while true; do ls -l; sleep .5; done
+```
+
+### DU
+To find the largest folders in a path:
+```
+du -m /some/path | sort -nr | head -n 20
 ```
 
 ### ALIAS
