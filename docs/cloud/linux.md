@@ -295,6 +295,9 @@ sudo git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt
 - Edit `/etc/nginx/sites-available/default`
 Add this *server lock*:
 ```
+# make sure the root is changed to correct location
+root /usr/share/nginx/html;
+
 location ~ /.well-known {
     allow all;
 }
