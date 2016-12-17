@@ -308,6 +308,7 @@ sudo service nginx reload
 - Run Lets Encrypt script, replacing `/path/to/root` with correct path:
 ```
 cd /opt/letsencrypt
+./letsencrypt-auto certonly -a webroot --webroot-path=/usr/share/nginx/html -d example.com -d www.example.com
 ./letsencrypt-auto certonly -a webroot --webroot-path=/path/to/root -d example.com -d www.example.com
 ```
 
