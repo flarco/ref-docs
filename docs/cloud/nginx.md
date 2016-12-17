@@ -78,3 +78,40 @@ server {
         proxy_set_header Host $http_host;
     }
 ```
+
+## Proxy pass to localhost server
+```nginx
+server {
+    listen          80;
+    server_name     example.com;
+    rewrite ^/(.*)  https://example.com/$1 permanent;
+}
+
+server {
+    listen          443 ssl;
+    server_name     example.com;
+    access_log      /var/log/nginx/example.com_access.log combined;
+    error_log       /var/log/nginx/example.com_error.log error;
+
+    ssl_certificate         /etc/nginx/ssl/example-unified.crt;
+    ssl_certificate_key     /etc/nginx/ssl/example.key;
+
+    location /static/ {
+        alias /webapps/example/static/;
+    }
+
+    location /media/ {
+        alias /webapps/example/media/;
+    }
+
+    location / {
+        proxy_pass         http://localhost:8000/;
+        proxy_redirect     off;
+
+        proxy_set_header   Host              $http_host;
+        proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+    }
+
+}
+```
