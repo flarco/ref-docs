@@ -320,4 +320,7 @@ cd /opt/letsencrypt
 ./letsencrypt-auto certonly -a webroot --webroot-path=/path/to/root -d example.com -d www.example.com
 ```
 
-
+- Generate Strong Diffie-Hellman Group
+```
+sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+```
