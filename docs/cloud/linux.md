@@ -22,6 +22,17 @@ To find the largest folders in a path:
 du -m /some/path | sort -nr | head -n 20
 ```
 
+### TAR – Archive
+Make one tar from all files in a folder
+```
+tar cvf /tmp/new_file.tar -C /path/to/source/folder .
+```
+
+Untar into folder
+```
+tar xf /path/to/file.tar -C /path/to/target/folder
+```
+
 ### ALIAS
 
 ```
