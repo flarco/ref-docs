@@ -1,6 +1,6 @@
 
 
-### Rate limiting
+## Rate limiting
 from: <https://lincolnloop.com/blog/rate-limiting-nginx/>
 ```
 upstream myapp {
@@ -39,7 +39,7 @@ location /account/login/ {
 }
 ```
 
-FULL CONFIG:
+## FULL CONFIG:
 ```
 upstream myapp {
     server 127.0.0.1:8081;
