@@ -303,6 +303,11 @@ location ~ /.well-known {
 }
 ```
 
+- Crate `acme-challenge` folder:
+```
+mkdir -p /usr/share/nginx/html/.well-known/acme-challenge
+```
+
 - Reload NGINX
 ```
 sudo service nginx reload
