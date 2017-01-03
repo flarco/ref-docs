@@ -1276,6 +1276,21 @@ for r in rows:
 System
 ------
 
+### Progress bar:
+```python
+from tqdm import tqdm
+for i in tqdm(range(10000)):
+```
+
+OR
+
+```python
+status='{}% complete\r'.format(int(i*100/len(list0)))
+sys.stdout.write('\r'+status)
+sys.stdout.flush()
+```
+
+
 ### Concurrent Processing
 
 #### Multiprocessing
