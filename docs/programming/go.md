@@ -599,6 +599,16 @@ if err != nil {
 }
 ```
 
+**Print Line Number**
+```go
+import "log"
+log.SetFlags(log.LstdFlags | log.Lshortfile)
+if err != nil {
+  log.Fatal(err)
+  return
+}
+```
+
 ## Threads / GoRoutines
 - Concurency
 ```go
