@@ -965,3 +965,35 @@ export GOBIN=[WorkspacePath]/bin
 
 **ERRORS**
 <http://stackoverflow.com/questions/335928/ld-cannot-find-an-existing-library>
+
+#### Installation Script [Ubuntu]
+```bash
+# Assuming GO, pkg-config, unzip are properly installed
+# Assuming the Oracle instant client zip file is location in $TMP
+# Folder $PROGS is where programs are stored
+
+export TMP=/tmp  # Temporary folder
+export PROGS=/progs  # where programs are stored
+export PKG_CONFIG_PATH=/progs/pkgconfig # for package confige
+
+mkdir -p $PKG_CONFIG_PATH
+
+cd $TMP
+unzip instantclient-basic-linux*.zip
+unzip instantclient-sdk-linux*.zip
+mv instantclient_11_2 $PROGS
+
+echo "
+prefixdir=$PROGS/instantclient_11_2
+libdir=${prefixdir}
+includedir=${prefixdir}/sdk/include
+
+Name: OCI
+Description: Oracle database driver
+Version: 11.2
+Libs: -L${libdir} -lclntsh
+Cflags: -I${includedir}
+" > $PKG_CONFIG_PATH/oci83.pc
+
+go get github.com/mattn/go-oci8
+```
