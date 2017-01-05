@@ -1,3 +1,4 @@
+# GO
 
 ## Keywords
 Address: `&i` returns the address
@@ -1063,3 +1064,12 @@ func main() {
 # Run!
 go run main.go
 ```
+
+## Databases
+
+### Scanning
+
+### Retreiving
+<http://go-database-sql.org/retrieving.html>
+<http://stackoverflow.com/questions/21986780/is-it-possible-to-retrieve-a-column-value-by-name-using-golang-database-sql>
+<http://stackoverflow.com/questions/14477941/read-select-columns-into-string-in-go>
