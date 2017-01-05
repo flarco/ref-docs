@@ -970,11 +970,14 @@ export GOBIN=[WorkspacePath]/bin
 ```bash
 # Assuming GO, pkg-config, unzip are properly installed
 # Assuming the Oracle instant client zip file is location in $TMP
+# Assuming variables $GOROOT, $GOPATH and $PATH are properly set
 # Folder $PROGS is where programs are stored
 
 export TMP=/tmp  # Temporary folder
 export PROGS=/progs  # where programs are stored
 export PKG_CONFIG_PATH=/progs/pkgconfig # for package confige
+export TNS_ADMIN=$PROGS/instantclient_11_2
+
 
 mkdir -p $PKG_CONFIG_PATH
 
@@ -996,4 +999,6 @@ Cflags: -I${includedir}
 " > $PKG_CONFIG_PATH/oci83.pc
 
 go get github.com/mattn/go-oci8
+
+# Next, ensure tnsnames.ora is location in folder $TNS_ADMIN
 ```
