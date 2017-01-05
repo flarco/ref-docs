@@ -345,6 +345,26 @@ delete(m, "key")
 
 ### Strings
 
+**Concatenation**
+```go
+package main
+
+import (
+    "bytes"
+    "fmt"
+)
+
+func main() {
+    var buffer bytes.Buffer
+
+    for i := 0; i < 1000; i++ {
+        buffer.WriteString("a")
+    }
+
+    fmt.Println(buffer.String())
+}
+```
+
 **Split**
 ```go
 strings.Fields(s)
@@ -825,6 +845,16 @@ func main() {
 ```
 
 ## Other
+
+### Arguments
+```go
+if len(os.Args) > 1 {
+  dsn = os.Args[1]
+  if dsn != "" {
+    return dsn
+  }
+}
+```
 
 ### Printing
 
