@@ -906,3 +906,19 @@ export GOBIN=[WorkspacePath]/bin
 
 ### BeeGo
 **Tutorial:** <https://beego.me/docs/install/bee.md>
+
+
+### Oracle
+
+<https://github.com/mattn/go-oci8>
+
+
+#### Instructions
+<https://github.com/Centny/Centny/blob/master/Articles/How%20build%20github.com:mattn:go-oci8.md>
+<http://apextips.blogspot.com/2015/09/making-connections-to-oracle-database.html>
+
+**PKG_CONFIG_PATH**
+<http://askubuntu.com/questions/210210/pkg-config-path-environment-variable>
+
+**ERRORS**
+<http://stackoverflow.com/questions/335928/ld-cannot-find-an-existing-library>
