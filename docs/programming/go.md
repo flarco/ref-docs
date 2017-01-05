@@ -976,8 +976,6 @@ export GOBIN=[WorkspacePath]/bin
 export TMP=/tmp  # Temporary folder
 export PROGS=/progs  # where programs are stored
 export PKG_CONFIG_PATH=/progs/pkgconfig # for package confige
-export TNS_ADMIN=$PROGS/instantclient_11_2
-
 
 mkdir -p $PKG_CONFIG_PATH
 
@@ -1000,5 +998,68 @@ Cflags: -I${includedir}
 
 go get github.com/mattn/go-oci8
 
-# Next, ensure tnsnames.ora is located in folder $TNS_ADMIN
+
+```
+
+#### Testing
+```bash
+# Ensure tnsnames.ora is located in folder $TNS_ADMIN
+# Assuming variables $GOROOT, $GOPATH and $PATH are properly set
+
+export TNS_ADMIN=$PROGS/instantclient_11_2
+export GO_OCI8_DB1="Username1/password2@DB1_TNS_ENTRY"
+export ORCL_TEST=$GOPATH/src/oracle1
+
+mkdir -p $ORCL_TEST
+cd $ORCL_TEST
+
+# Ajust Connection string ENV variable, and SQL select statement
+cat '
+package main
+
+import (
+	"database/sql"
+	"fmt"
+	"log"
+	"os"
+	"time"
+
+	_ "github.com/mattn/go-oci8"
+)
+
+func main() {
+	os.Setenv("NLS_LANG", "AMERICAN_AMERICA.AL32UTF8")
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+
+	db, err := sql.Open("oci8", os.Getenv("GO_OCI8_DB1"))
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	defer db.Close()
+
+	fmt.Println("Running query...")
+	rows, err := db.Query("select * from TABLE_DIM where ROWNUM <= 500")
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	defer rows.Close()
+
+	t0 := time.Now()
+
+	i := 0
+	for rows.Next() {
+		i++
+	}
+
+	dt := time.Now().Sub(t0)
+	fmt.Printf("%v rows.\n", i)
+	fmt.Printf("The call took %v to run.\n", dt)
+	fmt.Printf("Rate: %v rows/sec.\n", i/int(dt.Seconds()))
+}
+' > main.go
+
+# Run!
+go run main.go
 ```
