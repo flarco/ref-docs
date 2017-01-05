@@ -930,5 +930,8 @@ export GOBIN=[WorkspacePath]/bin
 **PKG_CONFIG_PATH**
 <http://askubuntu.com/questions/210210/pkg-config-path-environment-variable>
 
+**TNS / DNS Connections**
+<http://www.programering.com/a/MTO2EDNwATI.html>
+
 **ERRORS**
 <http://stackoverflow.com/questions/335928/ld-cannot-find-an-existing-library>
