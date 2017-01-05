@@ -1000,5 +1000,5 @@ Cflags: -I${includedir}
 
 go get github.com/mattn/go-oci8
 
-# Next, ensure tnsnames.ora is location in folder $TNS_ADMIN
+# Next, ensure tnsnames.ora is located in folder $TNS_ADMIN
 ```
