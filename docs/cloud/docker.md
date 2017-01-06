@@ -28,6 +28,16 @@ RUN echo "root:my_pass!" | chpasswd && \
 CMD service ssh restart && tail -f /var/log/lastlog
 ```
 
+#### Force Dockerfile step
+```
+RUN dpkg --add-architecture i386 \
+	&& apt-get update && apt-get install -y wget \
+	&& wget "${SKYPE_URL}" -O skype.deb \
+	&& { dpkg -i skype.deb || true; } \ # this is the key entry, forces TRUE in order to continue to next command
+	&& rm skype.deb \
+	&& apt-get update && apt-get install -y -f
+```
+
 ###List Images
 ```
 docker images
