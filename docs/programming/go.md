@@ -969,10 +969,10 @@ export GOBIN=[WorkspacePath]/bin
 
 #### Installation Script [Ubuntu]
 ```bash
-# Assuming GO, pkg-config, unzip are properly installed
-# Assuming the Oracle instant client zip file is location in $TMP
-# Assuming variables $GOROOT, $GOPATH and $PATH are properly set
-# Folder $PROGS is where programs are stored
+  # Assuming GO, pkg-config, unzip are properly installed
+  # Assuming the Oracle instant client zip file is location in $TMP
+  # Assuming variables $GOROOT, $GOPATH and $PATH are properly set
+  # Folder $PROGS is where programs are stored
 
 export TMP=/tmp  # Temporary folder
 export PROGS=/progs  # where programs are stored
@@ -1004,8 +1004,8 @@ go get github.com/mattn/go-oci8
 
 #### Testing
 ```bash
-# Ensure tnsnames.ora is located in folder $TNS_ADMIN
-# Assuming variables $GOROOT, $GOPATH and $PATH are properly set
+  # Ensure tnsnames.ora is located in folder $TNS_ADMIN
+  # Assuming variables $GOROOT, $GOPATH and $PATH are properly set
 
 export TNS_ADMIN=$PROGS/instantclient_11_2
 export GO_OCI8_DB1="Username1/password2@DB1_TNS_ENTRY"
@@ -1014,7 +1014,7 @@ export ORCL_TEST=$GOPATH/src/oracle1
 mkdir -p $ORCL_TEST
 cd $ORCL_TEST
 
-# Ajust Connection string ENV variable, and SQL select statement
+  # Ajust Connection string ENV variable, and SQL select statement
 cat '
 package main
 
@@ -1061,7 +1061,7 @@ func main() {
 }
 ' > main.go
 
-# Run!
+  # Run!
 go run main.go
 ```
 
