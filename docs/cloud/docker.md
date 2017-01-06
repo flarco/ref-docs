@@ -1,13 +1,13 @@
 
 
-##Installation
+## Installation
 ```
 curl -sSL https://get.docker.com/ | sh
 ```
 
-##Images
+## Images
 
-###Build Image
+### Build Image
 Go to folder with DockerFile
 ```
 docker build -t username/wma_app:v1 .
@@ -17,14 +17,14 @@ docker build --no-cache -t username/wma_app:v1 .
 docker build -f /path/to/a/Dockerfile2 -t username/wma_app:v1 .
 ```
 
-####Add SSH Service
+#### Add SSH Service
 ```
 RUN echo "root:my_pass!" | chpasswd && \
   awk '!/PermitRootLogin/' /etc/ssh/sshd_config > temp && \
   mv temp /etc/ssh/sshd_config && \
   echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
 
-#run `bash` last to keep the container from exiting
+ # run `bash` last to keep the container from exiting
 CMD service ssh restart && tail -f /var/log/lastlog
 ```
 
@@ -38,25 +38,25 @@ RUN dpkg --add-architecture i386 \
 	&& apt-get update && apt-get install -y -f
 ```
 
-###List Images
+### List Images
 ```
 docker images
 ```
 
-###Delete Image
+### Delete Image
 ```
 docker rmi e6b97f89ea4b
 # By name
 docker rmi $(docker images | grep username | awk "{print \$3}")
 ```
-##Containers
+## Containers
 
-###List Containers
+### List Containers
 ```
 docker ps -a
 ```
 
-###Delete Container
+### Delete Container
 ```
 docker rm e6b97f89ea4b
  # Delete by image name
@@ -92,7 +92,7 @@ cat exampleimage.tgz | docker import --message "New image imported from tarball"
 docker import /path/to/exampleimage.tgz
 ```
 
-###Run Image in background
+### Run Image in background
 ```
 docker run --privileged -dti -p 8084:8084 username/wma_app:v1
  # OR
@@ -100,18 +100,18 @@ screen
 docker run -p 80:80 username/wma_app:v1
 ```
 
-###Enter running container
+### Enter running container
 ```
 docker exec -ti ID_of_foo bash
 ```
 
-###See logs of running container
+### See logs of running container
 ```
 docker logs help
 ```
 
 
-##Cheat Sheet
+## Cheat Sheet
 
 
 ```
@@ -127,26 +127,26 @@ docker ps -a
 docker rm 446aacef846d # remove old container
 ```
 
-##Volumes
+## Volumes
 ```
 docker run -d -P --name web -v /src/webapp:/opt/webapp training/webapp python app.py
 ```
 
-###Copying files into Docker
+### Copying files into Docker
 ```
 docker cp SCHEMA_TABLES.dmp.gz 2a4499be5120:/u01/app/oracle/admin/XE/dpdump
 ```
 
-###Kill Containers and Remove them
+### Kill Containers and Remove them
 ```
 docker rm $(docker kill $(docker ps -aq))
 ```
 
-###Delete all docker containers
+### Delete all docker containers
 ```
 docker rm $(docker ps -a -q)
 ```
-###Delete all docker images
+### Delete all docker images
 ```
 docker rmi $(docker images -q)
 ```
@@ -161,5 +161,5 @@ docker stats `docker ps | awk '{print $NF}' | grep -v NAMES`
 ### Main Reference
 <https://docs.docker.com/compose/overview/>
 
-###Extanding / Inheritance
+### Extending / Inheritance
 <https://blog.docker.com/2015/04/easily-configure-apps-for-multiple-environments-with-compose-1-2-and-much-more/>
