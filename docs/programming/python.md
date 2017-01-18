@@ -179,6 +179,11 @@ get_unique_keys(data_dict)
 for path in sorted(all_paths):
   print('{} --> {}'.format(path, all_paths[path]))
 ```
+### Counter
+**Get unique values and occurence**
+```python
+for combo, field_count in Counter([row.combo1 for row in data_columns]).items()
+```
 
 ### Dictionary
 ```python
