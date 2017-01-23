@@ -240,6 +240,18 @@ dict(zip(keys, values))
 
 ```
 
+### Pandas
+
+- Dataframe: :http://pandas.pydata.org/pandas-docs/stable/api.html#dataframe>
+  - Serialization / IO / Conversion: <http://pandas.pydata.org/pandas-docs/stable/api.html#id12>
+  
+- Iterate over dataFrame:
+  - df.itertuples() - namedtuples
+  - df.iterrows() - dicts
+- CSV Interaction:
+  - df.to_csv(fileName): <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_csv.html>
+  - pandas.read_csv(fileName): <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html>
+
 
 
 ### Array
