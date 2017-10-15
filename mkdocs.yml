@@ -12,6 +12,7 @@ pages:
 - Home: 'index.md'
 - Programming:
   - 'Python': 'programming/python.md'
+  - 'Python | Links': 'programming/python-links.md'
   - 'Java': 'programming/java.md'
   - 'Ruby': 'programming/ruby.md'
   - 'NodeJS': 'programming/nodejs.md'
