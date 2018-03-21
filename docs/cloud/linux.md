@@ -7,6 +7,9 @@ To Find out if a process is already running
 pgrep tcpdump && echo "Already running.." || ( /__/pfsense.tcp.sh & )
 ```
 
+### PS1
+`export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ "`
+
 ### WATCH
 ```
 watch -n 5 ls -l # loops every 5 seconds
