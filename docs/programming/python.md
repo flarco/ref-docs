@@ -1,5 +1,9 @@
-Classes
--------
+# Python
+
+---
+
+# Classes
+
 ```python
 class c1:
    # class attrbitues are defaults for object attributes
@@ -625,7 +629,7 @@ for path_ in sorted(paths.items(), key=lambda x: x[1], reverse=True):
         path = path_[0]
         print path + ' [' + str(paths[path])
 ```
-##Collections
+## Collections
 
 https://docs.python.org/3/library/collections.html
 
@@ -642,7 +646,7 @@ https://docs.python.org/3/library/collections.html
 | UserString   | wrapper around string objects for easier string subclassing          | 
 
 
-##Date
+## Date
 
 
 ### SQL Datetime

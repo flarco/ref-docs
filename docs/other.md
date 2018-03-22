@@ -1,7 +1,9 @@
-##Word to Markdown
+# Other
+
+---
+
+## Word to Markdown
 <https://github.com/benbalter/word-to-markdown>
-
-
 
 ## Outlook Unified Inbox
 <https://www.reddit.com/r/Windows10/comments/3h6pja/unified_inbox_in_outlook_2016_anyone_have_a/>
@@ -30,14 +32,12 @@ Set myOlApp = Nothing
 End Sub
 ```
 
-
 ## Kibana
 
 ### Discover
 <https://www.timroes.de/2015/02/07/kibana-4-tutorial-part-2-discover/>
 
 ![image](https://cloud.githubusercontent.com/assets/7671010/17279497/063269ea-5743-11e6-8b21-239a1903123e.png)
-
 
 ## YAML
 <http://stackoverflow.com/questions/3790454/in-yaml-how-do-i-break-a-string-over-multiple-lines>

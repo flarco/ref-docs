@@ -1,9 +1,8 @@
-
 GIT
-===
 
-Initiation
-----------
+---
+
+# Initiation
 
 **Go to Working Directory**
 ```

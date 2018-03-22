@@ -1,5 +1,7 @@
 # GO
 
+---
+
 ## Keywords
 Address: `&i` returns the address
 
