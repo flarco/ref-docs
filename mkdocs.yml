@@ -11,11 +11,12 @@ markdown_extensions:
 pages:
 - Home: 'index.md'
 - Programming:
+  - 'Android': 'programming/android.md'
   - 'Python': 'programming/python.md'
   - 'Python Extra':
     - 'Python | Links': 'programming/python-links.md'
-    - 'Python | Database': 'programming/python-links.md'
-    - 'Python | Jupyter': 'programming/python-links.md'
+    - 'Python | Database': 'programming/python-database.md'
+    - 'Python | Jupyter': 'programming/python-jupyter.md'
   - 'Java': 'programming/java.md'
   - 'Ruby': 'programming/ruby.md'
   - 'NodeJS': 'programming/nodejs.md'
