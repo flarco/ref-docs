@@ -2,30 +2,30 @@
 
 ---
 
-# Classes
+## Classes
 
 ```python
 class c1:
    # class attrbitues are defaults for object attributes
   att1 = 'Nada'
   att3 = 'Beauty'
-  
+
   def __init__(self):
     c1.att2 = 22  # class attribute
     self.att2 = 22  # object attribute overwriten
-    
+
   def m1(self):
     c1.att1 = "hey"  # class attribute
     print self.att1  # object attrbute
     self.att1 = 'heyhey!'
-    
+
   @classmethod
   def cm2(klass, str0):
     print str0
     print klass.att1
     print c1.att3
     print c1==klass
-    
+
   @staticmethod
   def sm3(str0):
     print str0
@@ -47,6 +47,33 @@ Can be used/ran without instantiating the class into an object. Class methods do
 ```python
 # running class method, without object, and having access to class attributes
 c1.cm2('heelo')
+```
+
+### Licenses
+```python
+import pkg_resources
+import prettytable
+
+def get_pkg_license(pkg):
+    try:
+        lines = pkg.get_metadata_lines('METADATA')
+    except:
+        lines = pkg.get_metadata_lines('PKG-INFO')
+
+    for line in lines:
+        if line.startswith('License:'):
+            return line[9:]
+    return '(Licence not found)'
+
+def print_packages_and_licenses():
+    t = prettytable.PrettyTable(['Package', 'License'])
+    for pkg in sorted(pkg_resources.working_set, key=lambda x: str(x).lower()):
+        t.add_row((str(pkg), get_pkg_license(pkg)))
+    print(t)
+
+
+if __name__ == "__main__":
+    print_packages_and_licenses()
 ```
 
 
@@ -83,6 +110,8 @@ File.write(unicode\_str.encode('ascii', 'ignore'))
 **Decimal print:**
 ```python
 print('{:,.2f}'.format(s\['DL\_Sum'\] ))
+
+print('${:,.2f}'.format(salary) ## currency
 ```
 
 **Comma / Thousands Separator**
@@ -111,6 +140,20 @@ obj_sql2 = re.sub(r",[\n ]+(?i)" + combo_name + r"[ \r*\n]+",  combo_name , stri
 ```python
 r"(?<=Pay: )[- \w$\d]+"
 r"(?<=Rate )[ \w$]+?(?= Job Type)"
+```
+
+**Replace non-numeric**
+```python
+result = re.sub('[^0-9]','', 'af7878787ad')
+```
+
+**Constains one char math**
+```python
+import re
+word = 'fubar'
+regexp = re.compile(r'[rzd]') # matches r, z or d
+if regexp.search(word):
+  print 'matched'
 ```
 
 ### YAML
@@ -183,6 +226,7 @@ get_unique_keys(data_dict)
 for path in sorted(all_paths):
   print('{} --> {}'.format(path, all_paths[path]))
 ```
+
 ### Counter
 **Get unique values and occurence**
 ```python
@@ -190,6 +234,7 @@ for combo, field_count in Counter([row.combo1 for row in data_columns]).items()
 ```
 
 ### Dictionary
+
 ```python
 Headers = {}
 headers = {
@@ -210,8 +255,7 @@ del dict[key]
 **Sorted by key:**
 
 ```python
-for key in sorted(pumps_def):
-	print pumps_def[key]
+top_repo = sorted(all_repos, key=lambda x: x['stargazers_count'], reverse=True)[0]
 ```
 
 **Sorted by Value:**
@@ -241,6 +285,162 @@ keys = ('name', 'age', 'food')
 values = ('Monty', 42, 'spam')
 dict(zip(keys, values))
 {'food': 'spam', 'age': 42, 'name': 'Monty'}
+
+```
+
+#### JMESpath Search
+```python
+In [218]: d = dict(a=dict(b=[1,2]), c=[dict(d=3), dict(d=3)])
+
+In [219]: d
+Out[219]: {'a': {'b': [1, 2]}, 'c': [{'d': 3}, {'d': 3}]}
+
+In [220]:  jmespath.search('PolicyTransactionMessage.PolicyTransaction.Details', d)
+
+In [221]:  jmespath.search('a', d)
+Out[221]: {'b': [1, 2]}
+
+In [222]:  jmespath.search('a.b', d)
+Out[222]: [1, 2]
+
+In [223]:  jmespath.search('a', d)
+Out[223]: {'b': [1, 2]}
+
+In [224]:  jmespath.search('c', d)
+Out[224]: [{'d': 3}, {'d': 3}]
+
+In [225]:  jmespath.search('c[0]', d)
+Out[225]: {'d': 3}
+
+In [226]:  jmespath.search('c[*]', d)
+Out[226]: [{'d': 3}, {'d': 3}]
+
+In [227]:  jmespath.search('a.*', d)
+Out[227]: [[1, 2]]
+
+```
+
+```python
+class DictTree:
+  def __init__(self, data, header_only=False, name_processor=None):
+    self.data = data
+    self.name_processor = name_processor
+    self.get_keys_path(header_only=header_only)
+    self.TRow = namedtuple('TRow', 'title action field_name field_type depth_level field_path is_null is_list len')
+
+  def get_keys_path(self, header_only=False):
+    "Traverses nested dictionary and returns depth level and corresponding JMESPath search string"
+    # http://jmespath.org/specification.html#examples
+    # https://github.com/jmespath/jmespath.py
+    from pyspark.sql import Row
+    fields_parent = OrderedDict()
+    DP = namedtuple('DictPath', 'level key path vtype field_name')
+    name_processor = self.name_processor if self.name_processor else None
+
+    def get_data_type(val):
+      if isinstance(val, dict): return 'dict'
+      if isinstance(val, list): return 'list'
+      try: float(val) ; return 'number'
+      except:
+        try: dateutil.parser.parse(val) ; return 'datetime'
+        except: return 'string'
+    
+    def get_field_name(key, parent):
+      prefix = ''
+      parent = parent.replace('"', '')
+
+      if (parent.endswith('[*]') and len(parent.split('.')) > 1) or \
+          (parent.endswith('[*]') and not parent.startswith('[*]')):
+        prefix = parent.replace('[*]', '').split('.')[-1] + '_'
+      
+      if name_processor:
+        prefix = name_processor(prefix)
+        key = name_processor(key)
+      
+      f_name_new = f_name = prefix + key
+      i = 0
+      while f_name_new in fields_parent and fields_parent[f_name_new] != parent:
+        i+=1
+        f_name_new = f_name + str(i)
+      fields_parent[f_name_new] = parent
+      return f_name_new
+        
+    q = lambda s: '"' + s + '"'
+    def get_paths(d1, level=1, parent=''):
+      kks = set()
+
+      if isinstance(d1, dict):
+        if "Header" in d1:
+          keys = ["Header"] + [k for k in d1 if k != "Header"]
+        else:
+          keys = list(d1)
+        for key in keys:
+          if key.startswith('@'): continue
+          vt = get_data_type(d1[key])
+          field_name = get_field_name(key, parent) if vt not in ('dict', 'list') else None
+          path = '{}{}'.format(parent + '.' if parent else '', q(key))
+          kks.add(DP(level, key, path, vt, field_name))
+          kks = kks.union(get_paths(d1[key], level=level+1, parent=path))
+          if header_only and key == "Header": return kks
+      elif isinstance(d1, list):
+        key = '[*]'
+        path = '{}{}'.format(parent if parent else '', key)
+        if level==1:
+          kks.add(DP(level, key, path, vt, None))
+        for item in d1:
+          kks = kks.union(get_paths(item, level=level+1, parent=path))
+
+      return kks
+    
+    self.paths = sorted(get_paths(self.data))
+    self.v_paths = [r for r in self.paths if r.vtype not in ('dict', 'list')]
+    self.v_lists = [r for r in self.paths if r.vtype in ('list')]
+    self.fields = [r.field_name for r in self.paths if r.vtype not in ('dict', 'list')]
+    self.fields_dict = {r.field_name: r for r in self.paths if r.vtype not in ('dict', 'list')}
+    self.Rec = Row(*self.fields)
+
+    try:
+      self.title = list(self.data)[0]
+      self.action = self.get_value('Action', conv_date=False)
+    except:
+      pass
+
+    return self.paths
+
+  def search(self, path):
+    from jmespath import search
+    return search(path, self.data)
+  
+  def get_value(self, field, conv_date=True):
+    val = self.search(self.fields_dict[field].path)
+    if conv_date and self.fields_dict[field].vtype == 'date':
+      try: val = dateutil.parser.parse(val)
+      except: pass
+    return val
+  
+  def get_field_table(self):
+    "Create fields table"
+    t_rows = []
+    for field in self.fields:
+      val = self.get_value(field)
+      rec = dict(
+        title=self.title,
+        action=self.action,
+        field_name=field,
+        field_type=self.fields_dict[field].vtype,
+        depth_level=self.fields_dict[field].level,
+        field_path=self.fields_dict[field].path,
+        is_null=0 if str(val).strip() else 1,
+        is_list=1 if isinstance(val, list) else 0,
+        len=len(str(val)),
+      )
+      
+      t_rows.append(self.TRow(**rec))
+    return t_rows
+  
+  def get_record(self):
+    "Returns one record, omitting lists N:N relationships"
+    return self.Rec(*[self.get_value(f) for f in self.fields])
 
 ```
 
@@ -645,6 +845,20 @@ https://docs.python.org/3/library/collections.html
 | UserList     | wrapper around list objects for easier list subclassing              | 
 | UserString   | wrapper around string objects for easier string subclassing          | 
 
+## Path
+```python
+from pathlib import Path
+
+dataset = 'wiki_images'
+datasets_root = Path('/path/to/datasets/')
+
+train_path = datasets_root / dataset / 'train'
+test_path = datasets_root / dataset / 'test'
+
+for image_path in train_path.iterdir():
+    with image_path.open() as f: # note, open is a method of Path object
+        # do something with an image
+```
 
 ## Date
 
@@ -657,7 +871,6 @@ sql_date = time.strftime('%Y-%m-%d %H:%M:%S')
 start_time = time.time()
 end_time = time.time()
 delta_time = end_time - start_time
-
 ```
 
 ### Operations
@@ -1564,6 +1777,12 @@ call(["ls", "-l"])
 
 ```
 
+### Simple to get output
+```
+import subprocess
+out = subprocess.getoutput(lcmd)
+```
+
 #### To get All output
 
 This **BLOCKS/WAITS** until process is done.
@@ -1651,6 +1870,15 @@ opener = urllib2.build_opener(proxy)
 urllib2.install_opener(opener)
 urllib2.urlopen('http://www.google.com')
 
+```
+
+### NLTM Windows Auth
+```python
+import requests
+from requests.auth import HTTPBasicAuth
+from requests_ntlm import HttpNtlmAuth
+
+requests.get(sharepoint_url, auth=HttpNtlmAuth('domain\\user','password'))
 ```
 
 ### Selenium
@@ -2080,4 +2308,316 @@ item = results[0]
 text = item.css(css_selector_str2 + '::text').extract()
 ```
 
+
+
+# SSH
+```python=
+
+class Server(object):
+  def __init__(self, name, ip, username, password=None, key_path=None):
+    self.port = 22
+    if ":" in ip:
+        self.port = int(ip.split(":")[-1])
+        ip = ip.split(":")[0]
+    
+    import paramiko
+    self.name = name
+    self.ip = ip
+    self.username = username
+    self.password = password
+    self.temp_path = "/temp"
+    self.cores = 0
+    self.jobs_running = 0
+    self.connect_tries = 0
+    self.connected = False
+    self.core_id_status = {}
+    self.core_id_queue = {}
+    self.core_id_lock = {}
+
+    self.key = paramiko.RSAKey.from_private_key_file(key_path) if key_path else None
+    
+    self.ssh_client = paramiko.SSHClient()
+    self.ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    self.status = Status(text='', spinner='dots')
+      
+  
+  def ssh_connect(self):
+    self.connect_tries += 1
+        
+    try:
+      with Status(text='Connecting to ' + self.ip, spinner='dots'):
+        self.ssh_client.connect(self.ip, self.port, self.username, self.password, timeout=4, pkey=self.key)
+        self.sftp = self.ssh_client.open_sftp()
+      self.connected = True
+      log("Successful Connection to " + self.name + " (%s)" % self.ip)
+      return self.connected
+      
+      #self.channel = self.ssh_client.get_transport().open_session()
+      
+      # Get CPU cores
+      stdin, stdout, stderr = self.ssh_client.exec_command('cat /proc/cpuinfo')
+      output = []
+      for line in stdout.readlines(): output.append(line.replace('\n',''))
+      
+      for line in output:
+        line_arr = line.split()
+        try:
+          if line_arr[0] == 'processor':
+            self.cores = self.cores + 1
+            self.core_id_status[self.cores] = 'free'
+            self.core_id_queue[self.cores] = 'no'
+            self.core_id_lock[self.cores] = threading.RLock()
+        except:
+            pass
+    except:
+      error_message = "Failed to connect to " + self.name + " (%s)" % self.ip + " -> " + get_exception_message()
+      log(error_message, color='red')
+      return self.connected
+  
+  def ssh_command(self, command, wait_for_output = True):
+    if(not self.connected): self.ssh_connect()
+    
+    try:
+      stdin, stdout, stderr = self.ssh_client.exec_command(command)
+    except socket.error as e:
+      # not connected?
+      self.connected = False
+      self.ssh_connect()
+      stdin, stdout, stderr = self.ssh_client.exec_command(command)
+        
+    self.last_output = ''
+    self.last_output_lines = 0
+    
+    if(wait_for_output):
+      self.ssh_chan_status = stdout.channel.recv_exit_status()
+      for line in stdout.readlines():
+        self.last_output = self.last_output + line
+        self.last_output_lines += 1
+        
+    return self.last_output
+  
+  def sftp_copy_from(self, remote_filepath, local_filepath):
+    if(not self.test_connection): self.ssh_connect()
+    # copy file from remote server object to local path
+    log("Downloading from '" + remote_filepath + "' to '" + local_filepath + "'")
+    try:
+      self.status.start()
+      self.last_stat = None
+      self.sftp.get(remote_filepath, local_filepath, callback=self.transfer_progress)
+      self.status.stop()
+    except:
+      error_message = get_exception_message() + '\nremote_filepath: ' + self.name + ':' + remote_filepath + '\nlocal_filepath: ' + local_filepath
+      log(error_message, color='red')
+  
+  def sftp_copy_to(self, local_filepath, remote_filepath):
+    if(not self.test_connection): self.ssh_connect()
+    # copy file from local path to remote server object
+    log("Uploading from '" + local_filepath + "' to '" + remote_filepath  + "'")
+    try:
+      self.status.start()
+      self.last_stat = None
+      self.sftp.put(local_filepath, remote_filepath, callback=self.transfer_progress)
+      self.status.stop()
+    except:
+      error_message = get_exception_message() + '\nremote_filepath: ' + self.name + ':' + remote_filepath + '\nlocal_filepath: ' + local_filepath
+      log(error_message, color='red')
+  
+  def transfer_progress(self, transferred, total, unit='B'):
+    "Display transfer progress"
+    prct = int(100.0 * transferred / total)
+    divide = lambda x, y: round(1.0 * x / (y), 1)
+    
+    if self.last_stat:
+      secs = (datetime.datetime.now() - self.last_stat['time']).total_seconds()
+      if secs > 2:
+        rate = round((transferred - self.last_stat['transferred']) / secs, 1)
+        self.last_stat = dict(time=now(), transferred=transferred, rate=rate)
+      else:
+        rate = self.last_stat['rate']
+    else:
+      rate = 0
+      self.last_stat = dict(time=now(), transferred=transferred, rate=rate)
+    
+    if total > 1024 ** 3:
+      transferred = divide(transferred, 1024 ** 3)
+      total = divide(total, 1024 ** 3)
+      unit='GB'
+      rate = '{} {} / sec'.format(divide(rate, 1024 ** 2), 'MB')
+    elif total > 1024 ** 2:
+      transferred = divide(transferred, 1024 ** 2)
+      total = divide(total, 1024 ** 2)
+      unit='MB'
+      rate = '{} {} / sec'.format(divide(rate, 1024 ** 2), unit)
+    elif total > 1024 ** 1:
+      transferred = divide(transferred, 1024 ** 1)
+      total = divide(total, 1024 ** 1)
+      unit='KB'
+      rate = '{} {} / sec'.format(divide(rate, 1024 ** 1), unit)
+    self.status.text = '{}% Complete: {} / {} {} @ {}'.format(prct, transferred, total, unit, rate)
+
+  def test_connection(self):
+    stdout = self.ssh_client.exec_command('ls')
+    return self.connected
+
+
+  def __init__(self, name, ip, username, password):
+    self.port = 22
+    if ":" in ip:
+        self.port = int(ip.split(":")[-1])
+        ip = ip.split(":")[0]
+    
+    import paramiko
+    self.name = name
+    self.ip = ip
+    self.username = username
+    self.password = password
+    self.temp_path = "/temp"
+    self.cores = 0
+    self.jobs_running = 0
+    self.connect_tries = 0
+    self.connected = False
+    self.core_id_status = {}
+    self.core_id_queue = {}
+    self.core_id_lock = {}
+    
+    self.ssh_client = paramiko.SSHClient()
+    self.ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    self.status = Status(text='', spinner='dots')
+      
+  
+  def ssh_connect(self):
+    self.connect_tries += 1
+        
+    try:
+      with Status(text='Connecting to ' + self.ip, spinner='dots'):
+        self.ssh_client.connect(self.ip, self.port, self.username, self.password, timeout=4)
+        self.sftp = self.ssh_client.open_sftp()
+      self.connected = True
+      log("Successful Connection to " + self.name + " (%s)" % self.ip)
+      return self.connected
+      
+      #self.channel = self.ssh_client.get_transport().open_session()
+      
+      # Get CPU cores
+      stdin, stdout, stderr = self.ssh_client.exec_command('cat /proc/cpuinfo')
+      output = []
+      for line in stdout.readlines(): output.append(line.replace('\n',''))
+      
+      for line in output:
+        line_arr = line.split()
+        try:
+          if line_arr[0] == 'processor':
+            self.cores = self.cores + 1
+            self.core_id_status[self.cores] = 'free'
+            self.core_id_queue[self.cores] = 'no'
+            self.core_id_lock[self.cores] = threading.RLock()
+        except:
+            pass
+    except:
+      error_message = "Failed to connect to " + self.name + " (%s)" % self.ip + " -> " + get_exception_message()
+      log(error_message, color='red')
+      return self.connected
+  
+  def ssh_command(self, command, wait_for_output = True):
+    if(not self.connected): self.ssh_connect()
+    
+    try:
+      stdin, stdout, stderr = self.ssh_client.exec_command(command)
+    except socket.error as e:
+      # not connected?
+      self.connected = False
+      self.ssh_connect()
+      stdin, stdout, stderr = self.ssh_client.exec_command(command)
+        
+    self.last_output = ''
+    self.last_output_lines = 0
+    
+    if(wait_for_output):
+      self.ssh_chan_status = stdout.channel.recv_exit_status()
+      for line in stdout.readlines():
+        self.last_output = self.last_output + line
+        self.last_output_lines += 1
+        
+    return self.last_output
+  
+  def sftp_copy_from(self, remote_filepath, local_filepath):
+    if(not self.test_connection): self.ssh_connect()
+    # copy file from remote server object to local path
+    log("Downloading from '" + remote_filepath + "' to '" + local_filepath + "'")
+    try:
+      self.status.start()
+      self.last_stat = None
+      self.sftp.get(remote_filepath, local_filepath, callback=self.transfer_progress)
+      self.status.stop()
+    except:
+      error_message = get_exception_message() + '\nremote_filepath: ' + self.name + ':' + remote_filepath + '\nlocal_filepath: ' + local_filepath
+      log(error_message, color='red')
+  
+  def sftp_copy_to(self, local_filepath, remote_filepath):
+    if(not self.test_connection): self.ssh_connect()
+    # copy file from local path to remote server object
+    log("Uploading from '" + local_filepath + "' to '" + remote_filepath  + "'")
+    try:
+      self.status.start()
+      self.last_stat = None
+      self.sftp.put(local_filepath, remote_filepath, callback=self.transfer_progress)
+      self.status.stop()
+    except:
+      error_message = get_exception_message() + '\nremote_filepath: ' + self.name + ':' + remote_filepath + '\nlocal_filepath: ' + local_filepath
+      log(error_message, color='red')
+  
+  def transfer_progress(self, transferred, total, unit='B'):
+    "Display transfer progress"
+    prct = int(100.0 * transferred / total)
+    divide = lambda x, y: round(1.0 * x / (y), 1)
+    
+    if self.last_stat:
+      secs = (datetime.datetime.now() - self.last_stat['time']).total_seconds()
+      if secs > 2:
+        rate = round((transferred - self.last_stat['transferred']) / secs, 1)
+        self.last_stat = dict(time=now(), transferred=transferred, rate=rate)
+      else:
+        rate = self.last_stat['rate']
+    else:
+      rate = 0
+      self.last_stat = dict(time=now(), transferred=transferred, rate=rate)
+    
+    if total > 1024 ** 3:
+      transferred = divide(transferred, 1024 ** 3)
+      total = divide(total, 1024 ** 3)
+      unit='GB'
+      rate = '{} {} / sec'.format(divide(rate, 1024 ** 2), 'MB')
+    elif total > 1024 ** 2:
+      transferred = divide(transferred, 1024 ** 2)
+      total = divide(total, 1024 ** 2)
+      unit='MB'
+      rate = '{} {} / sec'.format(divide(rate, 1024 ** 2), unit)
+    elif total > 1024 ** 1:
+      transferred = divide(transferred, 1024 ** 1)
+      total = divide(total, 1024 ** 1)
+      unit='KB'
+      rate = '{} {} / sec'.format(divide(rate, 1024 ** 1), unit)
+    self.status.text = '{}% Complete: {} / {} {} @ {}'.format(prct, transferred, total, unit, rate)
+
+  def test_connection(self):
+    stdout = self.ssh_client.exec_command('ls')
+    return self.connected
+```
+
+
+# Pip
+
+**Installing with custom RPM library**
+```bash
+# Download RPM located at http://rpmfind.net/linux/rpm2html/search.php?query=ncurses-static
+cd /data/user/fl88589/tmp
+wget http://rpmfind.net/linux/centos/6.9/os/x86_64/Packages/ncurses-static-5.7-4.20090207.el6.x86_64.rpm
+
+# Install rpm without root
+cd /data/user/fl88589/ps/ncurses-static
+rpm2cpio /data/user/fl88589/tmp/ncurses-static-5.7-4.20090207.el6.x86_64.rpm | cpio -idv
+
+# pip install
+tpip3 install --global-option=build_ext --global-option="-L/data/user/fl88589/ps/ncurses-static/usr/lib64" readline
+```
 

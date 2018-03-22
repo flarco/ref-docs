@@ -28,6 +28,7 @@ pages:
   - 'ElasticSearch': 'database/elasticsearch.md'
   - 'InfluxDB': 'database/influxdb.md'
   - 'SAS': 'database/sas.md'
+  - 'Spark': 'database/spark.md'
 - ETL / BI:
   - 'Informatica': 'etl/informatica.md'
   - 'SSIS': 'etl/ssis.md'
