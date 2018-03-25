@@ -632,6 +632,9 @@ if err != nil {
 }
 ```
 
+**Better Error handling**
+[https://github.com/palantir/stacktrace](https://github.com/palantir/stacktrace)
+
 ## Threads / GoRoutines
 - Concurency
 ```go
