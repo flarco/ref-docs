@@ -244,6 +244,23 @@ curl -XPUT localhost:9200/_template/tcpdump -d '
 '
 ```
 
+
+## RPM (CentOs)
+
+Installing RPM as non-root user
+
+https://superuser.com/questions/209808/how-can-i-install-an-rpm-without-being-root
+
+https://www.cyberciti.biz/tips/how-to-extract-an-rpm-package-without-installing-it.html
+
+
+## MAKEFile
+
+```bash
+./configure --prefix=/private/folder
+make -j4  # 4 is number of threads
+```
+
 ## Syncthing
 
 http://www.syncthing.net
