@@ -188,6 +188,49 @@ func main() {
 }
 ```
 
+#### JSON
+```go
+// Rider : A passenger or a Rider
+type Rider struct {
+	riderID        uint      `gorm:"primary_key"`
+	Name           string    `json:"name"`
+	Phone          string    `json:"phone"`
+	DeviceID       string    `json:"device_id"`
+	Email          string    `json:"email"`
+	NotifToken     string    `json:"notif_token"`
+	RegistrationDt int64     `json:"registration_dt"`
+	CreatedAt      time.Time `json:"created_at"`
+	UpdatedAt      time.Time `json:"updated_at"`
+}
+
+rider := &Rider{
+	Name:           "",
+	Phone:          phone,
+	DeviceID:       deviceID,
+	Email:          "",
+	NotifToken:     "",
+	RegistrationDt: timestamp,
+	CreatedAt:      timeNow,
+	UpdatedAt:      timeNow,
+}
+
+data := structs.Map(rider)
+data2, err := json.MarshalIndent(data, "", "  ")
+if err != nil {
+	log.Fatal(stacktrace.Propagate(err, "Firebase failure: could not update user record for "+phone))
+}
+
+fmt.Print(string(data2))
+var rider2 Rider
+err = json.Unmarshal(data2, &rider2)
+if err != nil {
+	log.Fatal(stacktrace.Propagate(err, "Could not Unmarshal"))
+}
+
+println(strconv.FormatInt(timestamp, 10))
+println(strconv.FormatInt(rider2.CreatedAt.UnixNano()/1000000, 10))
+```
+
 ### Arrays
 - An array has a fixed size.
 ```go
