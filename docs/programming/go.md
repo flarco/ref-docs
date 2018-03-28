@@ -411,6 +411,11 @@ func main() {
 }
 ```
 
+#### Convert int64 to string
+```go
+strconv.FormatInt(time.Now().Unix(), 10)
+```
+
 **Split**
 ```go
 strings.Fields(s)
