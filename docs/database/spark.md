@@ -686,3 +686,13 @@ join t2 on t1.one = t2.one
 
 df2.show()
 ```
+
+## Fill nulls down
+```sql
+-- https://stackoverflow.com/questions/31144947/filling-null-value-from-last-not-null-value-in-hive
+select
+  coalesce(bill_acct_nbr, last_value(bill_acct_nbr, true) over(partition by bill_acct_nbr order by bill_acct_nbr, fin_bal_id rows between unbounded preceding and current row)) as bill_acct_nbr,
+  coalesce(fin_bal_id, last_value(fin_bal_id, true) over(partition by bill_acct_nbr order by bill_acct_nbr, fin_bal_id rows between unbounded preceding and current row)) as fin_bal_id,
+  coalesce(pol_term_id, last_value(pol_term_id, true) over(partition by bill_acct_nbr order by bill_acct_nbr, fin_bal_id rows between unbounded preceding and current row)) as pol_term_id
+from t1;
+```
