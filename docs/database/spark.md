@@ -80,7 +80,7 @@ sqlC = SQLContext(sc)
 # sqlc = hiveC
 
 # read from text file
-rdd = sc.textFile("/apps/hive/warehouse/lake_cl_ocds_team.db/stg_dq5")
+rdd = sc.textFile("/apps/hive/warehouse/schema.db/stg_dq5")
 rdd.toDF().head()
 
 # read from text file
@@ -88,7 +88,7 @@ df = sqlC.read.format("com.databricks.spark.csv") \
     .option("header", "true") \
     .option("inferschema", "true") \
     .option("mode", "DROPMALFORMED") \
-    .load("/tech/appl/lake/clmds/projects/common_dialect/extracts/lake_cl_ocds_team.stg_daily_quote2.csv")
+    .load("/file.csv")
 
     
 # read from SQL
@@ -103,7 +103,7 @@ with dq4 as (
     *,
     lag(account_nbr, 1) over (order by account_nbr, account_seq_num) as prev_account_nbr,
     lag(date_time, 1) over (order by account_nbr, account_seq_num) as prev_date_time
-  from lake_cl_ocds_team.stg_dq4
+  from schema.stg_dq4
 )
 select
   qcn,
@@ -197,19 +197,11 @@ spark.conf.set("spark.executor.memory", "2g")
 spark.catalog.setCurrentDatabase('lake_cl_ocds_team')
 
 # Read from SQL
-df = spark.sql(''' select * FROM lake_cl_ocds_team.stg_dq4 limit 10''')
+df = spark.sql(''' select * FROM schema.stg_dq4 limit 10''')
 
 
 # Read JSON
 df = spark.read.json("/home/webinar/person.json")
-
-# Read CSV
-# first put file in hdfs
-!hdfs dfs -put /tech/appl/lake/clmds/projects/common_dialect/extracts/lake_cl_ocds_team.stg_dq4.t1.csv /lake/cl/team/ocds/lake_cl_ocds_team.stg_dq4.t1.csv
-!hdfs dfs -put /tech/appl/lake/clmds/projects/common_dialect/extracts/lake_cl_ocds_team.stg_dq4.t2.csv /lake/cl/team/ocds/lake_cl_ocds_team.stg_dq4.t2.csv
-df1 = spark.read.csv("/lake/cl/team/ocds/lake_cl_ocds_team.stg_dq4.t1.csv", header=True, timestampFormat='yyyy-MM-dd HH:mm:ss', inferSchema=True)
-df2 = spark.read.csv("/lake/cl/team/ocds/lake_cl_ocds_team.stg_dq4.t2.csv", header=True, timestampFormat='yyyy-MM-dd HH:mm:ss', inferSchema=True)
-
 
 # Rename DF Columns
 new_col1 = [c if not '.' in c else c.split('.')[-1] for c in df1.columns]
@@ -231,10 +223,10 @@ spark = SparkSession(sc)
 # Configurations
 spark.conf.set("spark.sql.shuffle.partitions", 11)
 spark.conf.set("spark.executor.memory", "10g")
-# spark.catalog.setCurrentDatabase('lake_cl_ocds_team')
+# spark.catalog.setCurrentDatabase('schema')
 
-df1 = spark.read.csv("/__/Temp/lake_cl_ocds_team.stg_dq4.t1.csv", header=True, timestampFormat='yyyy-MM-dd HH:mm:ss', inferSchema=True)
-df2 = spark.read.csv("/__/Temp/lake_cl_ocds_team.stg_dq4.t2.csv", header=True, timestampFormat='yyyy-MM-dd HH:mm:ss', inferSchema=True)
+df1 = spark.read.csv("/__/Temp/schema.stg_dq4.t1.csv", header=True, timestampFormat='yyyy-MM-dd HH:mm:ss', inferSchema=True)
+df2 = spark.read.csv("/__/Temp/schema.stg_dq4.t2.csv", header=True, timestampFormat='yyyy-MM-dd HH:mm:ss', inferSchema=True)
 
 
 # clean columns
@@ -260,15 +252,15 @@ join t2
 '''
  
 df3 = spark.sql(sql)
-df3.write.csv('/__/Temp/lake_cl_ocds_team.stg_dq4.t3.csv', header=True, timestampFormat='yyyy-MM-dd HH:mm:ss')
+df3.write.csv('/__/Temp/schema.stg_dq4.t3.csv', header=True, timestampFormat='yyyy-MM-dd HH:mm:ss')
   
   
 #################################################### 
 # CSV
 
 # Read from CSV
-df1 = spark.read.csv("/__/Temp/lake_cl_ocds_team.stg_dq4.t1.csv", header=True, timestampFormat='yyyy-MM-dd HH:mm:ss', inferSchema=True)
-df2 = spark.read.csv("/__/Temp/lake_cl_ocds_team.stg_dq4.t2.csv", header=True, timestampFormat='yyyy-MM-dd HH:mm:ss', inferSchema=True)
+df1 = spark.read.csv("/__/Temp/schema.stg_dq4.t1.csv", header=True, timestampFormat='yyyy-MM-dd HH:mm:ss', inferSchema=True)
+df2 = spark.read.csv("/__/Temp/schema.stg_dq4.t2.csv", header=True, timestampFormat='yyyy-MM-dd HH:mm:ss', inferSchema=True)
 
 # Write to CSV
 file_path = "/__/temp/test.csv"
@@ -325,7 +317,7 @@ for col in dec_cols:
 ## Spark 2.1 Init Boilerplate
 ```python
 import sys, os, datetime, csv, time
-sys.path.insert(1, '/tech/appl/lake/clmds/code/python/libraries')
+sys.path.insert(1, '/code/python/libraries')
 
 from collections import namedtuple
 
@@ -358,14 +350,14 @@ sparko = Spark(globals(), restart=True)
 ## READING data
 
 # Read from DB
-df1 = sparko.jdbc_read(dbs['CDW_IMDSCVP'], 'FL88589.INVITATIONS')
-df1 = sparko.jdbc_read(dbs['CDW_IMDSCVP'], '(SELECT * from FL88589.INVITATIONS where rownum <= 1000)')
+df1 = sparko.jdbc_read(dbs['DBNAME'], 'schema.INVITATIONS')
+df1 = sparko.jdbc_read(dbs['DBNAME'], '(SELECT * from schema.INVITATIONS where rownum <= 1000)')
 
 # Read from Hive
-df1 = sparko.sql('select * from lake_cl_ocds_team.medallia_mart_invitations limit 100')
+df1 = sparko.sql('select * from schema.mart_invitations limit 100')
 
 # Read from Local CSV
-file_path = "/tech/appl/user/fl88589/share/http_9999/AMUCFEPVFritz428__.txt"
+file_path = "/tech/appl/user/schema/share/http_9999/AMUCFEPVFritz428__.txt"
 df1 = sparko.read_csv2(
   file_path,
   delimeter=',',
@@ -379,10 +371,10 @@ df1 = sparko.read_csv2(file_path, delimeter=',', timestampFormat='yyyy-MM-dd HH:
 ## Writing data
 
 # Write to DB
-sparko.jdbc_write(df1, dbs['CDW_IMDSCVP'], 'FL88589.INVITATIONS', partitions=20, order_by=['survey_id'])
+sparko.jdbc_write(df1, dbs['DBNAME'], 'schema.INVITATIONS', partitions=20, order_by=['survey_id'])
 
 # Write to Local CSV
-sparko.write_csv2(df1, "/tech/appl/user/fl88589/tmp/lake_ent_medallia_mart.invitations.csv")
+sparko.write_csv2(df1, "/tech/appl/user/schema/tmp/schema.invitations.csv")
 
 # Write to Hive
 # Parquet is the default format, which does not play nice with Decimal fields
@@ -394,31 +386,13 @@ sparko.hive_write(df1.write.format("orc"), 'schema_name.stg_test1', order_by=[])
 
 
 
-sqoop.to_hive(dbs['CDW_IMDSCVP'], 'FL88589.CD_W_EXTRACT_2', 'lake_cl_ocds_team.CD_W_EXTRACT_2')
+sqoop.to_hive(dbs['DBNAME'], 'schema.CD_W_EXTRACT_2', 'schema.CD_W_EXTRACT_2')
 
 import_list = \
-'''PL_CTIQ.EP_CDR
-PLDW_THOBSEDM.THO_BSE_CUSTOMER_CONTACT
-PLDW_CEMS_DM.CEMS_FACT
-PLDW_DLVY.AARP_STND_RPT_INFO
-PLDW_DLVY.THO_BSE_DAILY_QUOTE
-PL_MKTG.AARP_WEBCOUNTS
-PLDW_THOBSEDM.THO_BSE_CUSTOMER_POLICY
-PLDW_THOBSEDM.THO_BSE_CUSTOMER_QUOTE
-PL_MKTG.CLIENT_FIELDS_ALL
-PL_MKTG.MEDIA_AARP_CDRT
-PLDW_CEMS_DM.CEMS_SALES_CLOSURE_REF
-PLDW_BOBDM_DLVY.PERSONAL_AUTO_POLICY_INFORCE
-EDW_DM.THIRD_PARTY_QUOTE_BRIDGE
-EDW_DM.PL_AGREEMENT_ENDORSEMENT_DIM
-EDW_DM.PL_CLTXWALK
-EDW_DM.PL_AGREEMENT_EVENT_DIM
-PLDW_CLIENT_WHS.ACCOUNT_DIM
-PL_CTIQ.EP_ATTRIBUTE
-PLDW_THOBSEDM.THO_BSE_CUSTOMER
-PLDW_CLIENT_WHS.USER_DIM
+'''SCHEM1.TABLE1
+SCHEM1.TABLE2
 '''.splitlines()
-sqoop.to_hive_all(dbs['PLDWPRD'], import_list=import_list, tgt_schema='lake_cl_ocds_team')
+sqoop.to_hive_all(dbs['DBNAME'], import_list=import_list, tgt_schema='schema')
 
 ```
 
@@ -611,14 +585,14 @@ val newDataFrame = yourDF
 
 ## pivot
 ```python
-df = sparko.sql('select POL_QUOTE_STATUS_DESC,POL_STATUS_DESC, year(POL_EFF_DT) as POL_EFF_DT_YR from lake_cl_ocds_team.edw_dm_agreement_dim')
+df = sparko.sql('select POL_QUOTE_STATUS_DESC,POL_STATUS_DESC, year(POL_EFF_DT) as POL_EFF_DT_YR from schema.tab')
 df2 = df.groupBy('POL_QUOTE_STATUS_DESC', 'POL_EFF_DT_YR').pivot('POL_STATUS_DESC').count(
- sparko.write_csv2(df2, '/analysis/edw_dm_agreement_dim.pivot_pol_desc2.csv')
+ sparko.write_csv2(df2, '/file.csv')
 ```
 
 ## n-grams
 ```python
-df1 = sparko.sql("select connid, regexp_replace(mdibubble, '\\\\\\\\n', ' ') as mdibubble from lake_cl_ocds_team.cldw_echopass_ep_bi_cdr where mdibubble is not null limit 10000")
+df1 = sparko.sql("select connid, regexp_replace(mdibubble, '\\\\\\\\n', ' ') as mdibubble from schema.tab where mdibubble is not null limit 10000")
 df_tk = sparko.tokenize(df1, 'mdibubble', 'mdibubble_tk')
 df_tks = sparko.remove_stop_words(df_tk, 'mdibubble_tk', 'mdibubble_tks')
 df_ng3 = sparko.create_ngram(df_tks, 3, 'mdibubble_tks', 'mdibubble_ngram3')
@@ -656,12 +630,12 @@ df4.show()
 ```python
 from pyspark.ml.feature import QuantileDiscretizer
 
-df = sparko.sql('select talk_time from lake_cl_ocds_team.clickfox_events_cdr')
+df = sparko.sql('select talk_time from schema.tab')
 
 df.rdd.flatMap(lambda x: x).histogram(20)
 df.rdd.flatMap(lambda x: x).histogram((-10, -1, 0, 1, 5,10, 50,100,500,1000,5000, 10000, 50000))
 
-df = sparko.sql('select cast(talk_time as double) as talk_time from lake_cl_ocds_team.clickfox_events_cdr')
+df = sparko.sql('select cast(talk_time as double) as talk_time from schema.tab')
 qds = QuantileDiscretizer(
   numBuckets=20,
   inputCol="talk_time",
