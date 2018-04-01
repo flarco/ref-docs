@@ -391,6 +391,51 @@ for key, value := range dict {
 delete(m, "key")
 ```
 
+### Dates
+
+**Converting date to String**
+
+```go
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+// @link https://golang.org/pkg/time/
+
+func main() {
+
+    //caution : format string is `2006-01-02 15:04:05.000000000`
+    current := time.Now()
+
+    fmt.Println("origin : ", current.String())
+    // origin :  2016-09-02 15:53:07.159994437 +0800 CST
+
+    fmt.Println("mm-dd-yyyy : ", current.Format("01-02-2006"))
+    // mm-dd-yyyy :  09-02-2016
+
+    fmt.Println("yyyy-mm-dd : ", current.Format("2006-01-02"))
+    // yyyy-mm-dd :  2016-09-02
+
+    // separated by .
+    fmt.Println("yyyy.mm.dd : ", current.Format("2006.01.02"))
+    // yyyy.mm.dd :  2016.09.02
+
+    fmt.Println("yyyy-mm-dd HH:mm:ss : ", current.Format("2006-01-02 15:04:05"))
+    // yyyy-mm-dd HH:mm:ss :  2016-09-02 15:53:07
+
+    // StampMicro
+    fmt.Println("yyyy-mm-dd HH:mm:ss: ", current.Format("2006-01-02 15:04:05.000000"))
+    // yyyy-mm-dd HH:mm:ss:  2016-09-02 15:53:07.159994
+
+    //StampNano
+    fmt.Println("yyyy-mm-dd HH:mm:ss: ", current.Format("2006-01-02 15:04:05.000000000"))
+    // yyyy-mm-dd HH:mm:ss:  2016-09-02 15:53:07.159994437
+}    
+```
+
 ### Strings
 
 **Concatenation**
@@ -415,7 +460,16 @@ func main() {
 
 #### Convert int64 to string
 ```go
-strconv.FormatInt(time.Now().Unix(), 10)
+func strInt64(val int64) string {
+	return strconv.FormatInt(val, 10) // int64 to string
+}
+```
+
+#### Convert uint to string
+```go
+func strUint(val uint) string {
+	return fmt.Sprint(val) //uint to string
+}
 ```
 
 **Split**
