@@ -146,6 +146,14 @@ gandalf ALL=(ALL) NOPASSWD: ALL # append
 ```
 
 
+## Partitioning
+
+For disks under 2TB:
+https://www.howtogeek.com/106873/how-to-use-fdisk-to-manage-partitions-on-linux/
+
+For disks over 2TB:
+https://www.tecmint.com/parted-command-to-create-resize-rescue-linux-disk-partitions/
+
 
 ## Firewall
 
