@@ -730,6 +730,64 @@ def test1(times = 100):
 
 ```
 
+```python
+
+
+
+import timeit
+
+
+setup_tuple = '''
+headers = [f'col_{i}' for i in range(256)]
+'''
+res_tuple = min(timeit.Timer('headers', setup=setup_tuple).repeat(7, 10000))
+
+setup_pyspark = '''
+from pyspark.sql import Row
+headers = [f'col_{i}' for i in range(252)]
+Rec = Row(headers)
+'''
+res_pyspark = min(timeit.Timer('rec = Rec(*headers)', setup=setup_pyspark).repeat(7, 10000))
+
+
+setup_nt = '''
+from collections import namedtuple
+headers = [f'col_{i}' for i in range(255)]
+Rec = namedtuple("rec", headers)
+'''
+res_nt = min(timeit.Timer('rec = Rec(*headers)', setup=setup_nt).repeat(7, 10000))
+
+setup_kt = '''
+from sqlalchemy.util import KeyedTuple
+headers = [f'col_{i}' for i in range(252)]
+'''
+res_kt = min(timeit.Timer("rec = KeyedTuple(headers, labels=headers)", setup=setup_kt).repeat(7, 10000))
+
+setup_po = '''
+import plain_obj
+headers = [f'col_{i}' for i in range(252)]
+Rec = plain_obj.new_type('Rec', headers)
+'''
+res_po = min(timeit.Timer("rec = Rec(*headers)", setup=setup_po).repeat(7, 10000))
+
+setup_rec = '''
+headers = [f'col_{i}' for i in range(252)]
+class Rec:
+  def __init__(self, fields, values):
+    for i, field in enumerate(fields):
+      setattr(self, field, values[i])
+'''
+res_rec = min(timeit.Timer("Rec(headers, headers)", setup=setup_rec).repeat(7, 10000))
+
+print(f'''
+PySPark Row: {res_pyspark}
+NamedTuple:  {res_nt}
+KeyedTuple:  {res_kt}
+plain_obj:  {res_po}
+res_tuple:  {res_tuple}
+''')
+```
+
 
 Smaller is better, three level: &lt;, &lt;&lt;, &lt;&lt;&lt;
 
