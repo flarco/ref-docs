@@ -144,6 +144,21 @@ sudo nc -l 80
 sudo nano /etc/sudoers
 gandalf ALL=(ALL) NOPASSWD: ALL # append
 ```
+### Mount
+```
+sudo mount /dev/sdb1 /media/newhd
+sudo mount -t cifs //host/folder /media/folder -o username=user -o password=password
+```
+
+**In /etc/fstab**
+```
+/dev/sdb1 /media/folder auto defaults 0 2
+```
+
+### Samba
+https://tutorials.ubuntu.com/tutorial/install-and-configure-samba
+
+
 
 
 ## Partitioning
