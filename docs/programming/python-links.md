@@ -13,3 +13,5 @@ Python Links
 [Regex Parse](https://stackoverflow.com/questions/6260777/python-regex-to-parse-string-and-return-tuple)
 
 [Python Graph Gallery](https://python-graph-gallery.com/)
+
+[Cython Video](https://www.youtube.com/watch?v=NfnMJMkhDoQ)
