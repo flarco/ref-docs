@@ -1585,6 +1585,50 @@ sys.stdout.flush()
 
 ### Concurrent Processing
 
+Example:
+
+```python
+import concurrent.futures
+from multiprocessing.pool import ThreadPool
+from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
+from multiprocessing import Pool, Manager
+
+def collect(df):
+  for i, col in enumerate(df.columns):
+    df1 = df[[col]]
+    # df1 = df.iloc[:, i]
+    yield (df1, col, fields_types, samples_n)
+
+## Traditional Pool ##
+pool = Pool(workers)
+for i, rec_dict in enumerate(pool.imap(process_one_field, collect(df))):
+  pprogress(i+1, len(df.columns), show_time=False)
+  field = rec_dict['field']
+  fields_dict[field] = rec_dict
+
+
+### Same as above ##
+# with ProcessPoolExecutor(workers) as pool:
+#   threads = [pool.submit(process_one_field, args) for args in collect(df)]
+
+# for i, thread in enumerate(threads):
+#   rec_dict = thread.result()
+#   pprogress(i+1, len(df.columns), show_time=False)
+#   field = rec_dict['field']
+#   fields_dict[field] = rec_dict
+
+### Does not work fast due to GIL ! ##
+# with ThreadPoolExecutor(workers) as pool:
+#   threads = [pool.submit(process_one_field, args) for args in collect(df)]
+
+# for i, thread in enumerate(threads):
+#   rec_dict = thread.result()
+#   pprogress(i+1, len(df.columns), show_time=False)
+#   field = rec_dict['field']
+#   fields_dict[field] = rec_dict
+
+```
+
 #### Multiprocessing
 
 **Pros**
