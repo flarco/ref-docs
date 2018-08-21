@@ -8,10 +8,9 @@ This project loads the site <http://ref-docs.pw>
 ```
 pip install mkdocs
 ```
-
 Here for more info: <http://www.mkdocs.org/>
 
-## Building the site
+## Building the site with MkDocs
 
 ```bash
 git clone https://github.com/flarco/ref-docs.git
@@ -19,6 +18,22 @@ git clone https://github.com/flarco/ref-docs.git
 cd ref-docs
 
 mkdocs build --clean
+```
+
+## Install VuePress
+
+```
+npm install -g vuepress
+```
+
+## Building the site with VuePress
+
+```bash
+git clone https://github.com/flarco/ref-docs.git
+
+cd ref-docs
+
+vuepress build
 ```
 
 ## Running with NGINX
@@ -47,6 +62,6 @@ server {
 
 ```
 
-## Vue Press
+## Vue Press Examples
 
 Guide: https://github.com/vuejs/vue-router/tree/dev/docs
