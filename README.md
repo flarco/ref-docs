@@ -46,3 +46,7 @@ server {
 }
 
 ```
+
+## Vue Press
+
+Guide: https://github.com/vuejs/vue-router/tree/dev/docs

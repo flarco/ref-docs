@@ -2,7 +2,8 @@
 
 ---
 
-# Main Documentation
+## Main Documentation
+
 [https://spark.apache.org/docs/latest/index.html](https://spark.apache.org/docs/latest/index.html)
 [https://docs.databricks.com/spark/latest/gentle-introduction/sparksession.html](https://docs.databricks.com/spark/latest/gentle-introduction/sparksession.html)
 **[https://www.gitbook.com/book/jaceklaskowski/mastering-apache-spark/details](https://www.gitbook.com/book/jaceklaskowski/mastering-apache-spark/details)**
@@ -12,19 +13,19 @@ Configuration: [https://spark.apache.org/docs/latest/configuration.html](https:/
 Spark Streaming: [https://www.gitbook.com/book/jaceklaskowski/spark-structured-streaming/details](https://www.gitbook.com/book/jaceklaskowski/spark-structured-streaming/details)
 Kafka: [https://www.gitbook.com/book/jaceklaskowski/apache-kafka/details](https://www.gitbook.com/book/jaceklaskowski/apache-kafka/details)
 
-# Master Options
-| Master URL                      | Meaning                                                                                                                                                                                                                                                                                                   | 
-|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| local                           | Run Spark locally with one worker thread (i.e. no parallelism at all).                                                                                                                                                                                                                                    | 
-| local[K]                        | Run Spark locally with K worker threads (ideally, set this to the number of cores on your machine).                                                                                                                                                                                                       | 
-| local[K,F]                      | Run Spark locally with K worker threads and F maxFailures (see spark.task.maxFailures for an explanation of this variable)                                                                                                                                                                                | 
-| local[*]                        | Run Spark locally with as many worker threads as logical cores on your machine.                                                                                                                                                                                                                           | 
-| local[*,F]                      | Run Spark locally with as many worker threads as logical cores on your machine and F maxFailures.                                                                                                                                                                                                         | 
-| spark://HOST:PORT               | Connect to the given Spark standalone cluster master. The port must be whichever one your master is configured to use, which is 7077 by default.                                                                                                                                                          | 
-| spark://HOST1:PORT1,HOST2:PORT2 | Connect to the given Spark standalone cluster with standby masters with Zookeeper. The list must have all the master hosts in the high availability cluster set up with Zookeeper. The port must be whichever each master is configured to use, which is 7077 by default.                                 | 
-| mesos://HOST:PORT               | Connect to the given Mesos cluster. The port must be whichever one your is configured to use, which is 5050 by default. Or, for a Mesos cluster using ZooKeeper, use mesos://zk://.... To submit with --deploy-mode cluster, the HOST:PORT should be configured to connect to the MesosClusterDispatcher. | 
-| yarn                            | Connect to a YARN cluster in client or cluster mode depending on the value of --deploy-mode. The cluster location will be found based on the HADOOP_CONF_DIR or YARN_CONF_DIR variable.                                                                                                                   | 
+## Master Options
 
+| Master URL                      | Meaning                                                                                                                                                                                                                                                                                                   |
+|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| local                           | Run Spark locally with one worker thread (i.e. no parallelism at all).                                                                                                                                                                                                                                    |
+| local[K]                        | Run Spark locally with K worker threads (ideally, set this to the number of cores on your machine).                                                                                                                                                                                                       |
+| local[K,F]                      | Run Spark locally with K worker threads and F maxFailures (see spark.task.maxFailures for an explanation of this variable)                                                                                                                                                                                |
+| local[*]                        | Run Spark locally with as many worker threads as logical cores on your machine.                                                                                                                                                                                                                           |
+| local[*,F]                      | Run Spark locally with as many worker threads as logical cores on your machine and F maxFailures.                                                                                                                                                                                                         |
+| spark://HOST:PORT               | Connect to the given Spark standalone cluster master. The port must be whichever one your master is configured to use, which is 7077 by default.                                                                                                                                                          |
+| spark://HOST1:PORT1,HOST2:PORT2 | Connect to the given Spark standalone cluster with standby masters with Zookeeper. The list must have all the master hosts in the high availability cluster set up with Zookeeper. The port must be whichever each master is configured to use, which is 7077 by default.                                 |
+| mesos://HOST:PORT               | Connect to the given Mesos cluster. The port must be whichever one your is configured to use, which is 5050 by default. Or, for a Mesos cluster using ZooKeeper, use mesos://zk://.... To submit with --deploy-mode cluster, the HOST:PORT should be configured to connect to the MesosClusterDispatcher. |
+| yarn                            | Connect to a YARN cluster in client or cluster mode depending on the value of --deploy-mode. The cluster location will be found based on the HADOOP_CONF_DIR or YARN_CONF_DIR variable.                                                                                                                   |
 
 ## Hive connection
 
@@ -36,12 +37,12 @@ Need to set up the `hive-site.xml` file in the `conf/` folder.
 
 This will allow the use of master `local[10]` with a connection to Hive tables.
 
-
-
 ### Kerberos Authentication to Hive Metastore
+
 Still unsure how to do this. The keys `spark.yarn.keytab` and `spark.yarn.principal` are for accessing the YARN cluster, not the hive metastore.
 
 Could try this, right before Spark connection ([link](https://www.ibm.com/support/knowledgecenter/en/SSPT3X_3.0.0/com.ibm.swg.im.infosphere.biginsights.admin.doc/doc/kerberos_hive.html)):
+
 ```java
 import org.apache.hadoop.security.UserGroupInformation as UserGroupInformation
 import org.apache.hadoop.conf.Configuration
@@ -54,17 +55,17 @@ UserGroupInformation.loginUserFromKeytab(cd.user, cd.keytab)
 ```
 
 ## Spark on YARN
+
 Set the keys `spark.yarn.keytab` and `spark.yarn.principal` appropriately.
 
 ## Partitioning
+
 [https://blog.deepsense.ai/optimize-spark-with-distribute-by-and-cluster-by/](https://blog.deepsense.ai/optimize-spark-with-distribute-by-and-cluster-by/)
 
+## Python
 
+### Spark 1.6
 
----------
-
-# Python
-## Spark 1.6
 ```python
 
 from pyspark import SparkContext
@@ -93,11 +94,11 @@ df = sqlC.read.format("com.databricks.spark.csv") \
     
 # read from SQL
 
-sql = ''' select * FROM lake_cl_ocds_team.stg_dq4 '''
+sql = ''' select * FROM shema.stg_dq4 '''
 df = hiveC.sql(sql) # loads into pipeline
 df.registerTempTable('stg_dq4')
 
-sql = '''set tez.queue.name=long;use lake_cl_ocds_team;
+sql = '''
 with dq4 as (
   select
     *,
@@ -108,21 +109,6 @@ with dq4 as (
 select
   qcn,
   ucid,
-  lob,
-  qcn_group,
-  account_nbr,
-  vts_id,
-  seq_cd,
-  policy_nbr,
-  term_written_premium_amt,
-  date_time,
-  duration1,
-  duration2,
-  mdi_bias,
-  cdr_date,
-  ucid_seq_num,
-  account_seq_num,
-  qcn_seq_num,
   case
     when prev_account_nbr = account_nbr
       and unix_timestamp(date_time) - unix_timestamp(prev_date_time) < 20*60
@@ -255,7 +241,7 @@ df3 = spark.sql(sql)
 df3.write.csv('/__/Temp/schema.stg_dq4.t3.csv', header=True, timestampFormat='yyyy-MM-dd HH:mm:ss')
   
   
-#################################################### 
+####################################################
 # CSV
 
 # Read from CSV
@@ -312,9 +298,8 @@ for col in dec_cols:
 
 ```
 
--------------------
-
 ## Spark 2.1 Init Boilerplate
+
 ```python
 import sys, os, datetime, csv, time
 sys.path.insert(1, '/code/python/libraries')
@@ -357,12 +342,12 @@ df1 = sparko.jdbc_read(dbs['DBNAME'], '(SELECT * from schema.INVITATIONS where r
 df1 = sparko.sql('select * from schema.mart_invitations limit 100')
 
 # Read from Local CSV
-file_path = "/tech/appl/user/schema/share/http_9999/AMUCFEPVFritz428__.txt"
+file_path = "/user/schema/share/A428__.txt"
 df1 = sparko.read_csv2(
   file_path,
   delimeter=',',
   timestampFormat='yyyy-MM-dd HH:mm:ss.SSS',
-  dateFormat='MM/dd/yy', 
+  dateFormat='MM/dd/yy',
   date_cols=['event_day']
 )
 df1 = sparko.read_csv2(file_path, delimeter=',', timestampFormat='yyyy-MM-dd HH:mm:ss', dateFormat='yyyy-MM-dd', date_cols=[])
@@ -374,7 +359,7 @@ df1 = sparko.read_csv2(file_path, delimeter=',', timestampFormat='yyyy-MM-dd HH:
 sparko.jdbc_write(df1, dbs['DBNAME'], 'schema.INVITATIONS', partitions=20, order_by=['survey_id'])
 
 # Write to Local CSV
-sparko.write_csv2(df1, "/tech/appl/user/schema/tmp/schema.invitations.csv")
+sparko.write_csv2(df1, "/user/schema/tmp/schema.invitations.csv")
 
 # Write to Hive
 # Parquet is the default format, which does not play nice with Decimal fields
@@ -396,10 +381,9 @@ sqoop.to_hive_all(dbs['DBNAME'], import_list=import_list, tgt_schema='schema')
 
 ```
 
-
 # Java
 
-## Example Links 
+## Example Links
 [https://stackoverflow.com/questions/22298192/how-to-run-a-spark-java-program](https://stackoverflow.com/questions/22298192/how-to-run-a-spark-java-program)
 
 [https://github.com/mahmoudparsian/data-algorithms-book/blob/master/misc/how-to-submit-spark-job-to-yarn-from-java-code.md](https://github.com/mahmoudparsian/data-algorithms-book/blob/master/misc/how-to-submit-spark-job-to-yarn-from-java-code.md)
@@ -408,15 +392,15 @@ sqoop.to_hive_all(dbs['DBNAME'], import_list=import_list, tgt_schema='schema')
 
 [https://www.cloudera.com/documentation/enterprise/5-5-x/topics/spark_develop_run.html](https://www.cloudera.com/documentation/enterprise/5-5-x/topics/spark_develop_run.html)
 
-### Kotlin!
+### Kotlin
 
 This project works with Spark 1.6: `/Users/larco/Temp/spark0`
 [http://tomstechnicalblog.blogspot.com/2016/11/using-kotlin-language-with-spark.html](http://tomstechnicalblog.blogspot.com/2016/11/using-kotlin-language-with-spark.html)
 
 [https://github.com/thomasnield/kotlin-spark-test](https://github.com/thomasnield/kotlin-spark-test)
 
+#### Issues with building a single jar. :star:
 
-#### Issues with building a single jar. :star: 
 I am able to build a single jar fine with this project: https://github.com/techdev-solutions/spark-kotlin-example
 
 When I try with Apache Spark, with the SAME structure as above project, running the JAR file fails. It always gives the error: `Error: Could not find or load main class de.techdev.example.SparkExampleKt`
@@ -426,6 +410,7 @@ My conclusion is that the [apache.spark maven JAR file](https://mvnrepository.co
 This works with Spark 1.6.
 
 Two hurdles:
+
 - Use 2.2 instead of 1.6
 - ~~Be able to compile / build an executable file. Or perhaps have all the classpath JARs into one folder? I tried, but got error `Exception in thread "main" java.lang.NoClassDefFoundError: kotlin/jvm/internal/Intrinsics`~~
 
@@ -512,9 +497,6 @@ dependencies {
 }
 ```
 
-
-
-
 ## Code Help
 
 ### flatMap
@@ -583,14 +565,16 @@ val newDataFrame = yourDF
 // +---+-----+---+
 ```
 
-## pivot
+## Pivot
+
 ```python
 df = sparko.sql('select POL_QUOTE_STATUS_DESC,POL_STATUS_DESC, year(POL_EFF_DT) as POL_EFF_DT_YR from schema.tab')
 df2 = df.groupBy('POL_QUOTE_STATUS_DESC', 'POL_EFF_DT_YR').pivot('POL_STATUS_DESC').count(
  sparko.write_csv2(df2, '/file.csv')
 ```
 
-## n-grams
+## N-grams
+
 ```python
 df1 = sparko.sql("select connid, regexp_replace(mdibubble, '\\\\\\\\n', ' ') as mdibubble from schema.tab where mdibubble is not null limit 10000")
 df_tk = sparko.tokenize(df1, 'mdibubble', 'mdibubble_tk')
@@ -625,8 +609,8 @@ df4 = sparko.sql("""
 df4.show()
 ```
 
+## Histogram
 
-## histogram
 ```python
 from pyspark.ml.feature import QuantileDiscretizer
 
@@ -635,10 +619,15 @@ df = sparko.sql('select talk_time from schema.tab')
 df.rdd.flatMap(lambda x: x).histogram(20)
 df.rdd.flatMap(lambda x: x).histogram((-10, -1, 0, 1, 5,10, 50,100,500,1000,5000, 10000, 50000))
 
-df = sparko.sql('select cast(talk_time as double) as talk_time from schema.tab')
+field_name = 'talk_time'
+table = 'schema.tab'
+numBuckets=20
+
+df = sparko.sql('select cast({field} as double) as {field} from {table}'.format(field_name, table=table))
+
 qds = QuantileDiscretizer(
   numBuckets=20,
-  inputCol="talk_time",
+  inputCol=field_name,
   outputCol="bucket",
   relativeError=0.01,
   handleInvalid="error"
@@ -650,23 +639,39 @@ df1.registerTempTable("df1")
 
 df2 = sparko.sql('''
 with t1 as (
-  select bucket, count(1) cnt, min(talk_time) min_val, max(talk_time) max_val, 1 one from df1 group by bucket order by bucket
+  select
+    bucket, count(1) cnt,
+    min({field}) min_val,
+    max({field}) max_val,
+    1 one
+  from df1
+  group by bucket
+  order by bucket
 )
-, t2 as (select 1 one, sum(cnt) tot_cnt from t1)
-select bucket, cnt, round(100 * cnt / tot_cnt, 1) prct, min_val, max_val
+, t2 as (
+  select
+    1 one,
+    sum(cnt) tot_cnt
+  from t1
+)
+select
+  bucket, cnt,
+  round(100 * cnt / tot_cnt, 1) prct,
+  min_val, max_val
 from t1
 join t2 on t1.one = t2.one
-''')
+'''.format(field=field_name))
 
 df2.show()
 ```
 
 ## Fill nulls down
+
 ```sql
 -- https://stackoverflow.com/questions/31144947/filling-null-value-from-last-not-null-value-in-hive
 select
-  coalesce(bill_acct_nbr, last_value(bill_acct_nbr, true) over(partition by bill_acct_nbr order by bill_acct_nbr, fin_bal_id rows between unbounded preceding and current row)) as bill_acct_nbr,
-  coalesce(fin_bal_id, last_value(fin_bal_id, true) over(partition by bill_acct_nbr order by bill_acct_nbr, fin_bal_id rows between unbounded preceding and current row)) as fin_bal_id,
-  coalesce(pol_term_id, last_value(pol_term_id, true) over(partition by bill_acct_nbr order by bill_acct_nbr, fin_bal_id rows between unbounded preceding and current row)) as pol_term_id
+  coalesce(field1, last_value(field1, true) over(partition by field1 order by field1, field2 rows between unbounded preceding and current row)) as field1,
+  coalesce(field2, last_value(field2, true) over(partition by field1 order by field1, field2 rows between unbounded preceding and current row)) as field2,
+  coalesce(pol_term_id, last_value(pol_term_id, true) over(partition by field1 order by field1, field2 rows between unbounded preceding and current row)) as pol_term_id
 from t1;
 ```

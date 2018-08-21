@@ -1,7 +1,5 @@
 # GIT
 
----
-
 # Initiation
 
 **Go to Working Directory**

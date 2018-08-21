@@ -50,6 +50,7 @@ c1.cm2('heelo')
 ```
 
 ### Licenses
+
 ```python
 import pkg_resources
 import prettytable
@@ -87,8 +88,7 @@ o1.m1()
 ```
 
 
-Data Types
-----------
+## Data Types
 
 ### String & Number
 
@@ -108,6 +108,7 @@ File.write(unicode\_str.encode('ascii', 'ignore'))
 ```
 
 **Decimal print:**
+
 ```python
 print('{:,.2f}'.format(s\['DL\_Sum'\] ))
 
@@ -115,45 +116,65 @@ print('${:,.2f}'.format(salary) ## currency
 ```
 
 **Comma / Thousands Separator**
+
 ```python
 print("{:,d}".format(12456789))
 ```
 
 
 **Print in Grid:**
+
 ```python
 print('{0:&lt;10}'.format(str(stats\[s\]\[h\])))
 ```
 
-#### Regex
+### Regex
 
 **All Matches:**
+
 ```python
 m_arr = re.findall(r'[ ]*SET *[\w =,\n()]*WHERE', string1)
 ```
 
 **Replace all matches:**
+
 ```python
 obj_sql2 = re.sub(r",[\n ]+(?i)" + combo_name + r"[ \r*\n]+",  combo_name , string_sql2)
 ```
+
 **Matches Excluding Suffix/Prefix:**
+
 ```python
 r"(?<=Pay: )[- \w$\d]+"
 r"(?<=Rate )[ \w$]+?(?= Job Type)"
 ```
 
 **Replace non-numeric**
+
 ```python
 result = re.sub('[^0-9]','', 'af7878787ad')
 ```
 
 **Constains one char math**
+
 ```python
 import re
 word = 'fubar'
 regexp = re.compile(r'[rzd]') # matches r, z or d
 if regexp.search(word):
   print 'matched'
+```
+
+**Extract Substring**
+
+```python
+import re
+
+sql_lines = ['create table  schema1.table1  stored as parquet as']
+
+regexp = r'create\s+table\s+(\S*)[\sa-zA-Z\d]+ as'
+
+table = re.findall(regexp, sql_lines[0])[0]
 ```
 
 ### YAML
@@ -228,7 +249,9 @@ for path in sorted(all_paths):
 ```
 
 ### Counter
+
 **Get unique values and occurence**
+
 ```python
 for combo, field_count in Counter([row.combo1 for row in data_columns]).items()
 ```
@@ -242,7 +265,7 @@ headers = {
 }
 ```
 ```python
-for key, value in headers.iteritems(): 
+for key, value in headers.iteritems():
    print(key + ' ' + values)
 ```
 
@@ -289,6 +312,7 @@ dict(zip(keys, values))
 ```
 
 #### JMESpath Search
+
 ```python
 In [218]: d = dict(a=dict(b=[1,2]), c=[dict(d=3), dict(d=3)])
 
@@ -505,10 +529,8 @@ for value in data_array:
 
 **BOTTOM LINE: **
 
--   **If array of items will never be changed (no appending and no change of inner-item), use Tuple**
-
--   **If array of items will require lots of changes (many appends or change of inner-item), use List**
-
+- **If array of items will never be changed (no appending and no change of inner-item), use Tuple**
+- **If array of items will require lots of changes (many appends or change of inner-item), use List**
 **Performance**
 
 Python makes this very easy: timeit is your friend.
@@ -656,6 +678,7 @@ newobj = copy.deepcopy(oldobj) # deep (recursive) copy
 ```
 
 **Dicts**
+
 ```python
 newdict = olddict.copy()
 new_dict = dict(olddict) # copy
@@ -715,6 +738,7 @@ print id(c[0]) == id(d[0])    # False - d[0] is now a new object
 ### Performance Times
 
 **Way to measure**
+
 ```python
 def test1(times = 100):
   def test_unit():
@@ -891,19 +915,20 @@ for path_ in sorted(paths.items(), key=lambda x: x[1], reverse=True):
 
 https://docs.python.org/3/library/collections.html
 
-| Collection   | Desciption                                                           | 
-|--------------|----------------------------------------------------------------------| 
-| namedtuple() | factory function for creating tuple subclasses with named fields     | 
-| deque        | list-like container with fast appends and pops on either end         | 
-| ChainMap     | dict-like class for creating a single view of multiple mappings      | 
-| Counter      | dict subclass for counting hashable objects                          | 
-| OrderedDict  | dict subclass that remembers the order entries were added            | 
-| defaultdict  | dict subclass that calls a factory function to supply missing values | 
-| UserDict     | wrapper around dictionary objects for easier dict subclassing        | 
-| UserList     | wrapper around list objects for easier list subclassing              | 
-| UserString   | wrapper around string objects for easier string subclassing          | 
+| Collection   | Desciption                                                           |
+|--------------|----------------------------------------------------------------------|
+| namedtuple() | factory function for creating tuple subclasses with named fields     |
+| deque        | list-like container with fast appends and pops on either end         |
+| ChainMap     | dict-like class for creating a single view of multiple mappings      |
+| Counter      | dict subclass for counting hashable objects                          |
+| OrderedDict  | dict subclass that remembers the order entries were added            |
+| defaultdict  | dict subclass that calls a factory function to supply missing values |
+| UserDict     | wrapper around dictionary objects for easier dict subclassing        |
+| UserList     | wrapper around list objects for easier list subclassing              |
+| UserString   | wrapper around string objects for easier string subclassing          |
 
 ## Path
+
 ```python
 from pathlib import Path
 
@@ -976,6 +1001,7 @@ with open('Path/to/file', 'r') as content_file:
 ```
 
 **Convert to Ascii**
+
 ```python
 lines0 = open(file_path,'rb').read()
 lines = lines0.decode('utf-16-le').encode('ascii', 'ignore')
@@ -1019,13 +1045,13 @@ for header in headers_order:
 for element in xml_tree.iter():
     print("%s - %s" % (element.tag, element.text))
     if element.tag == 'FOLDER': v_FOLDER = element['NAME']
-    if element.tag in ('SOURCE','TARGET'): 
+    if element.tag in ('SOURCE','TARGET'):
         v_TYPE = element.tag
         v_DATABASETYPE = element['DATABASETYPE']
         v_DBDNAME = element['DBDNAME']
         v_OWNERNAME = element['OWNERNAME']
         v_NAME = element['NAME']
-    if element.tag in ('SOURCEFIELD','TARGETFIELD'): 
+    if element.tag in ('SOURCEFIELD','TARGETFIELD'):
         v_FIELDNUMBER = element['FIELDNUMBER']
         v_FIELDNAME = element['FIELDNAME']
         v_PRECISION = element['PRECISION']
@@ -1054,7 +1080,7 @@ def create_xml(self, jobs, folder_path = '/data/jobs_header'):
 
 	root = etree.Element('AllJobs')
 
-	for key, job in jobs.iteritems(): 
+	for key, job in jobs.iteritems():
 		# key is url, value is job_class
 		print(key + ' ' + job)
 
@@ -1138,7 +1164,7 @@ FOR Loop
 >>> # One parameter
 >>> for i in range(5):
 ...     print(i)
-... 
+...
 0
 1
 2
@@ -1147,21 +1173,21 @@ FOR Loop
 >>> # Two parameters
 >>> for i in range(3, 6):
 ...     print(i)
-... 
+...
 3
 4
 5
 >>> # Three parameters
 >>> for i in range(4, 10, 2):
 ...     print(i)
-... 
+...
 4
 6
 8
 >>> # Going backwards
 >>> for i in range(0, -10, -2):
 ...     print(i)
-... 
+...
 0
 -2
 -4
@@ -1242,6 +1268,7 @@ db_target.query_cursor(sql)
 ```
 
 **For Update**
+
 ```python
 For Update
 sql = '''UPDATE session_stats SET {set_fields} WHERE {where_fields}'''
@@ -1251,6 +1278,7 @@ cursor.execute(sql, tuple(session_hash.values()) + tuple([session_hash[k] for k 
 ```
 
 **For MySQL**
+
 ```python
 sql = """INSERT INTO db1.router_traffic (`{fields}`) VALUES ("{values}")""".format(fields='`,`'.join(record), values='","'.join(['%s']*len(record))) % tuple(record.values())
 
@@ -1312,6 +1340,7 @@ db.close()
 ```
 
 #### For Postgres
+
 ```python
 sql_upsert = '''
 INSERT INTO {table} ({fields})
@@ -1335,6 +1364,7 @@ result = conn.execute(text(sql_upsert.format(
 ```
 
 ### Import from CSV
+
 ```python
 import pandas as pd
 df = pd.read_csv('mypath.csv')
@@ -1367,7 +1397,9 @@ apt-get install -y python-dev libmysqlclient-dev gcc mysql-devel mysql-common my
 
 sudo apt-get install libmysqlclient-dev
 ```
+
 OR
+
 ```bash
 yum install -y python-devel mysql-devel
 
@@ -1379,7 +1411,9 @@ pip install MySQL-python
 
 pip install mysql-connector-python --allow-external mysql-connector-python
 ```
+
 **Alternate**
+
 ```bash
 git clone https://github.com/mysql/mysql-connector-python.git
 
@@ -1389,103 +1423,7 @@ python ./setup.py build
 
 sudo python ./setup.py install
 ```
-### MongoDB
 
-**Login**
-```python
-import pymongo
-
-from pymongo import MongoClient
-
-mongoDB = MongoClient('mongodb://router:router@localhost:27017/router')
-```
-**String Connection Config:**
-```
-mongodb://username:password@example.com:27017,example2.com:27017,...,example.comN:27017/database?key=value&keyN=valueN
-\_____/   \_______________/ \_________/ \__/  \_______________________________________/ \______/ \_/ \___/
-  |             |             |           |                    |                          |       |    |
-Scheme          |            Host        Port        Alternative host identifiers         |      Key Value
-             Userinfo       \_____________/                                               |      \_______/
-                                   |                                              Auth database      |
-                              Host Identifier                                                    Key Value Pair
-                             \_______________________________________________________/          \___________________/
-                                                      |                                                   |
-                                                 Host Information                                  Connection Options
-
-```
-
-
-**Configuration for High Availability, ReplicaSet Load Balancing:**
-
-<http://api.mongodb.org/python/current/examples/high_availability.html>
-
-**Point to Collection**
-```python
-router_traffic = mongoDB.router.router_traffic
-```
-
-
-**Insert**
-```python
-result = router_traffic.insert_one(packet)
-result = router_traffic.insert_many(all_packets)
-
-```
-
-
-**Delete**
-```python
-result = router_traffic.delete_many({"time": {"$lt": datetime.datetime.now() - datetime.timedelta(days=1)}})
-```
-
-
-**Aggregation**
-```python
-aggr_pipeline = [
-    { "$match" : {"time": {"$gt": datetime.datetime.now() - datetime.timedelta(minutes=5)}} },
-    { "$sort": { "_id" : 1} },
-    {   "$group": {
-           "_id": {
-                "IP":"$_id.IP"
-                ,"time": {"$add": [
-                { "$subtract": [
-                    { "$subtract": [ "$_id.time", datetime.datetime(1970, 1, 1) ] },
-                    { "$mod": [ 
-                        { "$subtract": [ "$_id.time", datetime.datetime(1970, 1, 1) ] },
-                        1000 * 60 * 5
-                    ]}
-                ]},
-                datetime.datetime(1970, 1, 1)
-            ]}
-            },
-           "UL_Sum": { "$sum": "$UL_Sum" },
-           "UL_Count": { "$sum": "$UL_Count" },
-           "DL_Sum": { "$sum": "$DL_Sum" },
-           "DL_Count": { "$sum": "$DL_Count" }
-           
-        }
-    },
-    { "$sort": { "_id" : 1} },
-    {   "$group": {
-            "_id": {
-                "IP":"$_id.IP"
-            },
-            
-           "IP": { "$last": "$_id.IP" },
-           "time": { "$last": "$_id.time" },
-           "UL_Sum": { "$last": "$UL_Sum" },
-           "UL_Count": { "$last": "$UL_Count" },
-           "DL_Sum": { "$last": "$DL_Sum" },
-           "DL_Count": { "$last": "$DL_Count" }
-    }
-    },
-    {   "$project" : { "_id" : 0, "IP": 1 , "time": 1, "UL_Sum" : 1, "UL_Count" : 1 , "DL_Sum" : 1, "DL_Count" : 1 } },
-    { "$sort": { "_id" : 1} }
-]
-
-stats = list(router_traffic.aggregate(aggr_pipeline))
-
-```
 
 ### ORM
 
@@ -1495,16 +1433,11 @@ ORMs (Object Relational Mapper) provide a high-level abstraction upon a relation
 
 ORM Libraries:
 
--   The Django ORM
-
--   SQLAlchemy
-
--   Peewee
-
--   PonyORM
-
--   SQLObject
-
+- The Django ORM
+- SQLAlchemy
+- Peewee
+- PonyORM
+- SQLObject
 
 ### SQLite
 
@@ -1539,6 +1472,7 @@ def extract_insert(text, cursor):
 ```
 
 #### Select
+
 ```python
 # print column names
 c.execute("SELECT * FROM my_db")
@@ -1549,13 +1483,13 @@ print col_name_list
 for row in c.execute('SELECT * FROM my_db ORDER BY my_var2'):
     print row
 
-# print all lines that have "YES" as my_var1 value 
+# print all lines that have "YES" as my_var1 value
 # and have an integer value <= 7 in my_var2
 t = ('YES',7,)
 for row in c.execute('SELECT * FROM my_db WHERE my_var1=? AND my_var2 <= ?', t):
     print row
 
-# print all lines that have "YES" as my_var1 value 
+# print all lines that have "YES" as my_var1 value
 # and have an integer value <= 7 in my_var2
 t = ('YES',7,)
 c.execute('SELECT * FROM my_db WHERE my_var1=? AND my_var2 <= ?', t)
@@ -1565,10 +1499,10 @@ for r in rows:
 
 ```
 
-System
-------
+## System
 
 ### Progress bar:
+
 ```python
 from tqdm import tqdm
 for i in tqdm(range(10000)):
@@ -1581,7 +1515,6 @@ status='{}% complete\r'.format(int(i*100/len(list0)))
 sys.stdout.write('\r'+status)
 sys.stdout.flush()
 ```
-
 
 ### Concurrent Processing
 
@@ -1633,51 +1566,38 @@ for i, rec_dict in enumerate(pool.imap(process_one_field, collect(df))):
 
 **Pros**
 
--   Separate memory space
+- Separate memory space
+- Code is usually straightforward
+- Takes advantage of multiple CPUs & cores
+- Avoids GIL limitations for cPython
+- Eliminates most needs for synchronization primitives unless if you use shared memory (instead, it's more of a communication odel for IPC)
 
--   Code is usually straightforward
-
--   Takes advantage of multiple CPUs & cores
-
--   Avoids GIL limitations for cPython
-
--   Eliminates most needs for synchronization primitives unless if you use shared memory (instead, it's more of a communication model for IPC)
-
--   Child processes are interruptible/killable
-
--   Python multiprocessing module includes useful abstractions with an interface much like threading.Thread
-
--   A must with cPython for CPU-bound processing
+- Child processes are interruptible/killable
+- Python multiprocessing module includes useful abstractions with an interface much like threading.Thread
+- A must with cPython for CPU-bound processing
 
 **Cons**
 
--   IPC a little more complicated with more overhead (communication model vs. shared memory/objects)
-
--   Larger memory footprint
+- IPC a little more complicated with more overhead (communication model vs. shared memory/objects)
+- Larger memory footprint
 
 #### Threading
 
 **Pros**
 
--   Lightweight - low memory footprint
-
--   Shared memory - makes access to state from another context easier
-
--   Allows you to easily make responsive UIs
-
--   cPython C extension modules that properly release the GIL will run in parallel
-
--   Great option for I/O-bound applications
+- Lightweight - low memory footprint
+- Shared memory - makes access to state from another context easier
+- Allows you to easily make responsive UIs
+- cPython C extension modules that properly release the GIL will run in parallel
+- Great option for I/O-bound applications
 
 **Cons**
 
--   cPython - subject to the GIL
+- cPython - subject to the GIL
+- Not interruptible/killable
+- If not following a command queue/message pump model (using the Queue module), then manual use of synchronization primitives ecome a necessity (decisions are needed for the granularity of locking)
 
--   Not interruptible/killable
-
--   If not following a command queue/message pump model (using the Queue module), then manual use of synchronization primitives become a necessity (decisions are needed for the granularity of locking)
-
--   Code is usually harder to understand and to get right - the potential for race conditions increases dramatically
+- Code is usually harder to understand and to get right - the potential for race conditions increases dramatically
 
 ### Performance
 
@@ -1824,7 +1744,7 @@ import getopt
 args = sys.argv[1:]
 try:
     (opts, getopts) = getopt.getopt(args, 'f:c:dinuvps?hV',
-                                    ["file=", "ignore", "verbose", "debug", 
+                                    ["file=", "ignore", "verbose", "debug",
                                      "help", "noemail", "config=", "version",
                                      "migrate", "purge", "daemon", "foreground",
                                      "sync", "upgrade099"])
@@ -1907,7 +1827,7 @@ import subprocess
 
 p = subprocess.Popen(["ls", "-l"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 lines = []
-for line in iter(p.stdout.readline, ''): 
+for line in iter(p.stdout.readline, ''):
     lines.append(line.rstrip())
 
 ```
@@ -2179,6 +2099,7 @@ yum localinstall -y xorg-x11-server-Xvfb-1.10.4-6.el6.x86_64.rpm
 ```
 
 **Debian**
+
 ```bash
 apt-get install -y xvfb
 ```
@@ -2213,22 +2134,20 @@ sudo pip install lxml
 ```
 ```python
 for element in xml_tree.iter():
-            # print element.tag
-            
-            if element.tag == 'FOLDER': v_FOLDER = element.get('NAME')
-            
-            if element.tag == 'SESSION': 
-                session_hash = dict(session_hash.items() + extract_SESSION2(element).items())
-            
-            
-            
-            if element.tag == 'WORKFLOW':
-                v_WORKFLOW_NAME = element.get('NAME')
-                data_row = []
-                print v_WORKFLOW_NAME
-                
-                for SESSION in element.findall('SESSION'):
-                    session_hash = dict(session_hash.items() + extract_SESSION2(SESSION).items())
+  # print element.tag
+
+  if element.tag == 'FOLDER': v_FOLDER = element.get('NAME')
+
+  if element.tag == 'SESSION':
+      session_hash = dict(session_hash.items() + extract_SESSION2(element).items())
+
+  if element.tag == 'WORKFLOW':
+      v_WORKFLOW_NAME = element.get('NAME')
+      data_row = []
+      print v_WORKFLOW_NAME
+
+      for SESSION in element.findall('SESSION'):
+          session_hash = dict(session_hash.items() + extract_SESSION2(SESSION).items())
 ```
 
 <http://www.w3schools.com/xml/xml_xpath.asp>
@@ -2238,6 +2157,7 @@ for element in xml_tree.xpath('//FOLDER'):
 ```
 
 ### Install Python 2.7 on CentOs
+
 ```bash
 # Install dependencies
 yum groupinstall -y 'development tools'
@@ -2293,6 +2213,7 @@ Flask
 -----
 
 **Passing Variables to Template**
+
 ```python
 from flask import Flask, render_template, url_for
 
@@ -2316,6 +2237,7 @@ if __name__ == "__main__":
 ```
 
 ### Passing Params through URI
+
 ```python
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -2376,15 +2298,12 @@ Flask with JQuery:
 
 ## Jython
 
-
 **Distributing a JAR**
 <http://www.jython.org/jythonbook/en/1.0/SimpleWebApps.html#distributing-via-standalone-jar>
 
 **JDBC**
 <https://wiki.python.org/jython/DatabaseExamples>
 <http://www.jython.org/jythonbook/en/1.0/DatabasesAndJython.html>
-
-
 
 ## Scrapy
 
@@ -2400,6 +2319,7 @@ response.css('img').xpath('@src').extract()
 ```
 
 **Using CSS**
+
 ```python
 from scrapy.selector import Selector
 from scrapy.http import HtmlResponse
@@ -2413,6 +2333,7 @@ text = item.css(css_selector_str2 + '::text').extract()
 
 
 # SSH
+
 ```python
 
 class Server(object):
@@ -2706,10 +2627,10 @@ class Server(object):
     return self.connected
 ```
 
-
 # Pip
 
 **Installing with custom RPM library**
+
 ```bash
 # Download RPM located at http://rpmfind.net/linux/rpm2html/search.php?query=ncurses-static
 cd /data/user/fl88589/tmp

@@ -1,6 +1,4 @@
-Docker
-
----
+# Docker
 
 ## Installation
 ```
