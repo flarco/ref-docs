@@ -13,6 +13,8 @@ Configuration: [https://spark.apache.org/docs/latest/configuration.html](https:/
 Spark Streaming: [https://www.gitbook.com/book/jaceklaskowski/spark-structured-streaming/details](https://www.gitbook.com/book/jaceklaskowski/spark-structured-streaming/details)
 Kafka: [https://www.gitbook.com/book/jaceklaskowski/apache-kafka/details](https://www.gitbook.com/book/jaceklaskowski/apache-kafka/details)
 
+JDBC: https://medium.com/@radek.strnad/tips-for-using-jdbc-in-apache-spark-sql-396ea7b2e3d3
+
 ## Master Options
 
 | Master URL                      | Meaning                                                                                                                                                                                                                                                                                                   |
