@@ -284,6 +284,17 @@ https://www.cyberciti.biz/tips/how-to-extract-an-rpm-package-without-installing-
 make -j4  # 4 is number of threads
 ```
 
+### Configure Library PATH
+
+https://askubuntu.com/questions/386315/how-to-add-libraries-path-to-the-configure-command
+https://stackoverflow.com/questions/37152366/compiler-says-uuid-h-not-found-but-apt-get-says-it-is
+
+```
+export CPPFLAGS='-I/home/foo/sw/include'
+export LDFLAGS='-L/home/foo/sw/lib/'
+./configure
+```
+
 ## Syncthing
 
 http://www.syncthing.net
