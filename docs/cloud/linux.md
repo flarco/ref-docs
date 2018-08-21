@@ -156,18 +156,16 @@ sudo mount -t cifs //host/folder /media/folder -o username=user -o password=pass
 ```
 
 ### Samba
-https://tutorials.ubuntu.com/tutorial/install-and-configure-samba
-
-
+<https://tutorials.ubuntu.com/tutorial/install-and-configure-samba>
 
 
 ## Partitioning
 
 For disks under 2TB:
-https://www.howtogeek.com/106873/how-to-use-fdisk-to-manage-partitions-on-linux/
+<https://www.howtogeek.com/106873/how-to-use-fdisk-to-manage-partitions-on-linux/>
 
 For disks over 2TB:
-https://www.tecmint.com/parted-command-to-create-resize-rescue-linux-disk-partitions/
+<https://www.tecmint.com/parted-command-to-create-resize-rescue-linux-disk-partitions/>
 
 
 ## Firewall
@@ -272,9 +270,8 @@ curl -XPUT localhost:9200/_template/tcpdump -d '
 
 Installing RPM as non-root user
 
-https://superuser.com/questions/209808/how-can-i-install-an-rpm-without-being-root
-
-https://www.cyberciti.biz/tips/how-to-extract-an-rpm-package-without-installing-it.html
+- <https://superuser.com/questions/209808/how-can-i-install-an-rpm-without-being-root>
+- <https://www.cyberciti.biz/tips/how-to-extract-an-rpm-package-without-installing-it.html>
 
 
 ## MAKEFile
@@ -286,8 +283,8 @@ make -j4  # 4 is number of threads
 
 ### Configure Library PATH
 
-https://askubuntu.com/questions/386315/how-to-add-libraries-path-to-the-configure-command
-https://stackoverflow.com/questions/37152366/compiler-says-uuid-h-not-found-but-apt-get-says-it-is
+- <https://askubuntu.com/questions/386315/how-to-add-libraries-path-to-the-configure-command>
+- <https://stackoverflow.com/questions/37152366/compiler-says-uuid-h-not-found-but-apt-get-says-it-is>
 
 ```
 export CPPFLAGS='-I/home/foo/sw/include'
@@ -336,9 +333,9 @@ nano ~/.config/syncthing/config.xml
 `start syncthing`
 
 ## NGINX
-<https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-14-04>
-<http://code-maven.com/deploying-python-flask-using-uwsgi-on-ubuntu-14-04>
-<https://github.com/sinkcup/docker-library-nginx-mkdocs>
+- <https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-14-04>
+- <http://code-maven.com/deploying-python-flask-using-uwsgi-on-ubuntu-14-04>
+- <https://github.com/sinkcup/docker-library-nginx-mkdocs>
 
 
 
