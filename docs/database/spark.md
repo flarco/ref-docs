@@ -1,7 +1,5 @@
 # Spark
 
----
-
 ## Main Documentation
 
 [https://spark.apache.org/docs/latest/index.html](https://spark.apache.org/docs/latest/index.html)
