@@ -13,12 +13,12 @@ Configuration: [https://spark.apache.org/docs/latest/configuration.html](https:/
 Spark Streaming: [https://www.gitbook.com/book/jaceklaskowski/spark-structured-streaming/details](https://www.gitbook.com/book/jaceklaskowski/spark-structured-streaming/details)
 Kafka: [https://www.gitbook.com/book/jaceklaskowski/apache-kafka/details](https://www.gitbook.com/book/jaceklaskowski/apache-kafka/details)
 
-JDBC: https://medium.com/@radek.strnad/tips-for-using-jdbc-in-apache-spark-sql-396ea7b2e3d3
+JDBC: <https://medium.com/@radek.strnad/tips-for-using-jdbc-in-apache-spark-sql-396ea7b2e3d3>
 
 ## Master Options
 
 | Master URL                      | Meaning                                                                                                                                                                                                                                                                                                   |
-|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | local                           | Run Spark locally with one worker thread (i.e. no parallelism at all).                                                                                                                                                                                                                                    |
 | local[K]                        | Run Spark locally with K worker threads (ideally, set this to the number of cores on your machine).                                                                                                                                                                                                       |
 | local[K,F]                      | Run Spark locally with K worker threads and F maxFailures (see spark.task.maxFailures for an explanation of this variable)                                                                                                                                                                                |
@@ -69,7 +69,6 @@ Set the keys `spark.yarn.keytab` and `spark.yarn.principal` appropriately.
 ### Spark 1.6
 
 ```python
-
 from pyspark import SparkContext
 from pyspark.sql import SQLContext
 from pyspark.sql import HiveContext
@@ -93,7 +92,7 @@ df = sqlC.read.format("com.databricks.spark.csv") \
     .option("mode", "DROPMALFORMED") \
     .load("/file.csv")
 
-    
+
 # read from SQL
 
 sql = ''' select * FROM shema.stg_dq4 '''
@@ -150,10 +149,10 @@ df = df.withColumn("prv_date_time", F.lag(df.date_time).over(my_window))
 df = df.withColumn("prv_account_nbr", F.lag(df.account_nbr).over(my_window))
 df = df.withColumn("diff_sec", F.when(F.isnull(df.date_time - df.prv_date_time), 0)
                               .otherwise(df.date_time - df.prv_date_time))
-  
+
 df.show()
 
-  
+
 session_id = 0
 def customFunction(row):
     if row.account_nbr == row.prv_account_nbr:
@@ -165,10 +164,10 @@ def customFunction(row):
 
 sample2 = df.rdd.map(customFunction)
 sample2.toDF().show()
-  
 
 
-  
+
+
 
 ####################################################################################
 ### Spark 2.1
@@ -238,11 +237,11 @@ join t2
   on t1.id <= t2.max_id
   and t1.id >= t2.min_id
 '''
- 
+
 df3 = spark.sql(sql)
 df3.write.csv('/__/Temp/schema.stg_dq4.t3.csv', header=True, timestampFormat='yyyy-MM-dd HH:mm:ss')
-  
-  
+
+
 ####################################################
 # CSV
 
@@ -296,8 +295,6 @@ for col in dec_cols:
   )
 
 #
-
-
 ```
 
 ## Spark 2.1 Init Boilerplate
@@ -380,12 +377,12 @@ import_list = \
 SCHEM1.TABLE2
 '''.splitlines()
 sqoop.to_hive_all(dbs['DBNAME'], import_list=import_list, tgt_schema='schema')
-
 ```
 
 # Java
 
 ## Example Links
+
 [https://stackoverflow.com/questions/22298192/how-to-run-a-spark-java-program](https://stackoverflow.com/questions/22298192/how-to-run-a-spark-java-program)
 
 [https://github.com/mahmoudparsian/data-algorithms-book/blob/master/misc/how-to-submit-spark-job-to-yarn-from-java-code.md](https://github.com/mahmoudparsian/data-algorithms-book/blob/master/misc/how-to-submit-spark-job-to-yarn-from-java-code.md)
@@ -419,7 +416,6 @@ Two hurdles:
 Solution is [Shadow](https://github.com/johnrengelman/shadow)
 
 #### Successful build.gradle
-
 
 ```javascript
 group 'de.techdev.example'
