@@ -292,6 +292,16 @@ export LDFLAGS='-L/home/foo/sw/lib/'
 ./configure
 ```
 
+### Default Permissions
+
+<https://unix.stackexchange.com/a/1315>
+
+```bash
+chmod g+s <directory>  //set gid
+setfacl -d -m g::rwx /<directory>  //set group to rwx default
+setfacl -d -m o::rx /<directory>   //set other
+```
+
 ## Syncthing
 
 http://www.syncthing.net
