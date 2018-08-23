@@ -32,6 +32,25 @@ To find the largest folders in a path:
 du -m /some/path | sort -nr | head -n 20
 ```
 
+### Split
+
+```bash
+# split into 1000 line files
+split -l1000 $name.txt $name/part.
+
+# split file into 65 parts with nnnn suffix (-da 4)
+split -l$((`wc -l < $name.txt`/65)) $name.txt $name/part. -da 4
+```
+
+#### Gsplit
+
+```bash
+brew install gsplit
+
+# -a3 means 3 digits i.e. nnn e.g. 001 , -l 1024 means 1024 line chunks, --numeric-suffixes=1 means start at 1 instead of 0
+gsplit -a3 -l 1024 --numeric-suffixes=1 flickr-roland-2004-12-avgcolour.txt 1024line-chunks-flickr-roland-2004-12-avgcolour-
+```
+
 ### TAR – Archive
 Make one tar from all files in a folder
 ```
