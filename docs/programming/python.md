@@ -2599,3 +2599,17 @@ def install(package):
 if __name__ == '__main__':
     install('argh')
 ```
+
+## Install Local Package
+
+## From local folder
+
+```
+pip install mypackage --no-index --find-links file:///srv/pkg/mypackage
+```
+
+### Edit / Develpement Mode
+
+```
+pip install -e /path/to/package
+```
