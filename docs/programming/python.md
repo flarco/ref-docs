@@ -29,12 +29,12 @@ class c1:
   @staticmethod
   def sm3(str0):
     print str0
-
 ```
 
 ### Static Method
 
 Can be used/ran without instantiating the class into an object. Static methods have no access to class attributes.
+
 ```python
 # running static method, without object, and without having access to class attributes
 c1.sm3('yoyoyo')
@@ -77,7 +77,6 @@ if __name__ == "__main__":
     print_packages_and_licenses()
 ```
 
-
 ### Simple Method
 
 Can be used/ran after instantiating the class into an object. Simple methods have access to class attributes and object attributes
@@ -86,7 +85,6 @@ Can be used/ran after instantiating the class into an object. Simple methods hav
 O1 = c1()
 o1.m1()
 ```
-
 
 ## Data Types
 
@@ -120,7 +118,6 @@ print('${:,.2f}'.format(salary) ## currency
 ```python
 print("{:,d}".format(12456789))
 ```
-
 
 **Print in Grid:**
 
@@ -196,11 +193,13 @@ with open(r'C:\path\file2.yml', 'w') as outfile:
 ### JSON
 
 **STDin JSON Tool**
+
 ```
 curl http://localhost:3000/stats | python -m "json.tool"
 ```
 
 **Dict to JSON String**
+
 ```python
 import json
 
@@ -208,12 +207,14 @@ print(json.dumps(data_dict))
 ```
 
 **JSON String to Dict**
+
 ```python
 import json
 print(json.loads(json_str))
 ```
 
 **Good Library: jmespath**
+
 ```
 pip install jmespath
 ```
@@ -229,8 +230,8 @@ jmespath.search('result.opening_hours.periods[0].close', data)
 jmespath.search('result.opening_hours.periods[*].close.time', data)
 ```
 
-
 #### Get Unique nested keys
+
 ```python
 all_paths = {}
 def get_unique_keys(data, parent_path=''):
@@ -264,6 +265,7 @@ headers = {
   'Content-type': 'application/json'
 }
 ```
+
 ```python
 for key, value in headers.iteritems():
    print(key + ' ' + values)
@@ -308,7 +310,6 @@ keys = ('name', 'age', 'food')
 values = ('Monty', 42, 'spam')
 dict(zip(keys, values))
 {'food': 'spam', 'age': 42, 'name': 'Monty'}
-
 ```
 
 #### JMESpath Search
@@ -341,7 +342,6 @@ Out[226]: [{'d': 3}, {'d': 3}]
 
 In [227]:  jmespath.search('a.*', d)
 Out[227]: [[1, 2]]
-
 ```
 
 ```python
@@ -368,7 +368,7 @@ class DictTree:
       except:
         try: dateutil.parser.parse(val) ; return 'datetime'
         except: return 'string'
-    
+
     def get_field_name(key, parent):
       prefix = ''
       parent = parent.replace('"', '')
@@ -376,11 +376,11 @@ class DictTree:
       if (parent.endswith('[*]') and len(parent.split('.')) > 1) or \
           (parent.endswith('[*]') and not parent.startswith('[*]')):
         prefix = parent.replace('[*]', '').split('.')[-1] + '_'
-      
+
       if name_processor:
         prefix = name_processor(prefix)
         key = name_processor(key)
-      
+
       f_name_new = f_name = prefix + key
       i = 0
       while f_name_new in fields_parent and fields_parent[f_name_new] != parent:
@@ -388,7 +388,7 @@ class DictTree:
         f_name_new = f_name + str(i)
       fields_parent[f_name_new] = parent
       return f_name_new
-        
+
     q = lambda s: '"' + s + '"'
     def get_paths(d1, level=1, parent=''):
       kks = set()
@@ -415,7 +415,7 @@ class DictTree:
           kks = kks.union(get_paths(item, level=level+1, parent=path))
 
       return kks
-    
+
     self.paths = sorted(get_paths(self.data))
     self.v_paths = [r for r in self.paths if r.vtype not in ('dict', 'list')]
     self.v_lists = [r for r in self.paths if r.vtype in ('list')]
@@ -434,14 +434,14 @@ class DictTree:
   def search(self, path):
     from jmespath import search
     return search(path, self.data)
-  
+
   def get_value(self, field, conv_date=True):
     val = self.search(self.fields_dict[field].path)
     if conv_date and self.fields_dict[field].vtype == 'date':
       try: val = dateutil.parser.parse(val)
       except: pass
     return val
-  
+
   def get_field_table(self):
     "Create fields table"
     t_rows = []
@@ -458,29 +458,27 @@ class DictTree:
         is_list=1 if isinstance(val, list) else 0,
         len=len(str(val)),
       )
-      
+
       t_rows.append(self.TRow(**rec))
     return t_rows
-  
+
   def get_record(self):
     "Returns one record, omitting lists N:N relationships"
     return self.Rec(*[self.get_value(f) for f in self.fields])
-
 ```
 
 ### Pandas
 
 - Dataframe: :http://pandas.pydata.org/pandas-docs/stable/api.html#dataframe>
+
   - Serialization / IO / Conversion: <http://pandas.pydata.org/pandas-docs/stable/api.html#id12>
-  
+
 - Iterate over dataFrame:
   - df.itertuples() - namedtuples
   - df.iterrows() - dicts
 - CSV Interaction:
   - df.to_csv(fileName): <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_csv.html>
   - pandas.read_csv(fileName): <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html>
-
-
 
 ### Array
 
@@ -489,11 +487,11 @@ class DictTree:
 Arrays are 10x more efficient than lists.
 
 | **Type code** | **C Type**     | **Python Type**   | **Minimum size in bytes** |
-|---------------|----------------|-------------------|---------------------------|
+| ------------- | -------------- | ----------------- | ------------------------- |
 | 'c'           | char           | character         | 1                         |
 | 'b'           | signed char    | int               | 1                         |
 | 'B'           | unsigned char  | int               | 1                         |
-| 'u'           | Py\_UNICODE    | Unicode character | 2 (see note)              |
+| 'u'           | Py_UNICODE     | Unicode character | 2 (see note)              |
 | 'h'           | signed short   | int               | 2                         |
 | 'H'           | unsigned short | int               | 2                         |
 | 'i'           | signed int     | int               | 2                         |
@@ -520,10 +518,7 @@ size = len(data_array)
 
 for value in data_array:
   print(value)
-
 ```
-
-
 
 ### Tuple vs List
 
@@ -531,7 +526,7 @@ for value in data_array:
 
 - **If array of items will never be changed (no appending and no change of inner-item), use Tuple**
 - **If array of items will require lots of changes (many appends or change of inner-item), use List**
-**Performance**
+  **Performance**
 
 Python makes this very easy: timeit is your friend.
 
@@ -541,25 +536,21 @@ python -m timeit -s "x=(1,2,3,4,5,6,7,8)"
 
 python -m timeit -s "x=[1,2,3,4,5,6,7,8]"
 100000000 loops, best of 3: 0.0143 usec per loop
-
 ```
 
 and...
+
 ```python
 $ python -m timeit -s "x=(1,2,3,4,5,6,7,8)" "y=x[3]"
 10000000 loops, best of 3: 0.0938 usec per loop
 
 $ python -m timeit -s "x=[1,2,3,4,5,6,7,8]" "y=x[3]"
 10000000 loops, best of 3: 0.0649 usec per loop
-
 ```
-
 
 So in this case, instantiation is almost an order of magnitude faster for the tuple, but item access is actually somewhat faster for the list! So if you're creating a few tuples and accessing them many many times, it may actually be faster to use lists instead.
 
 Of course if you want to change an item, the list will definitely be faster since you'd need to create an entire new tuple to change one item of it (since tuples are immutable).
-
-
 
 ### Mutable/Immutable
 
@@ -607,6 +598,7 @@ Changing mutable objects is cheap.
 ```
 
 **Numbers are immutable:**
+
 ```python
 >>> a = 1
 >>> id(a)
@@ -625,11 +617,10 @@ Changing mutable objects is cheap.
 11.6
 >>> id(a)
 36539224L
-
-
 ```
 
 **Tuple are Immutable**
+
 ```python
 >>> a = (1,2)
 >>> id(a)
@@ -639,8 +630,6 @@ Changing mutable objects is cheap.
 (1, 2, 2)
 >>> id(a)
 47525608L
-
-
 ```
 
 **Lists are Mutable**
@@ -655,6 +644,7 @@ Changing mutable objects is cheap.
 ```
 
 **Dicts are Mutable**
+
 ```python
 >>> a = {'a': 2}
 >>> id(a)
@@ -705,7 +695,6 @@ import copy
 a = [1, 2, 3]
 b = [4, 5, 6]
 c = [a, b]
-
 ```
 
 **Using normal assignment operatings to copy:**
@@ -715,7 +704,6 @@ d = c
 
 print id(c) == id(d)          # True - d is the same object as c
 print id(c[0]) == id(d[0])    # True - d[0] is the same object as c[0]
-
 ```
 
 **Using a shallow copy:**
@@ -724,7 +712,6 @@ print id(c[0]) == id(d[0])    # True - d[0] is the same object as c[0]
 d = copy.copy(c)
 print id(c) == id(d)          # False - d is now a new object
 print id(c[0]) == id(d[0])    # True - d[0] is the same object as c[0]
-
 ```
 
 **Using a deep copy:**
@@ -743,7 +730,7 @@ print id(c[0]) == id(d[0])    # False - d[0] is now a new object
 def test1(times = 100):
   def test_unit():
     pass
-  
+
   def t():
     t0 = time.perf_counter()
     test_unit()
@@ -751,13 +738,9 @@ def test1(times = 100):
 
   results = [t() for i in range(times)]
   print(sum(results) / len(results)
-
 ```
 
 ```python
-
-
-
 import timeit
 
 
@@ -812,10 +795,9 @@ res_tuple:  {res_tuple}
 ''')
 ```
 
-
 Smaller is better, three level: &lt;, &lt;&lt;, &lt;&lt;&lt;
 
-**If Order is not priority, use** dict **keys to store data, *as they write/append much faster* and *read as fast as list*.**
+**If Order is not priority, use** dict **keys to store data, _as they write/append much faster_ and _read as fast as list_.**
 
 **declare dict = declare list**
 
@@ -865,7 +847,6 @@ python -m timeit -s "x=[1,2,3,4,5,6,7,8]" "for i in x: i"
 
 python -m timeit -s "x=(1,2,3,4,5,6,7,8)" "for i in x: i"
 1000000 loops, best of 3: 0.254 usec per loop
-
 ```
 
 **Iterating lists &lt;&lt; iterating dict values**
@@ -911,12 +892,13 @@ for path_ in sorted(paths.items(), key=lambda x: x[1], reverse=True):
         path = path_[0]
         print path + ' [' + str(paths[path])
 ```
+
 ## Collections
 
 https://docs.python.org/3/library/collections.html
 
 | Collection   | Desciption                                                           |
-|--------------|----------------------------------------------------------------------|
+| ------------ | -------------------------------------------------------------------- |
 | namedtuple() | factory function for creating tuple subclasses with named fields     |
 | deque        | list-like container with fast appends and pops on either end         |
 | ChainMap     | dict-like class for creating a single view of multiple mappings      |
@@ -944,7 +926,6 @@ for image_path in train_path.iterdir():
 ```
 
 ## Date
-
 
 ### SQL Datetime
 
@@ -980,8 +961,7 @@ utc_delta = datetime.datetime.utcnow() - datetime.datetime.now()
 time_in_utc = datetime.datetime.now() + datetime.timedelta(seconds=round(utc_delta.total_seconds()))
 ```
 
-File Read/Write
----------------
+## File Read/Write
 
 ### Read
 
@@ -989,7 +969,6 @@ File Read/Write
 with open("/tmp/mining/test.txt", "rb") as fileobj:
     for line in fileobj:
         line = line.rstrip()
-
 ```
 
 **Read whole file**
@@ -997,7 +976,6 @@ with open("/tmp/mining/test.txt", "rb") as fileobj:
 ```python
 with open('Path/to/file', 'r') as content_file:
     content = content_file.read()
-
 ```
 
 **Convert to Ascii**
@@ -1005,7 +983,6 @@ with open('Path/to/file', 'r') as content_file:
 ```python
 lines0 = open(file_path,'rb').read()
 lines = lines0.decode('utf-16-le').encode('ascii', 'ignore')
-
 ```
 
 #### XML
@@ -1072,7 +1049,6 @@ target_file.close()
 self.log_file = open(self.log_folder_path + '/informatica_python_log.txt', 'a')
 ```
 
-
 #### XML
 
 ```python
@@ -1107,8 +1083,7 @@ def create_xml(self, jobs, folder_path = '/data/jobs_header'):
 	SaveTexttoFile(xml_body.encode('utf-8'), target_file_path)
 ```
 
-Random
-------
+## Random
 
 ### Numbers
 
@@ -1148,6 +1123,7 @@ N = 6
 ### Unicode
 
 **TypeError: Can't convert 'bytes' object to str implicitly**
+
 ```python
 ascii_string = unicode_string.decode('utf8')
 unicode_string = ascii_string.encode('utf8')
@@ -1155,8 +1131,7 @@ unicode_string = ascii_string.encode('utf8')
 ascii_string = unicode_string.encode('ascii', errors='replace').decode('ascii')
 ```
 
-FOR Loop
---------
+## FOR Loop
 
 ### Range
 
@@ -1241,8 +1216,6 @@ transformation_type_choices = [t["NAME"] for t in transformation_types]
 filter(lambda t: t["NAME"] == type, transformation_types)[0]['TABLEATTRIBUTE']
 
 atts = [a for a in dir(self) if not a.startswith('__') and not callable(getattr(self,a))]
-
-
 ```
 
 <http://www.python-course.eu/lambda.php>
@@ -1253,8 +1226,7 @@ atts = [a for a in dir(self) if not a.startswith('__') and not callable(getattr(
 object_dict = dict((x, x) for x in object_list)
 ```
 
-Database
---------
+## Database
 
 ### SQL statement model
 
@@ -1264,7 +1236,6 @@ Database
 sql = """REPLACE INTO Reservations ({fields}) VALUES ({values})"""
 sql = sql.format(fields=','.join(data), values=','.join(["'%s'"]*len(data))) % tuple(data.values())
 db_target.query_cursor(sql)
-
 ```
 
 **For Update**
@@ -1274,7 +1245,6 @@ For Update
 sql = '''UPDATE session_stats SET {set_fields} WHERE {where_fields}'''
 sql = sql.format(set_fields=' = ?, '.join(session_hash) + ' = ?', where_fields=' = ? AND '.join(session_pk_fields) + ' = ?')
 cursor.execute(sql, tuple(session_hash.values()) + tuple([session_hash[k] for k in session_pk_fields]))
-
 ```
 
 **For MySQL**
@@ -1336,7 +1306,6 @@ else:
 db.commit()
 cursor.close()
 db.close()
-
 ```
 
 #### For Postgres
@@ -1360,7 +1329,6 @@ result = conn.execute(text(sql_upsert.format(
     primary_key=','.join('"COL1" "COL1"'.split()),
     fields_equal_key=','.join([q(no_space(h)) + "=:" + no_space(h) for h in headers]),
   )), **record)
-
 ```
 
 ### Import from CSV
@@ -1374,9 +1342,7 @@ from sqlalchemy import create_engine
 engine = create_engine('postgresql://username:password@localhost:5432/dbname')
 
 df.to_sql("fhrs", engine)
-
 ```
-
 
 ### Install MySQL Connector
 
@@ -1386,12 +1352,15 @@ df.to_sql("fhrs", engine)
 **For Ubuntu**
 
 Starting with a vanilla Lucid install \[1\], install pip and upgrade to the latest version:
+
 ```bash
 apt-get install python-pip
 
 pip install -U pip
 ```
+
 Next, install the required development packages:
+
 ```bash
 apt-get install -y python-dev libmysqlclient-dev gcc mysql-devel mysql-common mysql-libs
 
@@ -1405,7 +1374,9 @@ yum install -y python-devel mysql-devel
 
 yum install -y mysql mysql-devel mysql-common mysql-libs gcc
 ```
+
 then
+
 ```bash
 pip install MySQL-python
 
@@ -1423,7 +1394,6 @@ python ./setup.py build
 
 sudo python ./setup.py install
 ```
-
 
 ### ORM
 
@@ -1460,15 +1430,14 @@ def extract_insert(text, cursor):
             result_hash[key] = arr[1]
         elif key != None:
             result_hash[key] = result_hash[key] + '\n' + line
-            
-    
+
+
     result_hash["Start_time"] = to_sql_datetime(result_hash["Start_time"])
     result_hash["End_time"] = to_sql_datetime(result_hash["End_time"])
-    
+
     sql = '''REPLACE INTO workflow_stats ("{fields}") VALUES ({values})'''
     sql = sql.format(fields='","'.join(result_hash), values=', '.join(['?']*len(result_hash)))
     cursor.execute(sql, tuple(result_hash.values()))
-
 ```
 
 #### Select
@@ -1496,7 +1465,6 @@ c.execute('SELECT * FROM my_db WHERE my_var1=? AND my_var2 <= ?', t)
 rows = c.fetchall()
 for r in rows:
     print r
-
 ```
 
 ## System
@@ -1559,7 +1527,6 @@ for i, rec_dict in enumerate(pool.imap(process_one_field, collect(df))):
 #   pprogress(i+1, len(df.columns), show_time=False)
 #   field = rec_dict['field']
 #   fields_dict[field] = rec_dict
-
 ```
 
 #### Multiprocessing
@@ -1608,20 +1575,20 @@ Measure-Command {python script.py}
 ```
 
 Linux:
+
 ```bash
 time python script.py
 ```
 
 ### Directory
+
 ```python
 import os
 
 list_of_files = os.listdir("C:\\temp")
 for filename in list_of_files:
     print  filename
-
 ```
-
 
 #### Check existing / Make
 
@@ -1634,7 +1601,6 @@ if not os.path.exists(folder_path): os.makedirs(folder_path)
 ```python
 import glob
 for f in glob.glob(params_mapping_passthrough['xml_new_files_folder_path'] + '/*'): os.remove(f)
-
 ```
 
 ### File Exists
@@ -1654,7 +1620,6 @@ os.remove(f)
 ```python
 import os
 os.environ["PATH"] += os.pathsep + ";/client/bin"
-
 ```
 
 **Change Current Directory**
@@ -1669,7 +1634,6 @@ os.chdir(path)
 import sys
 for line in sys.stdin:
     print line
-
 ```
 
 ### Command Line Arguments
@@ -1716,7 +1680,6 @@ print 'constant_value   =', results.constant_value
 print 'boolean_switch   =', results.boolean_switch
 print 'collection       =', results.collection
 print 'const_collection =', results.const_collection
-
 ```
 
 <https://pymotw.com/2/argparse/>
@@ -1784,7 +1747,6 @@ for opt, arg in opts:
     if opt == '--version':
         print "DenyHosts version:", VERSION
         sys.exit(0)
-
 ```
 
 ### Commands
@@ -1796,10 +1758,10 @@ from subprocess import call
 ```python
 from subprocess import call
 call(["ls", "-l"])
-
 ```
 
 ### Simple to get output
+
 ```
 import subprocess
 out = subprocess.getoutput(lcmd)
@@ -1815,7 +1777,6 @@ import subprocess
 p = subprocess.Popen(["ls", "-l"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 for line in p.stdout.readlines(): print line.rstrip()
 retval = p.wait()
-
 ```
 
 #### To get live output
@@ -1829,11 +1790,9 @@ p = subprocess.Popen(["ls", "-l"], shell=True, stdout=subprocess.PIPE, stderr=su
 lines = []
 for line in iter(p.stdout.readline, ''):
     lines.append(line.rstrip())
-
 ```
 
-Web / JSON
-----------
+## Web / JSON
 
 ### urllib2
 
@@ -1881,7 +1840,6 @@ for k,v in headers.iteritems():
     request.add_header(k, v)
 
 json_data = json.load(urlopen(request))
-
 ```
 
 #### Use Proxy
@@ -1891,10 +1849,10 @@ proxy = urllib2.ProxyHandler({'http': '127.0.0.1'})
 opener = urllib2.build_opener(proxy)
 urllib2.install_opener(opener)
 urllib2.urlopen('http://www.google.com')
-
 ```
 
 ### NLTM Windows Auth
+
 ```python
 import requests
 from requests.auth import HTTPBasicAuth
@@ -1922,7 +1880,6 @@ proxy = Proxy({
     })
 
 driver = webdriver.Firefox(proxy=proxy)
-
 ```
 
 ### A Proxy Server
@@ -1937,17 +1894,17 @@ import socket
 import select
 import time
 import sys
- 
+
 # Changing the buffer_size and delay, you can improve the speed and bandwidth.
 # But when buffer get to high or delay go too down, you can broke things
 buffer_size = 4096
 delay = 0.0001
 forward_to = ('smtp.zaz.ufsk.br', 25)
- 
+
 class Forward:
     def __init__(self):
         self.forward = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
- 
+
     def start(self, host, port):
         try:
             self.forward.connect((host, port))
@@ -1955,17 +1912,17 @@ class Forward:
         except Exception, e:
             print e
             return False
- 
+
 class TheServer:
     input_list = []
     channel = {}
- 
+
     def __init__(self, host, port):
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.server.bind((host, port))
         self.server.listen(200)
- 
+
     def main_loop(self):
         self.input_list.append(self.server)
         while 1:
@@ -1976,14 +1933,14 @@ class TheServer:
                 if self.s == self.server:
                     self.on_accept()
                     break
- 
+
                 self.data = self.s.recv(buffer_size)
                 if len(self.data) == 0:
                     self.on_close()
                     break
                 else:
                     self.on_recv()
- 
+
     def on_accept(self):
         forward = Forward().start(forward_to[0], forward_to[1])
         clientsock, clientaddr = self.server.accept()
@@ -1997,7 +1954,7 @@ class TheServer:
             print "Can't establish connection with remote server.",
             print "Closing connection with client side", clientaddr
             clientsock.close()
- 
+
     def on_close(self):
         print self.s.getpeername(), "has disconnected"
         #remove objects from input_list
@@ -2011,13 +1968,13 @@ class TheServer:
         # delete both objects from channel dict
         del self.channel[out]
         del self.channel[self.s]
- 
+
     def on_recv(self):
         data = self.data
         # here we can parse and/or modify the data before send forward
         print data
         self.channel[self.s].send(data)
- 
+
 if __name__ == '__main__':
         server = TheServer('', 9090)
         try:
@@ -2025,11 +1982,9 @@ if __name__ == '__main__':
         except KeyboardInterrupt:
             print "Ctrl C - Stopping server"
             sys.exit(1)
-
 ```
 
-Other
------
+## Other
 
 ### Decorators
 
@@ -2062,7 +2017,6 @@ def do_something():
 @synchronzied(lock)
 def do_something_else():
   # etc
-
 ```
 
 **Time Wrapper:**
@@ -2081,7 +2035,6 @@ def time_dec(func):
 
 @time_dec
 def myFunction(n):
-
 ```
 
 ### PyVirtualDisplay
@@ -2095,7 +2048,6 @@ pip install pyvirtualdisplay
 ```bash
 wget http://vault.centos.org/6.2/os/x86_64/Packages/xorg-x11-server-Xvfb-1.10.4-6.el6.x86_64.rpm
 yum localinstall -y xorg-x11-server-Xvfb-1.10.4-6.el6.x86_64.rpm
-
 ```
 
 **Debian**
@@ -2119,7 +2071,6 @@ formatter = logging.Formatter("%(asctime)s;%(levelname)s;%(message)s","%Y-%m-%d 
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 logger.propagate = False
-
 ```
 
 ### LXML
@@ -2130,8 +2081,8 @@ OR
 sudo apt-get install python-dev libxml2-dev libxslt-dev build-essential
 
 sudo pip install lxml
-
 ```
+
 ```python
 for element in xml_tree.iter():
   # print element.tag
@@ -2190,7 +2141,6 @@ curl https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py | pyth
 
 # Install `virtualenv`
 pip2.7 install virtualenv
-
 ```
 
 ### Python Libraries
@@ -2209,8 +2159,7 @@ Ubuntu:
 
 <https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-14-04>
 
-Flask
------
+## Flask
 
 **Passing Variables to Template**
 
@@ -2233,7 +2182,6 @@ def hello():
 
 if __name__ == "__main__":
     app.run(host= '0.0.0.0', port = 5000, debug=True)
-
 ```
 
 ### Passing Params through URI
@@ -2250,7 +2198,6 @@ You can typecast (well kinda) the arguments in three ways, path, int and float, 
 <float:stuff> # like int but for floating point values
 <path:stuff> # like the default but also accepts slashes
 <stuff> # Default
-
 ```
 
 ### Handle Form POST Requests
@@ -2263,12 +2210,12 @@ def hello():
     name=request.form['yourname']
     email=request.form['youremail']
     return render_template('form_action.html', name=name, email=email)
-
 ```
 
 ### Handle URL Arguments
 
 <http://code.runnable.com/Uhf58hcCo9RSAACs/using-sessions-in-flask-for-python>
+
 ```python
 @app.route('/form')
 def form(): # "GET /form?yourname=fff HTTP/1.1"
@@ -2283,7 +2230,6 @@ def form(): # "GET /form?yourname=fff HTTP/1.1"
   else:
     # If no name has been sent, show the form
     return render_template('form.html', session=session)
-
 ```
 
 Flask with AngularJS:
@@ -2293,8 +2239,6 @@ Flask with AngularJS:
 Flask with JQuery:
 
 <http://www.giantflyingsaucer.com/blog/?p=4310>
-
-
 
 ## Jython
 
@@ -2315,7 +2259,6 @@ from scrapy.http import HtmlResponse
 
 response = HtmlResponse(url='http://example.com', body=html_text, encoding='utf8')
 response.css('img').xpath('@src').extract()
-
 ```
 
 **Using CSS**
@@ -2330,19 +2273,16 @@ item = results[0]
 text = item.css(css_selector_str2 + '::text').extract()
 ```
 
-
-
 # SSH
 
 ```python
-
 class Server(object):
   def __init__(self, name, ip, username, password=None, key_path=None):
     self.port = 22
     if ":" in ip:
         self.port = int(ip.split(":")[-1])
         ip = ip.split(":")[0]
-    
+
     import paramiko
     self.name = name
     self.ip = ip
@@ -2358,15 +2298,15 @@ class Server(object):
     self.core_id_lock = {}
 
     self.key = paramiko.RSAKey.from_private_key_file(key_path) if key_path else None
-    
+
     self.ssh_client = paramiko.SSHClient()
     self.ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     self.status = Status(text='', spinner='dots')
-      
-  
+
+
   def ssh_connect(self):
     self.connect_tries += 1
-        
+
     try:
       with Status(text='Connecting to ' + self.ip, spinner='dots'):
         self.ssh_client.connect(self.ip, self.port, self.username, self.password, timeout=4, pkey=self.key)
@@ -2374,14 +2314,14 @@ class Server(object):
       self.connected = True
       log("Successful Connection to " + self.name + " (%s)" % self.ip)
       return self.connected
-      
+
       #self.channel = self.ssh_client.get_transport().open_session()
-      
+
       # Get CPU cores
       stdin, stdout, stderr = self.ssh_client.exec_command('cat /proc/cpuinfo')
       output = []
       for line in stdout.readlines(): output.append(line.replace('\n',''))
-      
+
       for line in output:
         line_arr = line.split()
         try:
@@ -2396,10 +2336,10 @@ class Server(object):
       error_message = "Failed to connect to " + self.name + " (%s)" % self.ip + " -> " + get_exception_message()
       log(error_message, color='red')
       return self.connected
-  
+
   def ssh_command(self, command, wait_for_output = True):
     if(not self.connected): self.ssh_connect()
-    
+
     try:
       stdin, stdout, stderr = self.ssh_client.exec_command(command)
     except socket.error as e:
@@ -2407,18 +2347,18 @@ class Server(object):
       self.connected = False
       self.ssh_connect()
       stdin, stdout, stderr = self.ssh_client.exec_command(command)
-        
+
     self.last_output = ''
     self.last_output_lines = 0
-    
+
     if(wait_for_output):
       self.ssh_chan_status = stdout.channel.recv_exit_status()
       for line in stdout.readlines():
         self.last_output = self.last_output + line
         self.last_output_lines += 1
-        
+
     return self.last_output
-  
+
   def sftp_copy_from(self, remote_filepath, local_filepath):
     if(not self.test_connection): self.ssh_connect()
     # copy file from remote server object to local path
@@ -2431,7 +2371,7 @@ class Server(object):
     except:
       error_message = get_exception_message() + '\nremote_filepath: ' + self.name + ':' + remote_filepath + '\nlocal_filepath: ' + local_filepath
       log(error_message, color='red')
-  
+
   def sftp_copy_to(self, local_filepath, remote_filepath):
     if(not self.test_connection): self.ssh_connect()
     # copy file from local path to remote server object
@@ -2444,12 +2384,12 @@ class Server(object):
     except:
       error_message = get_exception_message() + '\nremote_filepath: ' + self.name + ':' + remote_filepath + '\nlocal_filepath: ' + local_filepath
       log(error_message, color='red')
-  
+
   def transfer_progress(self, transferred, total, unit='B'):
     "Display transfer progress"
     prct = int(100.0 * transferred / total)
     divide = lambda x, y: round(1.0 * x / (y), 1)
-    
+
     if self.last_stat:
       secs = (datetime.datetime.now() - self.last_stat['time']).total_seconds()
       if secs > 2:
@@ -2460,7 +2400,7 @@ class Server(object):
     else:
       rate = 0
       self.last_stat = dict(time=now(), transferred=transferred, rate=rate)
-    
+
     if total > 1024 ** 3:
       transferred = divide(transferred, 1024 ** 3)
       total = divide(total, 1024 ** 3)
@@ -2488,7 +2428,7 @@ class Server(object):
     if ":" in ip:
         self.port = int(ip.split(":")[-1])
         ip = ip.split(":")[0]
-    
+
     import paramiko
     self.name = name
     self.ip = ip
@@ -2502,15 +2442,15 @@ class Server(object):
     self.core_id_status = {}
     self.core_id_queue = {}
     self.core_id_lock = {}
-    
+
     self.ssh_client = paramiko.SSHClient()
     self.ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     self.status = Status(text='', spinner='dots')
-      
-  
+
+
   def ssh_connect(self):
     self.connect_tries += 1
-        
+
     try:
       with Status(text='Connecting to ' + self.ip, spinner='dots'):
         self.ssh_client.connect(self.ip, self.port, self.username, self.password, timeout=4)
@@ -2518,14 +2458,14 @@ class Server(object):
       self.connected = True
       log("Successful Connection to " + self.name + " (%s)" % self.ip)
       return self.connected
-      
+
       #self.channel = self.ssh_client.get_transport().open_session()
-      
+
       # Get CPU cores
       stdin, stdout, stderr = self.ssh_client.exec_command('cat /proc/cpuinfo')
       output = []
       for line in stdout.readlines(): output.append(line.replace('\n',''))
-      
+
       for line in output:
         line_arr = line.split()
         try:
@@ -2540,10 +2480,10 @@ class Server(object):
       error_message = "Failed to connect to " + self.name + " (%s)" % self.ip + " -> " + get_exception_message()
       log(error_message, color='red')
       return self.connected
-  
+
   def ssh_command(self, command, wait_for_output = True):
     if(not self.connected): self.ssh_connect()
-    
+
     try:
       stdin, stdout, stderr = self.ssh_client.exec_command(command)
     except socket.error as e:
@@ -2551,18 +2491,18 @@ class Server(object):
       self.connected = False
       self.ssh_connect()
       stdin, stdout, stderr = self.ssh_client.exec_command(command)
-        
+
     self.last_output = ''
     self.last_output_lines = 0
-    
+
     if(wait_for_output):
       self.ssh_chan_status = stdout.channel.recv_exit_status()
       for line in stdout.readlines():
         self.last_output = self.last_output + line
         self.last_output_lines += 1
-        
+
     return self.last_output
-  
+
   def sftp_copy_from(self, remote_filepath, local_filepath):
     if(not self.test_connection): self.ssh_connect()
     # copy file from remote server object to local path
@@ -2575,7 +2515,7 @@ class Server(object):
     except:
       error_message = get_exception_message() + '\nremote_filepath: ' + self.name + ':' + remote_filepath + '\nlocal_filepath: ' + local_filepath
       log(error_message, color='red')
-  
+
   def sftp_copy_to(self, local_filepath, remote_filepath):
     if(not self.test_connection): self.ssh_connect()
     # copy file from local path to remote server object
@@ -2588,12 +2528,12 @@ class Server(object):
     except:
       error_message = get_exception_message() + '\nremote_filepath: ' + self.name + ':' + remote_filepath + '\nlocal_filepath: ' + local_filepath
       log(error_message, color='red')
-  
+
   def transfer_progress(self, transferred, total, unit='B'):
     "Display transfer progress"
     prct = int(100.0 * transferred / total)
     divide = lambda x, y: round(1.0 * x / (y), 1)
-    
+
     if self.last_stat:
       secs = (datetime.datetime.now() - self.last_stat['time']).total_seconds()
       if secs > 2:
@@ -2604,7 +2544,7 @@ class Server(object):
     else:
       rate = 0
       self.last_stat = dict(time=now(), transferred=transferred, rate=rate)
-    
+
     if total > 1024 ** 3:
       transferred = divide(transferred, 1024 ** 3)
       total = divide(total, 1024 ** 3)
@@ -2629,7 +2569,7 @@ class Server(object):
 
 # Pip
 
-**Installing with custom RPM library**
+## Installing with custom RPM library
 
 ```bash
 # Download RPM located at http://rpmfind.net/linux/rpm2html/search.php?query=ncurses-static
@@ -2644,3 +2584,18 @@ rpm2cpio /data/user/fl88589/tmp/ncurses-static-5.7-4.20090207.el6.x86_64.rpm | c
 tpip3 install --global-option=build_ext --global-option="-L/data/user/fl88589/ps/ncurses-static/usr/lib64" readline
 ```
 
+## Installing from script
+
+```python
+import pip
+
+def install(package):
+    if hasattr(pip, 'main'):
+        pip.main(['install', package])
+    else:
+        pip._internal.main(['install', package])
+
+# Example
+if __name__ == '__main__':
+    install('argh')
+```
