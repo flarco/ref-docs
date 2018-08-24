@@ -13,6 +13,8 @@ Kafka: [https://www.gitbook.com/book/jaceklaskowski/apache-kafka/details](https:
 
 JDBC: <https://medium.com/@radek.strnad/tips-for-using-jdbc-in-apache-spark-sql-396ea7b2e3d3>
 
+Memory Management: <https://0x0fff.com/spark-memory-management/>
+
 ## Master Options
 
 | Master URL                      | Meaning                                                                                                                                                                                                                                                                                                   |
