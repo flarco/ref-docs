@@ -152,6 +152,13 @@ r"(?<=Rate )[ \w$]+?(?= Job Type)"
 result = re.sub('[^0-9]','', 'af7878787ad')
 ```
 
+**Filter out entries***
+
+```python
+regexp = re.compile(r"[- ,;{}()\n\t=\/:.]")
+fields = filter(lambda field: not regexp.search(field), fields)
+```
+
 **Constains one char math**
 
 ```python
