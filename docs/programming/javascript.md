@@ -4,7 +4,7 @@
 
 ### Destructuring
 
-```javascript=
+```javascript
 var a, b, rest;
 
 ({ a, b } = { a: 10, b: 20 });
@@ -20,7 +20,7 @@ console.log(rest); //{c: 30, d: 40}
 
 ### Contains Key
 
-```javascript=
+```javascript
 if ("key" in myObj) {
   // logic
 }
@@ -28,13 +28,13 @@ if ("key" in myObj) {
 
 ### Copy / Clone
 
-```javascript=
+```javascript
 database = Object.assign({}, databases[name]); // copy of object
 ```
 
 ### Iteration
 
-```javascript=
+```javascript
 let databases = { k1: "v1", k2: "v2" };
 Object.entries(databases).forEach(function(item) {
   // item is ['k1', 'v1], then ['k2', 'v2']
@@ -50,7 +50,7 @@ Object.keys(databases).forEach(function(key) {
 
 ### Destructuring
 
-```javascript=
+```javascript
 var a, b, rest;
 [a, b] = [10, 20];
 console.log(a); // 10
@@ -64,7 +64,7 @@ console.log(rest); // [30, 40, 50]
 
 ### Iteration
 
-```javascript=
+```javascript
 let iterable = [10, 20, 30];
 
 for (let value of iterable) {
@@ -75,13 +75,13 @@ for (let value of iterable) {
 
 ### Find
 
-```javascript=
+```javascript
 // To find index
 let i = state.items.findIndex(obj => obj.name == "Query");
 let item = state.items[i];
 ```
 
-```javascript=
+```javascript
 // to find item
 const user = this.users.find(user => {
   return user.id == registration.userId;
@@ -94,7 +94,7 @@ const user = this.users.find(user => user.id == registration.userId);
 
 ### Create
 
-```javascript=
+```javascript
 // creates 100 rows of arrays with length of 6
 let data = Array.from({ length: 100 }, () =>
   Array.from({ length: 6 }, () => Math.random() * 1000)
@@ -103,7 +103,7 @@ let data = Array.from({ length: 100 }, () =>
 
 ### Filter
 
-```javascript=
+```javascript
 let filteredUsers = users.filter(user => {
   return !user.registered;
 });
@@ -113,7 +113,7 @@ let filteredUsers = users.filter(user => {
 
 [Remove last element from Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop)
 
-```javascript=
+```javascript
 var a = [1, 2, 3];
 a.pop();
 
@@ -124,7 +124,7 @@ console.log(a); // [1, 2]
 
 [Manipulate array, remove middle value](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
 
-```javascript=
+```javascript
 var myFish = ["angel", "clown", "mandarin", "sturgeon"];
 
 myFish.splice(2, 0, "drum"); // insert 'drum' at 2-index position
