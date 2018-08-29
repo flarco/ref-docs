@@ -2576,6 +2576,8 @@ class Server(object):
 
 # Pip
 
+<https://pip.pypa.io/en/stable/reference/pip_install/#git>
+
 ## Installing with custom RPM library
 
 ```bash
