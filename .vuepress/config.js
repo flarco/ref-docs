@@ -16,8 +16,7 @@ module.exports = {
         label: 'English',
         selectText: 'Languages',
         editLinkText: 'Edit this page on GitHub',
-        nav: [
-          {
+        nav: [{
             text: 'Home',
             link: '/'
           },
@@ -77,6 +76,7 @@ module.exports = {
               '/docs/programming/go.md',
               '/docs/programming/java.md',
               '/docs/programming/nodejs.md',
+              '/docs/programming/javascript.md',
               '/docs/programming/powershell.md',
               '/docs/programming/python-database.md',
               '/docs/programming/python-jupyter.md',
