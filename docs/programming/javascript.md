@@ -134,4 +134,6 @@ myFish.splice(2, 1); // remove 1 item at 2-index position (that is, "drum")
 // myFish is ["angel", "clown", "mandarin", "sturgeon"]
 ```
 
-# VueJS
+## Keyboard Keycodes
+
+<https://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes>
