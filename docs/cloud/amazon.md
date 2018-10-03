@@ -1,4 +1,36 @@
-# Amazon
+# Amazon Web Services
+
+# Python API Lib - Boto3
+
+<https://boto3.amazonaws.com/v1/documentation/api/latest/guide/index.html>
+<https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/index.html>
+
+# Certification
+
+## Strategy
+
+- Watch course
+- Read WhitePapers:
+  - <https://aws.amazon.com/whitepapers/>
+  - <https://d0.awsstatic.com/whitepapers/Security/AWS_Security_Whitepaper.pdf>
+  - <https://d0.awsstatic.com/whitepapers/AWS%20Storage%20Services%20Whitepaper-v9.pdf>
+  - <https://d0.awsstatic.com/whitepapers/architecture/AWS_Well-Architected_Framework.pdf>
+  - <http://d0.awsstatic.com/whitepapers/aws_pricing_overview.pdf>
+- Create Python scripts to create, consume and destroy services for all course labs.
+  - EC2 Instance
+  - S3 Buckets
+  - Kinesis Streams
+  - RDS Instance
+  - Redshift Instance
+- Take Practice Exam: <https://aws.amazon.com/certification/certification-prep/>
+- References:
+  - EC2: <https://aws.amazon.com/ec2/faqs/>
+  - S3: <https://aws.amazon.com/s3/faqs/>
+  - VPC: <https://aws.amazon.com/vpc/faqs/>
+  - Route 53: <https://aws.amazon.com/route53/faqs/>
+  - Route RDS: <https://aws.amazon.com/rds/faqs/>
+  - Route SQS: <https://aws.amazon.com/sqs/faqs/>
+  
 
 
 ## Certification Paths
@@ -246,7 +278,7 @@ Key Points:
 - 99% availability
 - 999999999% (11 x 9's) durability (the chance of losing your files)
 
-###Versioning:
+### Versioning:
 
 - Keeps all versions / history of the file
 - Take a lot of space, each time an update / delete is made, space is added up
@@ -254,14 +286,14 @@ Key Points:
 - Multi Factor Authentication (MFA) can be used for extra security
 - Cross-Region Replication :: replication of all files to another S3 Bucket located in another Region. Requires Versioning enabled !
 
-###LifeCycle Rules
+### LifeCycle Rules
 Lifecycle rules enable you to automatically transition objects to:::
 
 - Standard / Infrequent Access (IA) Storage Class (30 day minimum delta from creation date)
 - **and/or** archive objects to the Glacier Storage Class (30 day minimum delta from creation date, 60 day minimum delta from creation date if moved to IA first)
 - **and/or** remove objects after a specified time period.
 
-###Retrival Times
+### Retrival Times
 - Standard - Infrequent Access (IA): a few miliseconds
 - Glacier : 3 to 5 hours
 
