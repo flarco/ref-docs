@@ -129,8 +129,69 @@ WHERE rnum = 1;
 
 ---
 
+# PL SQL
 
-## CLOB Aggregation - Click to expand
+## Bulk Insert
+
+```sql
+declare
+  -- define array type of the new table
+  TYPE new_table_array_type IS TABLE OF NEW_TABLE%ROWTYPE INDEX BY BINARY_INTEGER;
+
+  -- define array object of new table
+  new_table_array_object new_table_array_type;
+
+  -- fetch size on  bulk operation, scale the value to tweak
+  -- performance optimization over IO and memory usage
+  fetch_size NUMBER := 5000;
+
+  -- define select statment of old table
+  -- select desiered columns of OLD_TABLE to be filled in NEW_TABLE
+  CURSOR old_table_cursor IS
+    select * from OLD_TABLE;
+
+BEGIN
+
+  OPEN old_table_cursor;
+  loop
+    -- bulk fetch(read) operation
+    FETCH old_table_cursor BULK COLLECT
+      INTO new_table_array_object LIMIT fetch_size;
+    EXIT WHEN old_table_cursor%NOTFOUND;
+
+    -- do your business logic here (if any)
+    -- FOR i IN 1 .. new_table_array_object.COUNT  LOOP
+    --   new_table_array_object(i).some_column := 'HELLO PLSQL';
+    -- END LOOP;
+
+    -- bulk Insert operation
+    FORALL i IN INDICES OF new_table_array_object SAVE EXCEPTIONS
+      INSERT INTO NEW_TABLE VALUES new_table_array_object(i);
+    COMMIT;
+
+  END LOOP;
+  CLOSE old_table_cursor;
+End;
+```
+
+## PL/SQL XML Conversion
+
+```sql
+
+declare
+  xml_doc DBMS_XMLDOM.DOMDocument;
+  xml_clob clob;
+BEGIN
+  dbms_lob.createtemporary(xml_clob, TRUE);
+  FOR i IN 1 .. new_table_array_object.COUNT  LOOP
+    xml_doc := DBMS_XMLDOM.NewDomDocument(new_table_array_object(i).xml_info);
+    dbms_xmldom.writetoclob(xml_doc, xml_clob);
+    new_table_array_object(i).xml_clob := xml_clob;
+  END LOOP;
+END;
+```
+
+## CLOB Aggregation
 
 
 ```sql
