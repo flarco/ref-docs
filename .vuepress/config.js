@@ -75,6 +75,7 @@ module.exports = {
               '/docs/programming/android.md',
               '/docs/programming/go.md',
               '/docs/programming/java.md',
+              '/docs/programming/scala.md',
               '/docs/programming/nodejs.md',
               '/docs/programming/javascript.md',
               '/docs/programming/powershell.md',
