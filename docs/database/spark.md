@@ -673,3 +673,14 @@ select
   coalesce(pol_term_id, last_value(pol_term_id, true) over(partition by field1 order by field1, field2 rows between unbounded preceding and current row)) as pol_term_id
 from t1;
 ```
+
+
+# Scala
+
+## Packaging and Submitting
+
+```bash
+cd /path/to/project_abc
+sbt package
+spark-submit --class "class.name.to.run" --master local[2] /path/to/project_abc/target/scala-2.11/project_abc_2.11-1.0.jar
+```
