@@ -21,3 +21,10 @@ sbt "test-only org.yourcompany.YourTestSpec" # runs a single test
 sbt test                                     # runs every tests
 sbt ";clean ;compile; run"                   # combines multiple commands in a single invocation
 ```
+
+# VSCode Language Server
+
+**First thing: Need to add the global plugin**
+<http://ensime.github.io/build_tools/sbt/#install>
+
+Then need to run `sbt ensimeConfig` in the root project.
