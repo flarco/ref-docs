@@ -684,3 +684,8 @@ cd /path/to/project_abc
 sbt package
 spark-submit --class "class.name.to.run" --master local[2] /path/to/project_abc/target/scala-2.11/project_abc_2.11-1.0.jar
 ```
+
+### Getting all Class Names in JAR
+```bash
+jar tvf build/libs/App1-standalone-0.1.jar | grep class.prefix
+```
