@@ -45,6 +45,10 @@ serverless create -t aws-python
 serverless deploy
 ```
 
+## Lambda
+
+Python Deployment: <https://docs.aws.amazon.com/lambda/latest/dg/lambda-python-how-to-create-deployment-package.html>
+
 ## CloudFormation Alternatives
 
 <https://github.com/cloudtools/troposphere>
