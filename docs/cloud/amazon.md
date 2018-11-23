@@ -23,6 +23,26 @@ aws help
 <https://boto3.amazonaws.com/v1/documentation/api/latest/guide/index.html>
 <https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/index.html>
 
+
+### Serverless
+
+**Installation***
+```bash
+npm install -g serverless
+```
+
+**Create from template***
+```bash
+serverless create -t aws-nodejs
+serverless create -t aws-python
+```
+
+**Deploy**
+```bash
+# after configuring AWS creds in ~/.aws/credentials
+serverless deploy
+```
+
 ## CloudFormation Alternatives
 
 <https://github.com/cloudtools/troposphere>
