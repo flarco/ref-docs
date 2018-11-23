@@ -26,12 +26,12 @@ aws help
 
 ### Serverless
 
-**Installation***
+**Installation**
 ```bash
 npm install -g serverless
 ```
 
-**Create from template***
+**Create from template**
 ```bash
 serverless create -t aws-nodejs
 serverless create -t aws-python
