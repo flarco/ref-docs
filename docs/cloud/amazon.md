@@ -26,6 +26,8 @@ aws help
 
 ### Serverless
 
+<https://github.com/serverless/serverless>
+
 **Installation**
 ```bash
 npm install -g serverless
