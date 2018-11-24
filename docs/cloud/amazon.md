@@ -23,6 +23,32 @@ aws help
 <https://boto3.amazonaws.com/v1/documentation/api/latest/guide/index.html>
 <https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/index.html>
 
+
+### Serverless
+
+<https://github.com/serverless/serverless>
+
+**Installation**
+```bash
+npm install -g serverless
+```
+
+**Create from template**
+```bash
+serverless create -t aws-nodejs
+serverless create -t aws-python
+```
+
+**Deploy**
+```bash
+# after configuring AWS creds in ~/.aws/credentials
+serverless deploy
+```
+
+## Lambda
+
+Python Deployment: <https://docs.aws.amazon.com/lambda/latest/dg/lambda-python-how-to-create-deployment-package.html>
+
 ## CloudFormation Alternatives
 
 <https://github.com/cloudtools/troposphere>
