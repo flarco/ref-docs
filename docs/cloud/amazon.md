@@ -37,6 +37,7 @@ npm install -g serverless
 ```bash
 serverless create -t aws-nodejs
 serverless create -t aws-python
+serverless create -t aws-go
 ```
 
 **Deploy**
