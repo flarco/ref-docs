@@ -2611,7 +2611,7 @@ if __name__ == '__main__':
 
 ## Install Local Package
 
-## From local folder
+### From local folder
 
 ```
 pip install mypackage --no-index --find-links file:///srv/pkg/mypackage
@@ -2621,4 +2621,9 @@ pip install mypackage --no-index --find-links file:///srv/pkg/mypackage
 
 ```
 pip install -e /path/to/package
+```
+
+### To Local Folder (PYTHONPATH)
+```
+pip install --target . mypackage
 ```
