@@ -2626,4 +2626,5 @@ pip install -e /path/to/package
 ### To Local Folder (PYTHONPATH)
 ```
 pip install --target . mypackage
+pip install --target /path/to/folder mypackage
 ```
