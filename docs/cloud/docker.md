@@ -17,6 +17,18 @@ docker build --no-cache -t username/wma_app:v1 .
 docker build -f /path/to/a/Dockerfile2 -t username/wma_app:v1 .
 ```
 
+### Push Image
+```
+# login
+docker login --username=username --password-stdin
+
+# build
+docker build -f /path/to/a/Dockerfile -t username/wma_app:v1 .
+
+# push
+docker push username/wma_app:v1
+```
+
 #### Add SSH Service
 ```
 RUN echo "root:my_pass!" | chpasswd && \
