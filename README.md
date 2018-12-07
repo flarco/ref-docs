@@ -2,23 +2,7 @@
 Master reference for all things code.
 Quickly find the solution!
 
-This project loads the site <http://ref-docs.pw>
-
-## Install MkDocs
-```
-pip install mkdocs
-```
-Here for more info: <http://www.mkdocs.org/>
-
-## Building the site with MkDocs
-
-```bash
-git clone https://github.com/flarco/ref-docs.git
-
-cd ref-docs
-
-mkdocs build --clean
-```
+This project loads the site <http://docs.ocral.org>
 
 ## Install VuePress
 
@@ -34,6 +18,8 @@ git clone https://github.com/flarco/ref-docs.git
 cd ref-docs
 
 vuepress build
+
+ls -l .vuepress/dist
 ```
 
 ## Running with NGINX
