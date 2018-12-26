@@ -46,6 +46,11 @@ serverless create -t aws-go
 serverless deploy
 ```
 
+**Test**
+```bash
+serverless invoke -f func_name --log
+```
+
 ## Lambda
 
 Python Deployment: <https://docs.aws.amazon.com/lambda/latest/dg/lambda-python-how-to-create-deployment-package.html>
