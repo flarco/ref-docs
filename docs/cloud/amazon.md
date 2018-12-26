@@ -54,6 +54,7 @@ serverless invoke -f func_name --log
 ## Lambda
 
 Python Deployment: <https://docs.aws.amazon.com/lambda/latest/dg/lambda-python-how-to-create-deployment-package.html>
+Virtual Env Deployment: <https://serverless.com/blog/serverless-python-packaging/>
 
 ## CloudFormation Alternatives
 
