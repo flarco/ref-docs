@@ -604,3 +604,49 @@ ORDER BY 1;
 **Change user Password**
 
 `ALTER USER postgres with password 'new-password';`
+
+# SSL
+
+## Generate & Config
+
+<https://gist.github.com/pepoviola/21c1cb00bac65a111568>
+
+```bash
+mkdir cert
+cd cert
+
+#### Generate #####
+# Generate a private key (you must provide a passphrase).
+openssl genrsa -des3 -out server.key 1024
+
+# Remove the passphrase.
+openssl rsa -in server.key -out server.key
+
+# Create server certificate
+openssl req -new -key server.key -days 3650 -out server.crt -x509 -subj '/C=CA/ST=British Columbia/L=Comox/O=TheBrain.ca/CN=thebrain.ca/emailAddress=info@thebrain.ca'
+cp server.crt root.crt
+
+# Find conf location
+$ psql -U postgres
+postgres=# SHOW config_file;
+
+
+# Append to postgreql.conf
+echo '
+ssl = on
+ssl_ciphers = 'DEFAULT:!LOW:!EXP:!MD5:@STRENGTH'
+ssl_cert_file = '/var/ssl/server.crt'
+ssl_key_file = '/var/ssl/server.key'
+' >> postgreql.conf
+```
+
+## Use from client
+
+<https://www.postgresql.org/docs/current/libpq-ssl.html>
+
+```bash
+cp server.crt ~/.postgresql/postgresql.crt
+cp server.key ~/.postgresql/postgresql.key
+
+# connect with sslmode=require
+```
