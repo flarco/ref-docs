@@ -4,6 +4,12 @@
 
 [https://golang.org/doc/effective_go.html](https://golang.org/doc/effective_go.html)
 
+## Install
+
+```bash
+sudo snap install go --classic
+```
+
 ## Keywords
 Address: `&i` returns the address
 
