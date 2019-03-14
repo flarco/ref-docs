@@ -487,6 +487,124 @@ class DictTree:
   - df.to_csv(fileName): <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_csv.html>
   - pandas.read_csv(fileName): <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html>
 
+```python
+
+def process_one_field(args):
+  (df, field, fields_types, samples_n) = args
+  data_type = fields_types[field]
+  tot_cnt = len(df)
+  f_cnt = df[field].count()
+  f_null_cnt = tot_cnt - f_cnt
+  f_null_prct = round(100.0 * f_null_cnt / tot_cnt, 1) if tot_cnt else tot_cnt
+  f_dstct_cnt = len(df[field].unique())
+  f_dstct_prct = round(100.0 * f_dstct_cnt / tot_cnt, 1) if tot_cnt else tot_cnt
+  f_dup_cnt = f_cnt - f_dstct_cnt if f_cnt > f_dstct_cnt else 0
+
+  f_min_len = df[field].apply(str).str.len().min()
+  f_max_len = df[field].apply(str).str.len().max()
+  f_avg_len = df[field].apply(str).str.len().mean()
+
+  try: std = df[field].std()
+  except TypeError: std = None
+
+  try: f_prctl_25 = df[field].quantile(q=0.25)
+  except TypeError: f_prctl_25 = None
+
+  try: f_prctl_50 = df[field].quantile(q=0.50)
+  except TypeError: f_prctl_50 = None
+
+  try: f_prctl_75 = df[field].quantile(q=0.75)
+  except TypeError: f_prctl_75 = None
+
+  try: f_min = df[field].min()
+  except TypeError: f_min = None
+
+  try: f_max = df[field].max()
+  except TypeError: f_max = None
+
+  try: f_avg = df[field].mean() if fields_types[field] in ('integer', 'decimal') else None
+  except TypeError: f_avg = None
+
+  if f_avg_len < 50:
+    mode = df[field].mode();  mode = mode[0] if len(mode) else None
+    sample = ' | '.join([
+      str(v) for v in
+      list(df[field].sample(n=samples_n if tot_cnt > samples_n else tot_cnt))
+    ]).replace('\n', ' ').replace('\\', '\\\\') if tot_cnt else ''
+    distro_cnt = [[getattr(row, field), int(row.cnt)] for row in
+      df.groupby([field]).size().reset_index(name='cnt').sort_values('cnt', ascending=False).head(n=top_n).itertuples(index=False)]
+    distro_prct = [[row[0], row[1], round(100.0*row[1]/tot_cnt, 1)] for row in distro_cnt]
+    distro_str = str(distro_prct).replace('\n', ' ').replace('\\', '\\\\')
+  else:
+    mode = None
+    sample = ''
+    distro_cnt = []
+    distro_prct = []
+    distro_str = ''
+  
+  dd = dict(
+    field=field,
+    data_type=data_type,
+    tot_cnt=tot_cnt,
+    f_cnt=f_cnt,
+    f_null_cnt=f_null_cnt,
+    f_null_prct=f_null_prct,
+    f_dstct_cnt=f_dstct_cnt,
+    f_dstct_prct=f_dstct_prct,
+    f_dup_cnt=f_dup_cnt,
+    std=std,
+    f_prctl_25=f_prctl_25,
+    f_prctl_50=f_prctl_50,
+    f_prctl_75=f_prctl_75,
+    f_min=f_min,
+    f_max=f_max,
+    f_avg=f_avg,
+    f_min_len=round(f_min_len, 1),
+    f_max_len=round(f_max_len, 1),
+    f_avg_len=round(f_avg_len, 1),
+    mode=mode,
+    sample=sample,
+    distro=distro_str,
+    distro_cnt=distro_cnt,
+    distro_prct=distro_prct,
+  )
+
+  return dd
+
+
+def process_date_distro(args):
+  log('Processing dates')
+  (df, date_field) = args
+  if not date_field: return {}
+
+  tot_cnt = len(df)
+
+  ym_field = 'year_month'
+  while ym_field in df.columns:
+    ym_field = ym_field + '_'
+  
+  cols = df.columns
+  try:
+    df[ym_field] = df[date_field].map(lambda x: x.strftime('%Y-%m'))
+  except ValueError:
+    df = df.dropna()
+    df[ym_field] = df[date_field].map(lambda x: x.strftime('%Y-%m'))
+  
+  df2 = df.groupby(ym_field)[cols].count()
+
+  field_date_distros = OrderedDict()
+  # get_ym = lambda row: [getattr(row, ym_field).split('-')[0], getattr(row, ym_field).split('-')[1]]
+  get_ym = lambda row: [getattr(row, ym_field)]
+  for col in df2.columns:
+    df2[ym_field] = df2.index
+    df3 = df2[[ym_field, col]].rename(columns={col: "cnt"})
+    df3['prct'] = 100.0 * df3['cnt'] / tot_cnt
+    field_date_distros[col] = [get_ym(row) + [int(row.cnt), round(row.prct, 1)] for row in
+      df3.itertuples(index=False)]
+  
+  return field_date_distros
+```
+
 ### Array
 
 <https://docs.python.org/2/library/array.html>

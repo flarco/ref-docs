@@ -15,6 +15,12 @@ JDBC: <https://medium.com/@radek.strnad/tips-for-using-jdbc-in-apache-spark-sql-
 
 Memory Management: <https://0x0fff.com/spark-memory-management/>
 
+Cheat Sheets:
+<https://www.qubole.com/resources/pyspark-cheatsheet/>
+<https://s3.amazonaws.com/assets.datacamp.com/blog_assets/PySpark_Cheat_Sheet_Python.pdf>
+
+Unit Testing: <https://blog.cambridgespark.com/unit-testing-with-pyspark-fb31671b1ad8>
+
 ## Master Options
 
 | Master URL                      | Meaning                                                                                                                                                                                                                                                                                                   |
@@ -497,6 +503,47 @@ dependencies {
 
 ## Code Help
 
+### Map
+
+```python
+def transform_1(row):
+  rec = row.asDict()
+  query = parse_qs(row.cs_uri_query) if row.cs_uri_query else {}
+  query = {k.lower(): re.sub(r'[\r\n\t]', ' ', query[k][0]).strip() for k in query}
+
+  d_du_query = {}
+
+  if 'd_du' in query:
+    # get Campaign from d_du
+    d_data = urlparse(query['d_du'])
+    domain = d_data.netloc
+    d_du_url = '{}://{}{}'.format(d_data.scheme, d_data.netloc, d_data.path)
+    d_du_query = parse_qs(d_data.query)
+    d_du_query = {k.lower(): re.sub(r'[\r\n\t]', ' ', d_du_query[k][0]).strip() for k in d_du_query}
+  else:
+    domain = None
+    d_du_url = None
+
+  cs_referrer_parse = urlparse(rec['cs_referrer']) if rec['cs_referrer'] else None
+  rec['cs_referrer_domain'] = cs_referrer_parse.netloc if cs_referrer_parse else None
+  rec['cs_referrer_url'] = '{}://{}{}'.format(cs_referrer_parse.scheme, cs_referrer_parse.netloc, cs_referrer_parse.path) if cs_referrer_parse else None
+  
+  rec['d_du_url'] = d_du_url
+  for k in d_du_query:
+    query[k] = d_du_query[k] if k not in query else query[k]
+
+  for k in query:
+    rec[k] = query[k] if k not in rec else rec[k]
+
+  out_rec = {ft[0]:rec[ft[0]] if ft[0] in rec else None for ft in fields_types}
+
+  return [out_rec[ft[0]] for ft in fields_types]
+
+rdd3 = rdd2.map(transform_1)
+schema = sparko.create_schema(fields=[f[0].lower() for f in fields_types], types=[f[1] for f in fields_types])
+df3 = sparko.spark.createDataFrame(rdd3, schema=schema).repartition(5)
+```
+
 ### flatMap
 
 ```scala
@@ -561,6 +608,44 @@ val newDataFrame = yourDF
 // | K2|  HTD| 10|
 // | K2|  YTD| 60|
 // +---+-----+---+
+```
+
+```python
+def transform_1(row):
+  rec = row.asDict()
+  query = parse_qs(row.cs_uri_query) if row.cs_uri_query else {}
+  query = {k.lower(): re.sub(r'[\r\n\t]', ' ', query[k][0]).strip() for k in query}
+  cookies_keys = parse_cookie(row.cs_cookie)
+  d_du_query = {}
+
+  if 'd_du' in query:
+    d_data = urlparse(query['d_du'])
+    domain = d_data.netloc
+    d_du_query = parse_qs(d_data.query)
+    d_du_query = {k.lower(): re.sub(r'[\r\n\t]', ' ', d_du_query[k][0]).strip() for k in d_du_query}
+  else:
+    domain = None
+    
+  
+  out_rows = []
+  for k in query:
+    row = (domain, 'cs_uri_query', k, 1, 1 if query[k] else 0)
+    out_rows.append(row)
+
+  for k in d_du_query:
+    row = (domain, 'd_du', k, 1, 1 if d_du_query[k] else 0)
+    out_rows.append(row)
+
+  for k in cookies_keys:
+    row = (domain, 'cs_cookie', k, 1, 1 if cookies_keys[k] else 0)
+    out_rows.append(row)
+
+  return out_rows
+
+rdd3 = rdd2.flatMap(transform_1)
+schema = sparko.create_schema(fields=[f[0].lower() for f in fields_types], types=[f[1] for f in fields_types])
+df3 = sparko.spark.createDataFrame(rdd3, schema=schema)
+
 ```
 
 ## Pivot
