@@ -7,6 +7,7 @@ module.exports = {
     },
   },
   serviceWorker: true,
+  base: "/ref-docs/",
   // theme: 'vue',
   themeConfig: {
     repo: 'flarco/ref-docs',
