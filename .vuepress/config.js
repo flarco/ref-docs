@@ -9,8 +9,8 @@ module.exports = {
   serviceWorker: true,
   // theme: 'vue',
   themeConfig: {
-    repo: 'flarco/ref-docs',
-    docsDir: 'docs',
+    repo: 'flarco/ref-docsDir',
+    docsDir: 'docsDir',
     locales: {
       '/': {
         label: 'English',
@@ -22,15 +22,15 @@ module.exports = {
           },
           {
             text: 'Linux',
-            link: '/docs/cloud/linux.md'
+            link: '/docsDir/cloud/linux.md'
           },
           {
             text: 'Python',
-            link: '/docs/programming/python.md'
+            link: '/docsDir/programming/python.md'
           },
           {
             text: 'Spark',
-            link: '/docs/database/spark.md'
+            link: '/docsDir/database/spark.md'
           },
           // {
           //   text: 'API Reference',
@@ -47,52 +47,52 @@ module.exports = {
             title: 'Cloud',
             collapsable: false,
             children: [
-              '/docs/cloud/amazon.md',
-              '/docs/cloud/docker.md',
-              '/docs/cloud/git.md',
-              '/docs/cloud/linux.md',
-              '/docs/cloud/nginx.md',
+              '/docsDir/cloud/amazon.md',
+              '/docsDir/cloud/docker.md',
+              '/docsDir/cloud/git.md',
+              '/docsDir/cloud/linux.md',
+              '/docsDir/cloud/nginx.md',
             ]
           },
           {
             title: 'Database',
             collapsable: false,
             children: [
-              '/docs/database/elasticsearch.md',
-              '/docs/database/influxdb.md',
-              '/docs/database/mysql.md',
-              '/docs/database/oracle.md',
-              '/docs/database/postgres.md',
-              '/docs/database/sas.md',
-              '/docs/database/spark.md',
-              '/docs/database/mongodb.md',
+              '/docsDir/database/elasticsearch.md',
+              '/docsDir/database/influxdb.md',
+              '/docsDir/database/mysql.md',
+              '/docsDir/database/oracle.md',
+              '/docsDir/database/postgres.md',
+              '/docsDir/database/sas.md',
+              '/docsDir/database/spark.md',
+              '/docsDir/database/mongodb.md',
             ]
           },
           {
             title: 'Programming',
             collapsable: false,
             children: [
-              '/docs/programming/android.md',
-              '/docs/programming/go.md',
-              '/docs/programming/java.md',
-              '/docs/programming/scala.md',
-              '/docs/programming/nodejs.md',
-              '/docs/programming/javascript.md',
-              '/docs/programming/powershell.md',
-              '/docs/programming/python-database.md',
-              '/docs/programming/python-jupyter.md',
-              '/docs/programming/python-links.md',
-              '/docs/programming/python.md',
-              '/docs/programming/ruby.md',
+              '/docsDir/programming/android.md',
+              '/docsDir/programming/go.md',
+              '/docsDir/programming/java.md',
+              '/docsDir/programming/scala.md',
+              '/docsDir/programming/nodejs.md',
+              '/docsDir/programming/javascript.md',
+              '/docsDir/programming/powershell.md',
+              '/docsDir/programming/python-database.md',
+              '/docsDir/programming/python-jupyter.md',
+              '/docsDir/programming/python-links.md',
+              '/docsDir/programming/python.md',
+              '/docsDir/programming/ruby.md',
             ]
           },
           {
             title: 'ETL',
             collapsable: false,
             children: [
-              '/docs/etl/informatica.md',
-              '/docs/etl/ssis.md',
-              '/docs/etl/talend.md',
+              '/docsDir/etl/informatica.md',
+              '/docsDir/etl/ssis.md',
+              '/docsDir/etl/talend.md',
             ]
           },
         ]
