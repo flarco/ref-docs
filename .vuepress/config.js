@@ -9,7 +9,7 @@ module.exports = {
   serviceWorker: true,
   // theme: 'vue',
   themeConfig: {
-    repo: 'flarco/ref-docsDir',
+    repo: 'flarco/ref-docs',
     docsDir: 'docsDir',
     locales: {
       '/': {
