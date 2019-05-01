@@ -17,9 +17,9 @@ git clone https://github.com/flarco/ref-docs.git
 
 cd ref-docs
 
-vuepress build
+bash build.sh
 
-ls -l .vuepress/dist
+ls -l docs
 ```
 
 ## Running with NGINX
