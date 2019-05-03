@@ -1345,6 +1345,21 @@ atts = [a for a in dir(self) if not a.startswith('__') and not callable(getattr(
 
 <http://www.python-course.eu/lambda.php>
 
+### Context Manager
+
+<https://docs.python.org/3/library/contextlib.html>
+
+```python
+from contextlib import contextmanager
+
+@contextmanager
+def closing(thing):
+    try:
+        yield thing
+    finally:
+        thing.close()
+```	
+
 ### List to Dict
 
 ```python
