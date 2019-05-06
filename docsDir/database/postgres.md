@@ -185,7 +185,22 @@ SELECT 3, 'C', 'Z'
 WHERE NOT EXISTS (SELECT 1 FROM table WHERE id=3);
 ```
  
+### Table Lock
 
+```sql
+
+select pid, 
+       usename, 
+       pg_blocking_pids(pid) as blocked_by, 
+       query as blocked_query
+from pg_stat_activity
+where cardinality(pg_blocking_pids(pid)) > 0;
+
+SELECT * FROM pg_stat_activity WHERE state = 'active';
+
+SELECT pg_cancel_backend(32143);
+
+```
  
 
 ### Information Schema
