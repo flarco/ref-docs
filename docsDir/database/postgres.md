@@ -562,7 +562,23 @@ END;
 $BODY$ LANGUAGE 'plpgsql' VOLATILE;
 ```
 
- 
+## Windowing
+
+### Rank in Group By
+
+First value in group: <https://stackoverflow.com/a/25534279>
+
+```sql
+select
+  rown,
+  description,
+  (array_agg(rul_limit ORDER BY regex_rk ASC))[1] as regex_rk,
+  (array_agg(product ORDER BY regex_rk ASC))[1] as product
+from matched_final
+group by
+  rown,
+  description
+```
 
 ## JSON
 
