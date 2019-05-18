@@ -9,7 +9,7 @@ pipeline:
       - mv .vuepress/dist docs
 
   publish:
-    image: plugins/gh-release
+    image: plugins/gh-pages
     settings:
       username:
         from_secret: github_username
