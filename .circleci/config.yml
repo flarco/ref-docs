@@ -18,6 +18,8 @@ jobs:
       - save_cache:
           paths:
             - node_modules
+            - /usr/local/lib/node_modules
+            - /usr/local/bin/vuepress
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run: git config user.email "$GH_USER"
