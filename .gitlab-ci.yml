@@ -1,0 +1,10 @@
+image: node:8
+
+before_script:
+  - npm install -g vuepress
+
+production:
+  script:
+  - git config --global user.email "$GH_USER"
+  - git config --global user.password "GH_PWD"
+  - bash build.sh
