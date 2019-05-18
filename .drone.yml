@@ -3,10 +3,10 @@ pipeline:
   frontend:
     image: node:8
     commands:
-	  - npm install -g vuepress
-	  - vuepress build
-	  - rm -rf docs
-	  - mv .vuepress/dist docs
+      - npm install -g vuepress
+      - vuepress build
+      - rm -rf docs
+      - mv .vuepress/dist docs
 
   publish:
     image: plugins/gh-release
