@@ -1,8 +1,0 @@
-image: node:8
-
-before_script:
-  - npm install -g vuepress
-
-production:
-  script:
-  - bash build.sh
