@@ -1,20 +1,19 @@
-kind: pipeline
+pipeline:
 
-steps:
-- name: test
-  image: node
-  commands:
-    - npm install -g vuepress
-    - vuepress build
-    - rm -rf docs
-    - mv .vuepress/dist docs
+  frontend:
+    image: node:8
+    commands:
+	  - npm install -g vuepress
+	  - vuepress build
+	  - rm -rf docs
+	  - mv .vuepress/dist docs
 
-- name: publish
-  image: plugins/gh-release
-  settings:
-    username:
-      from_secret: github_username
-    password:
-      from_secret: github_password
-  settings:
-    pages_directory: docs/
+  publish:
+    image: plugins/gh-release
+    settings:
+      username:
+        from_secret: github_username
+      password:
+        from_secret: github_password
+    settings:
+      pages_directory: docs/
