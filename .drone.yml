@@ -15,5 +15,5 @@ pipeline:
         from_secret: github_username
       password:
         from_secret: github_password
-    settings:
       pages_directory: docs/
+      target_branch: master
