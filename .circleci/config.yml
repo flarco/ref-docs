@@ -22,5 +22,4 @@ jobs:
 
       - run: git config user.email "$GH_USER"
       - run: git config user.name "Fritz Larco"
-      - run: git config user.password "GH_PWD"
       - run: bash build.sh
