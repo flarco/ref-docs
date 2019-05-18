@@ -18,9 +18,10 @@ git remote add TFMS11 Z:\\TFMS11.git
 git config
 ```
 
-## Set email
+## Set email / password
 ```
 git config --global user.email "user1@live.com"
+git config --global user.password "GH_PWD"
 ```
 
 ## Use Windows Credential Manager
