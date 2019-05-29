@@ -29,6 +29,20 @@ docker build -f /path/to/a/Dockerfile -t username/wma_app:v1 .
 docker push username/wma_app:v1
 ```
 
+### Cleanup
+
+https://docs.docker.com/config/pruning/
+
+```
+docker system prune
+
+
+docker image prune
+# or docker image prune -a
+
+docker container prune
+```
+
 #### Add SSH Service
 ```
 RUN echo "root:my_pass!" | chpasswd && \
