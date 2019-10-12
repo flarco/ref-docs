@@ -20,7 +20,7 @@ for md_file in md_files:
   title = name.replace('.md', '')
   tag = md_file.replace('docsDir/', '').replace(f'/{name}', '')
   new_name = md_file.replace('docsDir/', '')
-  new_title = f'{tag.replace("/", "_")} -- {title}'.title()
+  new_title = f'{tag.replace("/", "_")} - {title}'.title()
   header = header_template.format(tag=tag, title=new_title)
   new_text = header + text
   new_path = f'reference/{new_title}.md'
